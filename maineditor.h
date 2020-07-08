@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QTextEdit>
+#include <QVBoxLayout>
+
 class MainEditor : public QWidget
 {
     Q_OBJECT

@@ -4,15 +4,21 @@
 #include <QWidget>
 #include <QTextEdit>
 #include <QVBoxLayout>
+#include <QFile>
 
 class MainEditor : public QWidget
 {
     Q_OBJECT
-    QTextEdit *secondTextEdit;
+    QTextEdit *fileEditor;
+    QVBoxLayout *layout;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
 
+    void openFiles(QString &path);
+
 signals:
+
+public slots:
 
 };
 

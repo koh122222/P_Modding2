@@ -8,15 +8,18 @@
 #include <QFileSystemModel>
 #include <QTreeView>
 #include <QModelIndex>
+#include <QMainWindow>
+#include <onlyfilesystemmodel.h>
 
 class GameFiles : public QWidget
 {
     Q_OBJECT
+
     QVBoxLayout *layout;
     QSplitter *splitter;
 
-    QFileSystemModel *fileModel;
-    QFileSystemModel *favouritesModel;
+    onlyFileSystemModel *fileModel;
+    onlyFileSystemModel *favouritesModel;
 
     QTreeView *mainTree;
     QTreeView *favouritesTree;
@@ -26,7 +29,7 @@ public:
 signals:
 
 public slots:
-    void openFiles(const QModelIndex& index);
+    void openFilesG(const QModelIndex& index);
 
 
 };

@@ -19,12 +19,14 @@ SOURCES += \
     gamefiles.cpp \
     main.cpp \
     maineditor.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    onlyfilesystemmodel.cpp
 
 HEADERS += \
     gamefiles.h \
     maineditor.h \
-    mainwindow.h
+    mainwindow.h \
+    onlyfilesystemmodel.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(centralSplitter);
     centralSplitter->addWidget(gameFiles);
     centralSplitter->addWidget(mainEditor);
+
 }
 
 MainWindow::~MainWindow()

@@ -20,13 +20,15 @@ SOURCES += \
     main.cpp \
     maineditor.cpp \
     mainwindow.cpp \
-    onlyfilesystemmodel.cpp
+    onlyfilesystemmodel.cpp \
+    writeplacedialog.cpp
 
 HEADERS += \
     gamefiles.h \
     maineditor.h \
     mainwindow.h \
-    onlyfilesystemmodel.h
+    onlyfilesystemmodel.h \
+    writeplacedialog.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

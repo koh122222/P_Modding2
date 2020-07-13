@@ -28,12 +28,8 @@ GameFiles::GameFiles(QWidget *parent)
     favouritesTree->hideColumn(2);
     favouritesTree->hideColumn(3);
     //favouritesTree->setHeader()
-    connect(mainTree, SIGNAL(doubleClicked(QModelIndex)), this , SLOT(openFilesG(QModelIndex)));
-
-
-    //FOR BUILD COLUMN
-    //QTextEdit *testEdit = new QTextEdit(favouritesTree);
-    //testEdit->resize(500, 30);
+    connect(mainTree, SIGNAL(doubleClicked(QModelIndex)),
+            this , SLOT(openFilesG(QModelIndex)));
 
     splitter = new QSplitter(this);
     layout = new QVBoxLayout(this);

@@ -27,13 +27,11 @@ GameFiles::GameFiles(QWidget *parent)
     favouritesTree->hideColumn(1);
     favouritesTree->hideColumn(2);
     favouritesTree->hideColumn(3);
-    //favouritesTree->setHeader()
     connect(mainTree, SIGNAL(doubleClicked(QModelIndex)),
             this , SLOT(openFilesG(QModelIndex)));
 
     splitter = new QSplitter(this);
     layout = new QVBoxLayout(this);
-    //favouritesTree->setModel(new Model);
     splitter->setOrientation(Qt::Vertical);
     splitter->setHandleWidth(1);
     splitter->addWidget(mainTree);
@@ -41,8 +39,6 @@ GameFiles::GameFiles(QWidget *parent)
     layout->addWidget(splitter);
     layout->setContentsMargins(0,0,0,0);
     setLayout(layout);
-    //qDebug() << mainTree[0];
-     //setRootIsDecorated(false) // for two tree
 
 }
 //NOW ONLY FOR TXT

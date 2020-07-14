@@ -10,8 +10,6 @@ class WritePlaceDialog : public QDialog
 {
     Q_OBJECT
     //QString moddingGame; ///?????? need?
-    //QString placeGame;
-    //QString placeMod; // hmmmm
     QGridLayout *layout;
 
     QLabel *liteInfProgram;

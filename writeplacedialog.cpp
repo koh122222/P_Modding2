@@ -1,6 +1,10 @@
 #include "writeplacedialog.h"
+#include <mainwindow.h>
+
 #include <QDir>
 #include <QFileDialog>
+#include <QTextStream>
+#include <QDebug>
 
 WritePlaceDialog::WritePlaceDialog(QWidget* parent)
     :QDialog(parent)
@@ -12,6 +16,11 @@ WritePlaceDialog::WritePlaceDialog(QWidget* parent)
 
     placeGameBox = new QComboBox(this);
     placeModBox = new QComboBox(this);
+
+    QTextStream workFile(static_cast<MainWindow*>(parent)->getProgramFilesF());
+    //QString testString = workFile.readAll();
+    //workFile << "test";
+    //qDebug() << testString;
 
     placeGameButton = new QPushButton("Browse..", this);
     placeModButton = new QPushButton("Browse..", this);
@@ -29,6 +38,7 @@ WritePlaceDialog::WritePlaceDialog(QWidget* parent)
 
     connect(placeGameButton, SIGNAL(clicked()), this, SLOT(selectGamePlace()));
     connect(placeModButton, SIGNAL(clicked()), this, SLOT(selectModPlace()));
+
 
 
 

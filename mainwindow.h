@@ -9,10 +9,14 @@
 #include "gamefiles.h"
 #include "maineditor.h"
 #include <writeplacedialog.h>
+#include <QFile>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    QFile *ProgramFilesF;
+
+    QDir *dirProgram;
     QDir *placeGame;
     QDir *placeMod;
 public:
@@ -24,6 +28,8 @@ public:
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    QFile* getProgramFilesF();
 
 public slots:
     void returnFiles();

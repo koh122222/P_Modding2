@@ -6,10 +6,11 @@
 #include <QVBoxLayout>
 #include <QString>
 #include <QDir>
+#include <QFile>
 #include "gamefiles.h"
 #include "maineditor.h"
 #include <writeplacedialog.h>
-#include <QFile>
+#include <moddifView.h>
 
 class MainWindow : public QMainWindow
 {
@@ -22,6 +23,7 @@ class MainWindow : public QMainWindow
 public:
     GameFiles* gameFiles;
     MainEditor* mainEditor;
+    ModdifView* moddifView;
 
     WritePlaceDialog* dirFinder;
 

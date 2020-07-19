@@ -10,13 +10,16 @@ MainWindow::MainWindow(QWidget *parent)
     resize(1024, 720);
     gameFiles = new GameFiles(this);
     mainEditor = new MainEditor(this);
+    moddifView = new ModdifView(this);
     QSplitter *centralSplitter = new QSplitter(this);
     centralSplitter->setHandleWidth(0);
     setCentralWidget(centralSplitter);
     centralSplitter->addWidget(gameFiles);
     centralSplitter->addWidget(mainEditor);
+    centralSplitter->addWidget(moddifView);
     centralSplitter->setStretchFactor(0, 20);
     centralSplitter->setStretchFactor(1, 80);
+    centralSplitter->setStretchFactor(2, 30);
 
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");

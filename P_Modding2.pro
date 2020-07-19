@@ -20,6 +20,7 @@ SOURCES += \
     main.cpp \
     maineditor.cpp \
     mainwindow.cpp \
+    moddifView.cpp \
     onlyfilesystemmodel.cpp \
     primparseryaml.cpp \
     writeplacedialog.cpp
@@ -28,6 +29,7 @@ HEADERS += \
     gamefiles.h \
     maineditor.h \
     mainwindow.h \
+    moddifView.h \
     onlyfilesystemmodel.h \
     primparseryaml.h \
     writeplacedialog.h

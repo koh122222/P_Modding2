@@ -21,6 +21,7 @@ SOURCES += \
     maineditor.cpp \
     mainwindow.cpp \
     onlyfilesystemmodel.cpp \
+    primparseryaml.cpp \
     writeplacedialog.cpp
 
 HEADERS += \
@@ -28,6 +29,7 @@ HEADERS += \
     maineditor.h \
     mainwindow.h \
     onlyfilesystemmodel.h \
+    primparseryaml.h \
     writeplacedialog.h
 
 # Default rules for deployment.

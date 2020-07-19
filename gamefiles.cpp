@@ -50,7 +50,7 @@ void GameFiles::openFilesG(const QModelIndex& index)
     quint32 findExtension;
     if ((findExtension = openFile.lastIndexOf('.')) == -1)
         return;
-    else if (openFile.right(openFile.size() - findExtension) != ".txt")
+    else if (openFile.right(openFile.size() - findExtension) == ".txt")
     {
         qDebug() << openFile.right(openFile.size() - findExtension);
         return;

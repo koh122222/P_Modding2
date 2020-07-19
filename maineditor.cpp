@@ -13,7 +13,7 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
     layout->addWidget(fileEditor);
     layout->setContentsMargins(0,0,0,0);
     layout->setMargin(1);
-    fileEditor->setText("test");
+    fileEditor->setText("1234567");
 
 
 }

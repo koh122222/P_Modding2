@@ -16,6 +16,7 @@ class WritePlaceDialog : public QDialog
     QLabel *infPlaceGame;
     QLabel *infPlaceMod;
 
+    QComboBox *nowGameBox;
     QComboBox *placeGameBox;
     QComboBox *placeModBox;
 
@@ -28,6 +29,7 @@ public:
     void setLiteInfProgram(QString newInf);
     QString getNowPlaceGame();
     QString getNowPlaceMod();
+    QString getNowGame();
 
 
 

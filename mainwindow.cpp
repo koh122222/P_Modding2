@@ -3,6 +3,11 @@
 #include <QDebug>
 #include <QDir>
 #include <QCoreApplication>
+#include <QFileInfo>
+std::unordered_map<QString, QString> MainWindow::allGameBase
+{
+    {"Europa Universalis IV", "eu4.exe"}
+};
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -23,10 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");
-    ProgramFilesF = new QFile(dirProgram->currentPath() + "//ProgramFiles//test.txt", this);
-    ProgramFilesF->open(QFile::ReadOnly | QFile::WriteOnly | QFile::Text);
-    //QTextStream temp(getProgramFilesF());
-
 
     placeGame = new QDir("");
     placeMod = new QDir("");
@@ -37,21 +38,55 @@ MainWindow::MainWindow(QWidget *parent)
     dirFinder->open();
 }
 
- QFile* MainWindow::getProgramFilesF()
-{
-     return ProgramFilesF;
-}
-
 void MainWindow::returnFiles()
 {
     placeGame->cd(dirFinder->getNowPlaceGame());
+    qDebug() << placeGame->absolutePath();
     placeMod->cd(dirFinder->getNowPlaceMod());
-    qDebug() << dirProgram->currentPath();
     if (!(placeGame->cd(dirFinder->getNowPlaceGame()) && (placeGame->path() != ".") &&
             placeMod->cd(dirFinder->getNowPlaceMod()) && (placeMod->path() != ".")))
     {
         dirFinder->setLiteInfProgram("Dir problem");
         dirFinder->open();
+        return;
+    }
+    else
+    {
+        std::unordered_map<QString, QString>::iterator it = allGameBase.find(dirFinder->getNowGame());
+        qDebug() << "1";
+        if (it == allGameBase.end())
+        {
+            qDebug() << ("2");
+            dirFinder->setLiteInfProgram("The selected game is not supported");
+            dirFinder->open();
+            return;
+        }
+        qDebug() << placeGame->path();
+        qDebug() << placeGame->absolutePath();
+        QFileInfo gameFile(placeGame->path() + "//" + it->second);
+        qDebug() << gameFile.absoluteFilePath();
+        if (!(gameFile.exists() && gameFile.isFile()))
+        {
+            qDebug() << "3";
+            dirFinder->setLiteInfProgram(it->second + " not find in directory");
+            dirFinder->open();
+            return;
+        }
+        //if all normal
+        QFile writePlaceGame("ProgramFiles//placeGame.txt");
+        writePlaceGame.open(QFile::Text | QFile::WriteOnly);
+        QTextStream writerPlaceGame(&writePlaceGame);
+        writerPlaceGame << placeGame->absolutePath();
+        writePlaceGame.close();
+        QFile writePlaceMod("ProgramFiles//placeMod.txt");
+        writePlaceMod.open(QFile::Text | QFile::WriteOnly);
+        QTextStream writerPlaceMod(&writePlaceMod);
+        writerPlaceMod << placeMod->absolutePath();
+        writePlaceMod.close();
+
+        //qDebug() << gameFile.path();
+
+
     }
     return;
 }

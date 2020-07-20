@@ -7,20 +7,26 @@
 #include <QString>
 #include <QDir>
 #include <QFile>
+#include <unordered_map>
 #include "gamefiles.h"
 #include "maineditor.h"
 #include <writeplacedialog.h>
 #include <moddifView.h>
 
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QFile *ProgramFilesF;
+    QString gameName;
 
     QDir *dirProgram;
     QDir *placeGame;
     QDir *placeMod;
 public:
+
+    static std::unordered_map<QString, QString>  allGameBase;
+
     GameFiles* gameFiles;
     MainEditor* mainEditor;
     ModdifView* moddifView;
@@ -31,7 +37,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QFile* getProgramFilesF();
+
 
 public slots:
     void returnFiles();

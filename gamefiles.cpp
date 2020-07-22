@@ -10,9 +10,7 @@ GameFiles::GameFiles(QWidget *parent)
     : QWidget(parent)
 {
     fileModel = new onlyFileSystemModel(this);
-    fileModel->setRootPath("");
     fileModel->setFirstName("Game Name");
-
     mainTree = new QTreeView(this);
     mainTree->setModel(fileModel);
     mainTree->hideColumn(1);
@@ -20,7 +18,6 @@ GameFiles::GameFiles(QWidget *parent)
     mainTree->hideColumn(3);
 
     favouritesModel = new onlyFileSystemModel(this);
-    //favouritesModel->setRootPath("");
     favouritesModel->setFirstName("File Mod");
     favouritesTree = new QTreeView(this);
     favouritesTree->setModel(favouritesModel);
@@ -40,6 +37,20 @@ GameFiles::GameFiles(QWidget *parent)
     layout->setContentsMargins(0,0,0,0);
     setLayout(layout);
 
+}
+
+void GameFiles::setGamePlace(QString placeGame)
+{
+    QModelIndex index = fileModel->index(placeGame);
+    mainTree->setRootIndex(index);
+    fileModel->setRootPath(placeGame);
+}
+
+void GameFiles::setModPlace(QString placeMod)
+{
+    QModelIndex index = favouritesModel->index(placeMod);
+    favouritesTree->setRootIndex(index);
+    favouritesModel->setRootPath(placeMod);
 }
 //NOW ONLY FOR TXT
 void GameFiles::openFilesG(const QModelIndex& index)

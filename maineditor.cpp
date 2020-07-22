@@ -7,13 +7,17 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
     //showMaximized();
     //layout->addWidget(secondTextEdit, 33);
     //layout->addWidget(threeTextEdit, 50);
-    fileEditor = new QTextEdit(this);
+    fileEditor = new CodeEditor(this);
+    QFont fontEditor("Courier", 16);
+    fileEditor->setFont(fontEditor);
+    QFontMetrics metrics(fontEditor);
+    fileEditor->setTabStopDistance(metrics.horizontalAdvance("    "));
 
     layout = new QVBoxLayout(this);
     layout->addWidget(fileEditor);
     layout->setContentsMargins(0,0,0,0);
     layout->setMargin(1);
-    fileEditor->setText("1234567");
+    fileEditor->setPlainText("1234567");
 
 
 }
@@ -28,6 +32,6 @@ void MainEditor::openFiles(QString &path)
     }
     QTextStream in(&file);
     QString text = in.readAll();
-    fileEditor->setText(text);
+    fileEditor->setPlainText(text);
     file.close();
 }

@@ -5,11 +5,12 @@
 #include <QTextEdit>
 #include <QVBoxLayout>
 #include <QFile>
+#include <codeeditor.h>
 
 class MainEditor : public QWidget
 {
     Q_OBJECT
-    QTextEdit *fileEditor;
+    CodeEditor *fileEditor;
     QVBoxLayout *layout;
 public:
     explicit MainEditor(QWidget *parent = nullptr);

@@ -41,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::returnFiles()
 {
     placeGame->cd(dirFinder->getNowPlaceGame());
-    qDebug() << placeGame->absolutePath();
     placeMod->cd(dirFinder->getNowPlaceMod());
     if (!(placeGame->cd(dirFinder->getNowPlaceGame()) && (placeGame->path() != ".") &&
             placeMod->cd(dirFinder->getNowPlaceMod()) && (placeMod->path() != ".")))
@@ -53,21 +52,15 @@ void MainWindow::returnFiles()
     else
     {
         std::unordered_map<QString, QString>::iterator it = allGameBase.find(dirFinder->getNowGame());
-        qDebug() << "1";
         if (it == allGameBase.end())
         {
-            qDebug() << ("2");
             dirFinder->setLiteInfProgram("The selected game is not supported");
             dirFinder->open();
             return;
         }
-        qDebug() << placeGame->path();
-        qDebug() << placeGame->absolutePath();
         QFileInfo gameFile(placeGame->path() + "//" + it->second);
-        qDebug() << gameFile.absoluteFilePath();
         if (!(gameFile.exists() && gameFile.isFile()))
         {
-            qDebug() << "3";
             dirFinder->setLiteInfProgram(it->second + " not find in directory");
             dirFinder->open();
             return;
@@ -83,6 +76,12 @@ void MainWindow::returnFiles()
         QTextStream writerPlaceMod(&writePlaceMod);
         writerPlaceMod << placeMod->absolutePath();
         writePlaceMod.close();
+
+        qDebug() << placeGame->absolutePath();
+        qDebug() << placeMod->absolutePath();
+
+        gameFiles->setGamePlace(placeGame->absolutePath());
+        gameFiles->setModPlace(placeMod->absolutePath());
 
         //qDebug() << gameFile.path();
 

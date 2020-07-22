@@ -26,6 +26,9 @@ class GameFiles : public QWidget
 public:
     explicit GameFiles(QWidget *parent = nullptr);
 
+    void setGamePlace(QString placeGame);
+    void setModPlace(QString placeMod);
+
 signals:
 
 public slots:

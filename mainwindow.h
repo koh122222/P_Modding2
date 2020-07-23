@@ -11,7 +11,7 @@
 #include "gamefiles.h"
 #include "maineditor.h"
 #include <writeplacedialog.h>
-#include <moddifView.h>
+#include <modifView.h>
 
 
 
@@ -29,13 +29,15 @@ public:
 
     GameFiles* gameFiles;
     MainEditor* mainEditor;
-    ModdifView* moddifView;
+    ModifView* moddifView;
 
     WritePlaceDialog* dirFinder;
 
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    QString get_placeGame();
 
 
 

@@ -90,8 +90,14 @@ void MainWindow::returnFiles()
     return;
 }
 
+
 MainWindow::~MainWindow()
 {
+}
+
+QString MainWindow::get_placeGame()
+{
+    return placeGame->absolutePath();
 }
 
 

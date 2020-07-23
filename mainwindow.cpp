@@ -66,20 +66,16 @@ void MainWindow::returnFiles()
             return;
         }
         //if all normal
-        QFile writePlaceGame("ProgramFiles//placeGame.txt");
+        QFile writePlaceGame(dirProgram->absolutePath() + "//ProgramFiles//placeGame.txt");
         writePlaceGame.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceGame(&writePlaceGame);
         writerPlaceGame << placeGame->absolutePath();
         writePlaceGame.close();
-        QFile writePlaceMod("ProgramFiles//placeMod.txt");
+        QFile writePlaceMod(dirProgram->absolutePath() + "//ProgramFiles//placeMod.txt");
         writePlaceMod.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceMod(&writePlaceMod);
         writerPlaceMod << placeMod->absolutePath();
         writePlaceMod.close();
-
-        qDebug() << placeGame->absolutePath();
-        qDebug() << placeMod->absolutePath();
-
         gameFiles->setGamePlace(placeGame->absolutePath());
         gameFiles->setModPlace(placeMod->absolutePath());
 

@@ -3,7 +3,7 @@
 
 ModifView::ModifView(QWidget *parent) : QWidget(parent)
 {
-    reedFile()
+    //reedFile()
 }
 
 bool ModifView::messagePoint (QString localizedText)

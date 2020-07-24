@@ -29,7 +29,7 @@ public:
 
     GameFiles* gameFiles;
     MainEditor* mainEditor;
-    ModifView* moddifView;
+    ModifView* modifView;
 
     WritePlaceDialog* dirFinder;
 

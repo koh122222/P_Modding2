@@ -6,18 +6,21 @@
 #include <QVBoxLayout>
 #include <QFile>
 #include <QTabWidget>
-#include <codeeditor.h>
+#include <unordered_map>
+#include "codeeditor.h"
+
+using AllOpenFile = std::unordered_map<QString, CodeEditor*>;
 
 class MainEditor : public QWidget
 {
     Q_OBJECT
     QTabWidget *fileEditor;
-    //CodeEditor *fileEditor;
+    AllOpenFile allOpenFile;
     QVBoxLayout *layout;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
 
-    void openFiles(QString &path);
+    void openFile(QString &path);
 
 signals:
 

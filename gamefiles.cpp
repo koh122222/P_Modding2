@@ -10,7 +10,7 @@ GameFiles::GameFiles(QWidget *parent)
     : QWidget(parent)
 {
     fileModel = new onlyFileSystemModel(this);
-    fileModel->setFirstName("Game Name");
+    fileModel->setFirstName("File Game");
     mainTree = new QTreeView(this);
     mainTree->setModel(fileModel);
     mainTree->hideColumn(1);
@@ -25,7 +25,7 @@ GameFiles::GameFiles(QWidget *parent)
     favouritesTree->hideColumn(2);
     favouritesTree->hideColumn(3);
     connect(mainTree, SIGNAL(doubleClicked(QModelIndex)),
-            this , SLOT(openFilesG(QModelIndex)));
+            this , SLOT(openFileFromTree(QModelIndex)));
 
     splitter = new QSplitter(this);
     layout = new QVBoxLayout(this);
@@ -53,13 +53,13 @@ void GameFiles::setModPlace(QString placeMod)
     favouritesModel->setRootPath(placeMod);
 }
 //NOW ONLY FOR TXT
-void GameFiles::openFilesG(const QModelIndex& index)
+void GameFiles::openFileFromTree(const QModelIndex& index)
 {
-    QString openFile = fileModel->filePath(index);
+    QString clickedFile = fileModel->filePath(index);
     if (fileModel->isDir(index))//////
         return;
     quint32 findExtension;
-    if ((findExtension = openFile.lastIndexOf('.')) == -1)
+    if ((findExtension = clickedFile.lastIndexOf('.')) == -1)
         return;
     /*
     else if (openFile.right(openFile.size() - findExtension) == ".txt")
@@ -68,5 +68,5 @@ void GameFiles::openFilesG(const QModelIndex& index)
         return;
     }
     */
-    static_cast<MainWindow*>(parent()->parent())->mainEditor->openFiles(openFile);
+    static_cast<MainWindow*>(parent()->parent())->mainEditor->openFile(clickedFile);
 }

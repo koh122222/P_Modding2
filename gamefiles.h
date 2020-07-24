@@ -32,7 +32,7 @@ public:
 signals:
 
 public slots:
-    void openFilesG(const QModelIndex& index);
+    void openFileFromTree(const QModelIndex& index);
 
 
 };

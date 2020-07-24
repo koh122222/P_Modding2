@@ -58,6 +58,7 @@ WritePlaceDialog::WritePlaceDialog(QWidget* parent)
 
     connect(placeGameButton, SIGNAL(clicked()), this, SLOT(selectGamePlace()));
     connect(placeModButton, SIGNAL(clicked()), this, SLOT(selectModPlace()));
+    connect(acceptButton, SIGNAL(clicked()), this, SLOT(accept()));
 
 
 

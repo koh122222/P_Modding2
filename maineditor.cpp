@@ -1,14 +1,14 @@
 #include "maineditor.h"
-#include "QTextStream"
-#include "QMessageBox"
+#include <QTextStream>
+#include <QMessageBox>
 #include <QDebug>
+#include <QString>
+
 MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
 {
     fileEditor = new QTabWidget(this);
     fileEditor->setTabsClosable(true);
-    fileEditor->addTab(new CodeEditor, "default");
-    fileEditor->addTab(new CodeEditor, "default22222222222222222222222222222222222222222222222222222222222222222222222222");
-    fileEditor->addTab(new CodeEditor, "default");
+    //fileEditor->addTab(new CodeEditor, "default");
 
 
 
@@ -22,16 +22,45 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
     fileEditor->setFont(fontEditor);
     QFontMetrics metrics(fontEditor);
     fileEditor->setTabStopDistance(metrics.horizontalAdvance("    "));
-
-
-    fileEditor->setPlainText("1234567");
 */
 
 
 }
 
-void MainEditor::openFiles(QString &path)
+void MainEditor::openFile(QString &path)
 {
+    auto c = allOpenFile.find(path);
+    if (c != allOpenFile.end()) //if the tab exists
+    {
+        fileEditor->setCurrentWidget(c->second);
+    }
+    else //create new Tab
+    {
+        CodeEditor* newCodeEditor = new CodeEditor;
+        QFile file(path);
+
+        if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
+            QMessageBox::warning(this, "Warning", "Cannot open file: " + file.errorString());
+            return;
+        }
+        QTextStream in(&file);
+        QString text = in.readAll();
+        newCodeEditor->setPlainText(text);
+        file.close();
+        allOpenFile.insert(AllOpenFile::value_type(path, newCodeEditor));
+        fileEditor->addTab(newCodeEditor,
+                           path.mid(path.lastIndexOf("/") + 1));
+
+
+    }
+
+
+
+            /*for_each(,[path](CodeEditor* element) -> bool
+    {
+        return true;
+
+    });*/
     /*
     QFile file(path);
 

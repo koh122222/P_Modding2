@@ -6,24 +6,35 @@
 #include <QVBoxLayout>
 #include <QFile>
 #include <QTabWidget>
+#include <QPushButton>
 #include <unordered_map>
+#include "tabeditor.h"
 #include "codeeditor.h"
+
+class NewFileButton;
 
 using AllOpenFile = std::unordered_map<QString, CodeEditor*>;
 
 class MainEditor : public QWidget
 {
     Q_OBJECT
-    QTabWidget *fileEditor;
+    TabEditor *fileEditor;
+    NewFileButton *createFileModButton;
     AllOpenFile allOpenFile;
     QVBoxLayout *layout;
     QFont *nowFont;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
+    enum FileSystem
+    {
+        GAME_FILE,
+        MOD_FILE
+    };
 
-    void openFile(QString &path);
-
+    void openTextFile(QString &path, FileSystem fileSystem);
     void setFont(QFont* newFont);
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 signals:
 

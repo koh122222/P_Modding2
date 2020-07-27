@@ -14,7 +14,6 @@
 #include <modifView.h>
 
 
-
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -37,7 +36,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    QString get_placeGame();
+    QString getPlaceGame();
+    QString getPlaceMod();
 
 
 

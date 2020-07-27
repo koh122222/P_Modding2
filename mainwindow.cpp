@@ -91,9 +91,13 @@ MainWindow::~MainWindow()
 {
 }
 
-QString MainWindow::get_placeGame()
+QString MainWindow::getPlaceGame()
 {
     return placeGame->absolutePath();
 }
 
+QString MainWindow::getPlaceMod()
+{
+    return placeMod->absolutePath();
+}
 

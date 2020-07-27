@@ -22,8 +22,10 @@ SOURCES += \
     maineditor.cpp \
     mainwindow.cpp \
     modifView.cpp \
+    newfilebutton.cpp \
     onlyfilesystemmodel.cpp \
     primparseryaml.cpp \
+    tabeditor.cpp \
     writeplacedialog.cpp
 
 HEADERS += \
@@ -32,11 +34,16 @@ HEADERS += \
     maineditor.h \
     mainwindow.h \
     modifView.h \
+    newfilebutton.h \
     onlyfilesystemmodel.h \
     primparseryaml.h \
+    tabeditor.h \
     writeplacedialog.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

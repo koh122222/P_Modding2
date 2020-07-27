@@ -10,6 +10,7 @@
 #include <QModelIndex>
 #include <QMainWindow>
 #include <onlyfilesystemmodel.h>
+#include "maineditor.h"
 
 class GameFiles : public QWidget
 {
@@ -29,10 +30,14 @@ public:
     void setGamePlace(QString placeGame);
     void setModPlace(QString placeMod);
 
+    void openFileFromTree(const QModelIndex& index, MainEditor::FileSystem fileSystem);
+
 signals:
 
 public slots:
-    void openFileFromTree(const QModelIndex& index);
+    void openFileFromTreeGame(const QModelIndex& index);
+    void openFileFromTreeMod(const QModelIndex& index);
+
 
 
 };

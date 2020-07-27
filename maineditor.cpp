@@ -3,20 +3,26 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QString>
+#include <QFileInfo>
+#include "gamefiles.h"
+#include "newfilebutton.h"
 
 MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
 {
-    fileEditor = new QTabWidget(this);
+    fileEditor = new TabEditor(this);
     fileEditor->setTabsClosable(true);
     connect(fileEditor, SIGNAL(tabCloseRequested(int)), this, SLOT(closeFile(qint32)));
-    //fileEditor->addTab(new CodeEditor, "default");
-
-
+    nowFont = new QFont("Courier", 12);
+    createFileModButton = new NewFileButton("lol", this);
+    createFileModButton->setGeometry(400, 400, 100, 100);
 
     layout = new QVBoxLayout(this);
     layout->addWidget(fileEditor);
     layout->setContentsMargins(0,0,0,0);
     layout->setMargin(0);
+
+
+
 
     /*
     fileEditor = new CodeEditor(this);
@@ -29,14 +35,12 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
 
 }
 
-void MainEditor::openFile(QString &path)
+void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
 {
-    qDebug() << path;
     auto c = allOpenFile.find(path);
     if (c != allOpenFile.end()) //if the tab exists
     {
         fileEditor->setCurrentWidget(c->second);
-        qDebug() << "WTF";
     }
     else //create new Tab
     {
@@ -51,9 +55,23 @@ void MainEditor::openFile(QString &path)
         QString text = in.readAll();
         newCodeEditor->setPlainText(text);
         file.close();
+        newCodeEditor->setFont(*nowFont);
+        QFontMetrics metrics(*nowFont);
+        newCodeEditor->setTabStopDistance(metrics.horizontalAdvance("    "));
         allOpenFile.insert(AllOpenFile::value_type(path, newCodeEditor));
-        fileEditor->addTab(newCodeEditor,
-                           path.mid(path.lastIndexOf("/") + 1));
+
+        if (fileSystem == MainEditor::GAME_FILE)
+        {
+            QIcon gameIcon("://resources//gameIcon//eu4_icon.jpg");
+            fileEditor->addTab(newCodeEditor, gameIcon,
+                               path.mid(path.lastIndexOf("/") + 1));
+        }
+        else if (fileSystem == MainEditor::MOD_FILE)
+        {
+            QIcon modIcon("://resources//gameIcon//eu4_modIcon.png");
+            fileEditor->addTab(newCodeEditor, modIcon,
+                               path.mid(path.lastIndexOf("/") + 1));
+        }
 
 
     }
@@ -63,6 +81,13 @@ void MainEditor::setFont(QFont* newFont)
 {
     for (auto editItem : allOpenFile)
         editItem.second->setFont(*newFont);
+}
+
+void MainEditor::resizeEvent(QResizeEvent *event)
+{
+    //QWidget::resizeEvent(event); //why not need? okey
+    if (createFileModButton != nullptr)
+        createFileModButton->resizeGeometryEvent();
 }
 
 void MainEditor::closeFile(qint32 index)

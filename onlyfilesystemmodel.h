@@ -4,6 +4,7 @@
 #include <QString>
 class onlyFileSystemModel : public QFileSystemModel
 {
+    Q_OBJECT
     QString firstName = "Folder";
 public:
     onlyFileSystemModel(QObject *parent = nullptr);

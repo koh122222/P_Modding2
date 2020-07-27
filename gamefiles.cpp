@@ -16,6 +16,8 @@ GameFiles::GameFiles(QWidget *parent)
     mainTree->hideColumn(1);
     mainTree->hideColumn(2);
     mainTree->hideColumn(3);
+    connect(mainTree, SIGNAL(doubleClicked(QModelIndex)),
+            this , SLOT(openFileFromTreeGame(QModelIndex)));
 
     favouritesModel = new onlyFileSystemModel(this);
     favouritesModel->setFirstName("File Mod");
@@ -24,8 +26,9 @@ GameFiles::GameFiles(QWidget *parent)
     favouritesTree->hideColumn(1);
     favouritesTree->hideColumn(2);
     favouritesTree->hideColumn(3);
-    connect(mainTree, SIGNAL(doubleClicked(QModelIndex)),
-            this , SLOT(openFileFromTree(QModelIndex)));
+    connect(favouritesTree, SIGNAL(doubleClicked(QModelIndex)),
+            this , SLOT(openFileFromTreeMod(QModelIndex)));
+
 
     splitter = new QSplitter(this);
     layout = new QVBoxLayout(this);
@@ -52,8 +55,17 @@ void GameFiles::setModPlace(QString placeMod)
     favouritesTree->setRootIndex(index);
     favouritesModel->setRootPath(placeMod);
 }
+
+void GameFiles::openFileFromTreeGame(const QModelIndex& index)
+{
+    openFileFromTree(index, MainEditor::GAME_FILE);
+}
+void GameFiles::openFileFromTreeMod(const QModelIndex& index)
+{
+    openFileFromTree(index, MainEditor::MOD_FILE);
+}
 //NOW ONLY FOR TXT
-void GameFiles::openFileFromTree(const QModelIndex& index)
+void GameFiles::openFileFromTree(const QModelIndex& index, MainEditor::FileSystem fileSystem)
 {
     QString clickedFile = fileModel->filePath(index);
     if (fileModel->isDir(index))//////
@@ -61,12 +73,12 @@ void GameFiles::openFileFromTree(const QModelIndex& index)
     quint32 findExtension;
     if ((findExtension = clickedFile.lastIndexOf('.')) == -1)
         return;
-    /*
-    else if (openFile.right(openFile.size() - findExtension) == ".txt")
+    QStringRef fileExtension = clickedFile.rightRef(clickedFile.size() - findExtension);
+    if (fileExtension == ".txt" || fileExtension == ".yml")
     {
-        qDebug() << openFile.right(openFile.size() - findExtension);
-        return;
+
+        qDebug() << clickedFile.right(clickedFile.size() - findExtension);
+        static_cast<MainWindow*>(parent()->parent())->mainEditor->openTextFile(clickedFile, fileSystem);
     }
-    */
-    static_cast<MainWindow*>(parent()->parent())->mainEditor->openFile(clickedFile);
+
 }

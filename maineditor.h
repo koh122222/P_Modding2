@@ -17,14 +17,18 @@ class MainEditor : public QWidget
     QTabWidget *fileEditor;
     AllOpenFile allOpenFile;
     QVBoxLayout *layout;
+    QFont *nowFont;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
 
     void openFile(QString &path);
 
+    void setFont(QFont* newFont);
+
 signals:
 
 public slots:
+    void closeFile(qint32 index);
 
 };
 

@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     codeeditor.cpp \
+    createcopynewfile.cpp \
     gamefiles.cpp \
     main.cpp \
     maineditor.cpp \
@@ -30,6 +31,7 @@ SOURCES += \
 
 HEADERS += \
     codeeditor.h \
+    createcopynewfile.h \
     gamefiles.h \
     maineditor.h \
     mainwindow.h \

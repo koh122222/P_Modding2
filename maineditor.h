@@ -40,6 +40,7 @@ signals:
 
 public slots:
     void closeFile(qint32 index);
+    void createFileMod();
 
 };
 

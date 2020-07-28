@@ -10,5 +10,5 @@ NewFileButton::NewFileButton(QString name,QWidget *parent)
 void NewFileButton::resizeGeometryEvent()
 {
     QRect cr = static_cast<MainEditor*>(parent())->contentsRect();
-    setGeometry(QRect(cr.right() - 150, cr.top() + 26, 130, 30));
+    setGeometry(QRect(cr.right() - 150, cr.top() + 35, 120, 30));
 }

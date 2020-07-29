@@ -4,9 +4,13 @@
 #include <QDebug>
 #include <QString>
 #include <QFileInfo>
-#include <mainwindow.h>
+#include <QRegExp>
+#include <QMessageBox>
+#include <QDialog>
+#include "mainwindow.h"
 #include "gamefiles.h"
 #include "newfilebutton.h"
+
 
 MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
 {
@@ -14,15 +18,16 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
     fileEditor->setTabsClosable(true);
     connect(fileEditor, SIGNAL(tabCloseRequested(int)), this, SLOT(closeFile(qint32)));
     nowFont = new QFont("Courier", 12);
-    createFileModButton = new NewFileButton("lol", this);
-    createFileModButton->setGeometry(400, 400, 100, 100);
-    createFileModButton->setStyleSheet("background-color: rgba(0, 0, 0, 90)"); //TODO
+    createFileModButton = new NewFileButton("create such a file in the mod directory", this); //todo
+    createFileModButton->setStyleSheet("background-color: rgba(57, 69, 8, 200)");
     connect(createFileModButton, SIGNAL(clicked()), this, SLOT(createFileMod()));
 
     layout = new QVBoxLayout(this);
     layout->addWidget(fileEditor);
     layout->setContentsMargins(0,0,0,0);
     layout->setMargin(0);
+
+    createCopyNewFileDialog = new CreateCopyNewFileDialog(this);
 
 
 
@@ -75,6 +80,7 @@ void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
             fileEditor->addTab(newCodeEditor, modIcon,
                                path.mid(path.lastIndexOf("/") + 1));
         }
+        fileEditor->setCurrentWidget(newCodeEditor);
 
 
     }
@@ -106,31 +112,61 @@ void MainEditor::closeFile(qint32 index)
 
 void MainEditor::createFileMod()
 {
-    //1.0
     CodeEditor* nowEditor = static_cast<CodeEditor*>(fileEditor->currentWidget());
+    if (nowEditor == nullptr)
+        return;
     auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
                      [nowEditor] (std::pair<QString, CodeEditor*> el)
         { return el.second == nowEditor; });
+    QString shortFileName = fileEditor->tabText(fileEditor->currentIndex());
     QString dirFileOfTheGame = needIt->first;
+    dirFileOfTheGame = dirFileOfTheGame.mid(0, needIt->first.lastIndexOf(shortFileName));
+
     QStringRef relativeDirFile = dirFileOfTheGame.midRef(
                 static_cast<MainWindow*>(parent()->parent())->getPlaceGame().size());
     QString dirFileOfTheMod =
-            static_cast<MainWindow*>(parent()->parent())->getPlaceMod() + relativeDirFile;
+            static_cast<MainWindow*>(parent()->parent())->getPlaceMod() +
+            relativeDirFile;
 
-    QString shortFileName = fileEditor->tabText(fileEditor->currentIndex());
+
     qDebug() << dirFileOfTheGame;
     qDebug() << relativeDirFile;
     qDebug() << dirFileOfTheMod;
     qDebug() << shortFileName;
 
-    if (shortFileName.midRef(0, 3) == "00_") //2.x
+    if (!(QRegExp("\\d*").exactMatch(shortFileName.mid(0, 2)))) //if first two symbol don't have numbers (not include file)
     {
+        qDebug() << "open not include file";
+        QFileInfo gameFile(dirFileOfTheMod + shortFileName);
+        qDebug() << gameFile;
+        if(gameFile.exists() && gameFile.isFile()) //if the file exists
+        {
+            qDebug() << "f";
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "",
+                                            tr("The file already exists. Want to open it?"),
+                                            QMessageBox::Yes | QMessageBox::No);
+            if (reply == QMessageBox::Yes)//if need open mod file
+            {
+                QString stringModFile(dirFileOfTheMod + shortFileName);
+                openTextFile(stringModFile, FileSystem::MOD_FILE);
+            }
+            return;
+        }
+        else
+        {
+            QDir().mkpath(dirFileOfTheMod);
+            QFile nowFile(dirFileOfTheMod + shortFileName);
+            nowFile.open(QIODevice::WriteOnly  |  QIODevice::Text);
+            QTextStream writer(&nowFile);
+            writer << nowEditor->toPlainText().toUtf8();
+            nowFile.close();
+        }
+    }
+    else //if first two symbol HAVE numbers (include file)
+    {
+        createCopyNewFileDialog->open();
 
-        qDebug() << "sp00";
     }
 
-    QFileInfo gameFile(dirFileOfTheGame);
-
-    if(gameFile.exists() && gameFile.isFile())
-        qDebug() << true;
 }

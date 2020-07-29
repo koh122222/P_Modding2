@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include "tabeditor.h"
 #include "codeeditor.h"
+#include "createcopynewfiledialog.h"
 
 class NewFileButton;
 
@@ -23,6 +24,8 @@ class MainEditor : public QWidget
     AllOpenFile allOpenFile;
     QVBoxLayout *layout;
     QFont *nowFont;
+
+    CreateCopyNewFileDialog* createCopyNewFileDialog;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
     enum FileSystem

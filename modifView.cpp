@@ -1,9 +1,33 @@
 #include "modifView.h"
 #include "primparseryaml.h"
-
+#include "mainwindow.h"
+#include <QDebug>
 ModifView::ModifView(QWidget *parent) : QWidget(parent)
 {
-    //reedFile()
+    testEditor = new QTextEdit(this);
+    layout = new QGridLayout(this);
+    layout->setContentsMargins(0,0,0,0);
+    layout->addWidget(testEditor);
+}
+
+void ModifView::localOpener()
+{
+    //qDebug()<<"1";
+    QString filePlace = static_cast<MainWindow*>(parent()->parent())->getPlaceGame();
+    filePlace+="/localisation";
+
+    localMap * tagLocal = new localMap;
+    //qDebug()<<filePlace;
+    YAML::reedFile(filePlace+"/countries_l_english.yml",*tagLocal);
+    //QString text;
+
+    for (auto it = tagLocal->begin();it !=tagLocal->end();++it)
+    {
+        it->first;
+        it->second;
+    }
+    //qDebug()<<"end";
+    //testEditor->setText(text);
 }
 
 bool ModifView::messagePoint (QString localizedText)

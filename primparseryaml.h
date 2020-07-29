@@ -3,11 +3,11 @@
 #include <QFile>
 #include <unordered_map>
 
-using twoMap = std::unordered_map<QString, QString>;
+using localMap = std::unordered_map<QString, QString>;
 
 namespace YAML
 {
-    void reedFile(QFile* file, twoMap& strMap);
+    void reedFile(QString adress, localMap& strMap);
 }
 
 #endif // PRIMPARSERYAML_H

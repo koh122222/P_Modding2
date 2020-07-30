@@ -11,7 +11,7 @@ void YAML::reedFile(QString adress, localMap& strMap)
     while (!in.atEnd())
     {
         QString line = in.readLine();
-        qDebug()<<line;
+        //qDebug()<<line;
         if (line.size() == 0)
             continue;
         qint32 startStr = line.indexOf("\"");

@@ -25,6 +25,7 @@ class MainEditor : public QWidget
     QVBoxLayout *layout;
     QFont *nowFont;
 
+
     CreateCopyNewFileDialog* createCopyNewFileDialog;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
@@ -43,7 +44,9 @@ signals:
 
 public slots:
     void closeFile(qint32 index);
+    void changeTab(qint32 index);
     void createFileMod();
+    void createIncludeFileMod();
 
 };
 

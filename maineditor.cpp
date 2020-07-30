@@ -17,9 +17,11 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
     fileEditor = new TabEditor(this);
     fileEditor->setTabsClosable(true);
     connect(fileEditor, SIGNAL(tabCloseRequested(int)), this, SLOT(closeFile(qint32)));
+    connect(fileEditor, SIGNAL(currentChanged(int)), this, SLOT(changeTab(qint32)));
     nowFont = new QFont("Courier", 12);
     createFileModButton = new NewFileButton("create such a file in the mod directory", this); //todo
     createFileModButton->setStyleSheet("background-color: rgba(57, 69, 8, 200)");
+    createFileModButton->setVisible(false);
     connect(createFileModButton, SIGNAL(clicked()), this, SLOT(createFileMod()));
 
     layout = new QVBoxLayout(this);
@@ -28,6 +30,8 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
     layout->setMargin(0);
 
     createCopyNewFileDialog = new CreateCopyNewFileDialog(this);
+
+    connect(createCopyNewFileDialog, SIGNAL(accepted()), this, SLOT(createIncludeFileMod()));
 
 
 
@@ -110,6 +114,23 @@ void MainEditor::closeFile(qint32 index)
     delete deleteEditor; //this doesn't work completely ((
 }
 
+void MainEditor::changeTab(qint32 index)
+{
+    CodeEditor* newNowEditor = static_cast<CodeEditor*>(fileEditor->widget(index));
+    auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
+                     [newNowEditor] (std::pair<QString, CodeEditor*> el)
+        { return el.second == newNowEditor; });
+    QString dirGame = static_cast<MainWindow*>(parent()->parent())->getPlaceGame();
+    if (dirGame == needIt->first.mid(0, dirGame.size()))
+    {
+        createFileModButton->setVisible(true);
+    }
+    else
+    {
+        createFileModButton->setVisible(false);
+    }
+}
+
 void MainEditor::createFileMod()
 {
     CodeEditor* nowEditor = static_cast<CodeEditor*>(fileEditor->currentWidget());
@@ -161,12 +182,49 @@ void MainEditor::createFileMod()
             QTextStream writer(&nowFile);
             writer << nowEditor->toPlainText().toUtf8();
             nowFile.close();
+            QString newNowFile = dirFileOfTheMod + shortFileName;
+            openTextFile(newNowFile, FileSystem::MOD_FILE);
         }
     }
     else //if first two symbol HAVE numbers (include file)
     {
+        createCopyNewFileDialog->setCreateFileInfo("Creating a new file to include");
+        createCopyNewFileDialog->setNowFileInfo("TODO");
+        createCopyNewFileDialog->setNameFile(dirFileOfTheMod + shortFileName);
         createCopyNewFileDialog->open();
-
     }
+
+}
+
+void MainEditor::createIncludeFileMod()
+{
+    QString fullNameFile = createCopyNewFileDialog->getFullNewName();
+    qDebug() << fullNameFile << "!";
+     QFileInfo gameFile(fullNameFile);
+     if (gameFile.exists() && gameFile.isFile())
+     {
+         QMessageBox::StandardButton reply;
+         reply = QMessageBox::question(this, "",
+                                         tr("The file already exists. Want to open it?"),
+                                         QMessageBox::Yes | QMessageBox::No);
+         if (reply == QMessageBox::Yes)//if need open mod file
+         {
+             QString stringModFile(fullNameFile);
+             openTextFile(stringModFile, FileSystem::MOD_FILE);
+         }
+         return;
+     }
+     else
+     {
+         QDir().mkpath(fullNameFile.mid(0, fullNameFile.lastIndexOf("/")));
+         QFile nowFile(fullNameFile);
+         nowFile.open(QIODevice::WriteOnly  |  QIODevice::Text);
+         QTextStream writer(&nowFile);
+         nowFile.close();
+         openTextFile(fullNameFile, FileSystem::MOD_FILE); ////////
+     }
+
+
+
 
 }

@@ -4,6 +4,8 @@
 #include <QDir>
 #include <QCoreApplication>
 #include <QFileInfo>
+#include <QMenuBar>
+
 std::unordered_map<QString, QString> MainWindow::allGameBase
 {
     {"Europa Universalis IV", "eu4.exe"}
@@ -31,6 +33,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     placeGame = new QDir("");
     placeMod = new QDir("");
+
+    menuBar()->addMenu(tr("&File"));
 
     dirFinder = new WritePlaceDialog(this);
     show();

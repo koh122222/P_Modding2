@@ -29,6 +29,8 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
     layout->setContentsMargins(0,0,0,0);
     layout->setMargin(0);
 
+
+
     createCopyNewFileDialog = new CreateCopyNewFileDialog(this);
 
     connect(createCopyNewFileDialog, SIGNAL(accepted()), this, SLOT(createIncludeFileMod()));
@@ -99,7 +101,8 @@ void MainEditor::setFont(QFont* newFont)
 void MainEditor::resizeEvent(QResizeEvent *event)
 {
     //QWidget::resizeEvent(event); //why not need? okey
-    if (createFileModButton != nullptr)
+    qDebug() << "ops";
+    if (createFileModButton != nullptr && (fileEditor->currentIndex() == -1));
         createFileModButton->resizeGeometryEvent();
 }
 
@@ -116,6 +119,11 @@ void MainEditor::closeFile(qint32 index)
 
 void MainEditor::changeTab(qint32 index)
 {
+    if (index == -1)
+    {
+        createFileModButton->setVisible(false);
+        return;
+    }
     CodeEditor* newNowEditor = static_cast<CodeEditor*>(fileEditor->widget(index));
     auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
                      [newNowEditor] (std::pair<QString, CodeEditor*> el)
@@ -190,7 +198,7 @@ void MainEditor::createFileMod()
     {
         createCopyNewFileDialog->setCreateFileInfo("Creating a new file to include");
         createCopyNewFileDialog->setNowFileInfo("TODO");
-        createCopyNewFileDialog->setNameFile(dirFileOfTheMod + shortFileName);
+        createCopyNewFileDialog->setNameFile(dirFileOfTheMod + shortFileName, true);
         createCopyNewFileDialog->open();
     }
 

@@ -2,5 +2,6 @@
     <qresource prefix="/resources">
         <file>gameIcon/eu4_icon.jpg</file>
         <file>gameIcon/eu4_modIcon.png</file>
+        <file>toolIcon/icon_save.png</file>
     </qresource>
 </RCC>

@@ -78,7 +78,7 @@ void GameFiles::openFileFromTree(const QModelIndex& index, MainEditor::FileSyste
     {
 
         qDebug() << clickedFile.right(clickedFile.size() - findExtension);
-        static_cast<MainWindow*>(parent()->parent())->mainEditor->openTextFile(clickedFile, fileSystem);
+        static_cast<MainWindow*>(parent()->parent()->parent())->mainEditor->openTextFile(clickedFile, fileSystem);
     }
 
 }

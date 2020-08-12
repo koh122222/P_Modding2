@@ -8,11 +8,12 @@
 #include <QDir>
 #include <QFile>
 #include <unordered_map>
+#include <QToolBar>
 #include "gamefiles.h"
 #include "maineditor.h"
 #include <writeplacedialog.h>
 #include <modifView.h>
-
+#include "toolbar.h"
 
 class MainWindow : public QMainWindow
 {
@@ -26,6 +27,7 @@ public:
 
     static std::unordered_map<QString, QString>  allGameBase;
 
+    ToolBar* toolBar;
     GameFiles* gameFiles;
     MainEditor* mainEditor;
     ModifView* modifView;

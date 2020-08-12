@@ -27,6 +27,7 @@ SOURCES += \
     onlyfilesystemmodel.cpp \
     primparseryaml.cpp \
     tabeditor.cpp \
+    toolbar.cpp \
     writeplacedialog.cpp
 
 HEADERS += \
@@ -40,6 +41,7 @@ HEADERS += \
     onlyfilesystemmodel.h \
     primparseryaml.h \
     tabeditor.h \
+    toolbar.h \
     writeplacedialog.h
 
 # Default rules for deployment.

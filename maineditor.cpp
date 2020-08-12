@@ -76,7 +76,7 @@ void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
 
         if (fileSystem == MainEditor::GAME_FILE)
         {
-            QIcon gameIcon("://resources//gameIcon//eu4_icon.jpg");
+            QIcon gameIcon("://resources//toolIcon//icon_save.png");
             fileEditor->addTab(newCodeEditor, gameIcon,
                                path.mid(path.lastIndexOf("/") + 1));
         }
@@ -128,7 +128,7 @@ void MainEditor::changeTab(qint32 index)
     auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
                      [newNowEditor] (std::pair<QString, CodeEditor*> el)
         { return el.second == newNowEditor; });
-    QString dirGame = static_cast<MainWindow*>(parent()->parent())->getPlaceGame();
+    QString dirGame = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
     if (dirGame == needIt->first.mid(0, dirGame.size()))
     {
         createFileModButton->setVisible(true);
@@ -152,9 +152,9 @@ void MainEditor::createFileMod()
     dirFileOfTheGame = dirFileOfTheGame.mid(0, needIt->first.lastIndexOf(shortFileName));
 
     QStringRef relativeDirFile = dirFileOfTheGame.midRef(
-                static_cast<MainWindow*>(parent()->parent())->getPlaceGame().size());
+                static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame().size());
     QString dirFileOfTheMod =
-            static_cast<MainWindow*>(parent()->parent())->getPlaceMod() +
+            static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceMod() +
             relativeDirFile;
 
 

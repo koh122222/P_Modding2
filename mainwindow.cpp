@@ -14,19 +14,28 @@ std::unordered_map<QString, QString> MainWindow::allGameBase
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    resize(1024, 720);
-    gameFiles = new GameFiles(this);
-    mainEditor = new MainEditor(this);
-    modifView = new ModifView(this);
-    QSplitter *centralSplitter = new QSplitter(this);
+    QWidget* mainWidget = new QWidget(this);
+    setCentralWidget(mainWidget);
+    QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
+
+    gameFiles = new GameFiles(mainWidget);
+    mainEditor = new MainEditor(mainWidget);
+    modifView = new ModifView(mainWidget);
+    QSplitter *centralSplitter = new QSplitter(mainWidget);
     centralSplitter->setHandleWidth(0);
-    setCentralWidget(centralSplitter);
     centralSplitter->addWidget(gameFiles);
     centralSplitter->addWidget(mainEditor);
     centralSplitter->addWidget(modifView);
     centralSplitter->setStretchFactor(0, 20);
     centralSplitter->setStretchFactor(1, 80);
     centralSplitter->setStretchFactor(2, 30);
+
+    toolBar = new ToolBar(mainWidget);
+    mainLayout->addWidget(toolBar);
+    mainLayout->addWidget(centralSplitter);
+    mainLayout->setContentsMargins(0,0,0,0);
+
+    resize(1024, 720);
 
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");
@@ -44,11 +53,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::returnFiles()
 {
+    qDebug() << "returns places mod and game from the dialog";
     placeGame->cd(dirFinder->getNowPlaceGame());
     placeMod->cd(dirFinder->getNowPlaceMod());
     if (!(placeGame->cd(dirFinder->getNowPlaceGame()) && (placeGame->path() != ".") &&
             placeMod->cd(dirFinder->getNowPlaceMod()) && (placeMod->path() != ".")))
     {
+        qDebug() << "problems with dir";
         dirFinder->setLiteInfProgram("Dir problem");
         dirFinder->open();
         return;
@@ -70,20 +81,25 @@ void MainWindow::returnFiles()
             return;
         }
         //if all normal
+        qDebug() << "start writing dir mod and game";
         QFile writePlaceGame(dirProgram->absolutePath() + "//ProgramFiles//placeGame.txt");
         writePlaceGame.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceGame(&writePlaceGame);
         writerPlaceGame << placeGame->absolutePath();
         writePlaceGame.close();
+        qDebug() << "1";
         QFile writePlaceMod(dirProgram->absolutePath() + "//ProgramFiles//placeMod.txt");
         writePlaceMod.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceMod(&writePlaceMod);
         writerPlaceMod << placeMod->absolutePath();
         writePlaceMod.close();
+        qDebug() << "2";
         gameFiles->setGamePlace(placeGame->absolutePath());
         gameFiles->setModPlace(placeMod->absolutePath());
+        qDebug() << "3";
 
         modifView->localOpener();
+        qDebug() << "dialog work";
 
 
     }

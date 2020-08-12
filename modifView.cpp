@@ -1,13 +1,16 @@
 #include "modifView.h"
-#include "primparseryaml.h"
 #include "mainwindow.h"
 #include <QDebug>
 ModifView::ModifView(QWidget *parent) : QWidget(parent)
 {
     testEditor = new QTextEdit(this);
     layout = new QGridLayout(this);
+    allFilter = new QCheckBox("All",this);
     layout->setContentsMargins(0,0,0,0);
-    layout->addWidget(testEditor);
+    layout->addWidget(allFilter,0,0);
+    layout->addWidget(testEditor,1,0);
+
+    connect(allFilter, SIGNAL(stateChanged(int)), this, SLOT(allPrint(int)));
 }
 
 void ModifView::localOpener()
@@ -15,18 +18,11 @@ void ModifView::localOpener()
     QString filePlace = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
     filePlace+="/localisation";
 
-    localMap * tagLocal = new localMap;
-    //qDebug()<<filePlace;
-    YAML::reedFile(filePlace+"/countries_l_english.yml",*tagLocal);
-    //QString text;
+    QVector <QString> files;
 
-    for (auto it = tagLocal->begin();it !=tagLocal->end();++it)
-    {
-        it->first;
-        it->second;
-    }
-    //qDebug()<<"end";
-    //testEditor->setText(text);
+    allMap = new localMap;
+
+    YAML::reedFile(filePlace+"/countries_l_english.yml",*allMap);
 }
 
 bool ModifView::messagePoint (QString localizedText)
@@ -63,4 +59,21 @@ bool ModifView::adj_tagPoint (QString programText)
         if (programText.mid(3,4) == "_ADJ")
             return true;
     return false;
+}
+
+void ModifView::allPrint(int a)
+{
+    testEditor->setText("");
+    if (a)
+    {
+        QString text ;
+        for (auto it = allMap->begin();it !=allMap->end();++it)
+        {
+            text+=it->first;
+            text+=" | ";
+            text+=it->second;
+            text+="\n";
+        }
+        testEditor->setText(text);
+    }
 }

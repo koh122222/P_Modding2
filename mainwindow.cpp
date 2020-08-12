@@ -31,8 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     centralSplitter->setStretchFactor(2, 30);
 
     toolBar = new ToolBar(mainWidget);
-    mainLayout->addWidget(toolBar);
-    mainLayout->addWidget(centralSplitter);
+    mainLayout->addWidget(toolBar, 0);
+    mainLayout->addWidget(centralSplitter, 1);
     mainLayout->setContentsMargins(0,0,0,0);
 
     resize(1024, 720);
@@ -87,16 +87,13 @@ void MainWindow::returnFiles()
         QTextStream writerPlaceGame(&writePlaceGame);
         writerPlaceGame << placeGame->absolutePath();
         writePlaceGame.close();
-        qDebug() << "1";
         QFile writePlaceMod(dirProgram->absolutePath() + "//ProgramFiles//placeMod.txt");
         writePlaceMod.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceMod(&writePlaceMod);
         writerPlaceMod << placeMod->absolutePath();
         writePlaceMod.close();
-        qDebug() << "2";
         gameFiles->setGamePlace(placeGame->absolutePath());
         gameFiles->setModPlace(placeMod->absolutePath());
-        qDebug() << "3";
 
         modifView->localOpener();
         qDebug() << "dialog work";

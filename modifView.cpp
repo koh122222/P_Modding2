@@ -12,9 +12,7 @@ ModifView::ModifView(QWidget *parent) : QWidget(parent)
 
 void ModifView::localOpener()
 {
-    qDebug()<<"1";
     QString filePlace = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
-    qDebug() << "2";
     filePlace+="/localisation";
 
     localMap * tagLocal = new localMap;

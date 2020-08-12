@@ -3,5 +3,18 @@
         <file>gameIcon/eu4_icon.jpg</file>
         <file>gameIcon/eu4_modIcon.png</file>
         <file>toolIcon/icon_save.png</file>
+        <file>toolIcon/icon_backText.png</file>
+        <file>toolIcon/icon_closeAllFile.png</file>
+        <file>toolIcon/icon_closeFile.png</file>
+        <file>toolIcon/icon_copyText.png</file>
+        <file>toolIcon/icon_findText.png</file>
+        <file>toolIcon/icon_forwardText.png</file>
+        <file>toolIcon/icon_increaseText.png</file>
+        <file>toolIcon/icon_openFile.png</file>
+        <file>toolIcon/icon_pasteText.png</file>
+        <file>toolIcon/icon_reduceText.png</file>
+        <file>toolIcon/icon_replaceWord.png</file>
+        <file>toolIcon/icon_saveAllFile.png</file>
+        <file>toolIcon/icon_cutText.png</file>
     </qresource>
 </RCC>

@@ -76,7 +76,7 @@ void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
 
         if (fileSystem == MainEditor::GAME_FILE)
         {
-            QIcon gameIcon("://resources//toolIcon//icon_save.png");
+            QIcon gameIcon("://resources//gameIcon//eu4_icon.jpg");
             fileEditor->addTab(newCodeEditor, gameIcon,
                                path.mid(path.lastIndexOf("/") + 1));
         }
@@ -101,7 +101,6 @@ void MainEditor::setFont(QFont* newFont)
 void MainEditor::resizeEvent(QResizeEvent *event)
 {
     //QWidget::resizeEvent(event); //why not need? okey
-    qDebug() << "ops";
     if (createFileModButton != nullptr && (fileEditor->currentIndex() == -1));
         createFileModButton->resizeGeometryEvent();
 }

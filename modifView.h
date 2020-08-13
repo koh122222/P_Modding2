@@ -13,8 +13,16 @@ class ModifView : public QWidget
     QTextEdit* testEditor;
 
     QCheckBox* allFilter;
+    QCheckBox* textFilter;
+    QCheckBox* tagFilter;
+    QCheckBox* testFilter;
+
+    QString currentText;
 public:
     localMap* allMap;
+    localMap* textMap;
+    localMap* tagMap;
+
     explicit ModifView(QWidget *parent = nullptr);
     bool messagePoint (QString localizetedText);
     bool tagPoint (QString programText);
@@ -22,6 +30,9 @@ public:
     void localOpener();
 public slots:
     void allPrint(int a);
+    void textPrint(int a);
+    void tagPrint(int a);
+    void testPrint(int a);
 signals:
 
 };

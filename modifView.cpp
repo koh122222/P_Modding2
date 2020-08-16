@@ -34,6 +34,7 @@ void ModifView::localOpener()
     allMap = new localMap;
     textMap = new localMap;
     tagMap = new localMap;
+    eventMap = new localMap;
     for (int i = 0; i< names.size();++i)
     {
         if (names[i].right(11)=="english.yml")
@@ -55,8 +56,12 @@ void ModifView::localOpener()
         {
             tagMap->insert(localMap::value_type(TechName,LocalName));
         }
+        if (eventPoint(TechName))
+        {
+            eventMap->insert(localMap::value_type(TechName,LocalName));
+        }
     }
-    qDebug()<<tagMap->size();
+    //qDebug()<<tagMap->size();
 
 
     //YAML::reedFile(filePlace+"/countries_l_english.yml",*allMap);
@@ -95,6 +100,35 @@ bool ModifView::adj_tagPoint (QString programText)
     if (programText.size()==9)
         if (programText.mid(3,4) == "_ADJ")
             return true;
+    return false;
+}
+
+bool ModifView::eventPoint (QString programText)
+{
+    if (programText.size()>=5)
+    {
+        QString right = programText.right (5);
+        if (right.left(2) == "1.")
+            return true;
+        if (right.left(2) == "2.")
+            return true;
+        if (right.left(2) == "3.")
+            return true;
+        if (right.left(2) == "4.")
+            return true;
+        if (right.left(2) == "5.")
+            return true;
+        if (right.left(2) == "6.")
+            return true;
+        if (right.left(2) == "7.")
+            return true;
+        if (right.left(2) == "8.")
+            return true;
+        if (right.left(2) == "9.")
+            return true;
+        if (right.left(2) == "0.")
+            return true;
+    }
     return false;
 }
 
@@ -140,11 +174,11 @@ void ModifView::testPrint(int a)
     if (a)
     {
         QString text ;
-        for (auto it = tagMap->begin();it !=tagMap->end();++it)
+        for (auto it = eventMap->begin();it !=eventMap->end();++it)
         {
             text+=it->first;
             text+=" | ";
-            text+=it->second;
+            //text+=it->second;
             text+="\n";
         }
         testEditor->setText(text);

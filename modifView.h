@@ -22,11 +22,13 @@ public:
     localMap* allMap;
     localMap* textMap;
     localMap* tagMap;
+    localMap* eventMap;
 
     explicit ModifView(QWidget *parent = nullptr);
     bool messagePoint (QString localizetedText);
     bool tagPoint (QString programText);
     bool adj_tagPoint (QString programText);
+    bool eventPoint (QString programText);
     void localOpener();
 public slots:
     void allPrint(int a);

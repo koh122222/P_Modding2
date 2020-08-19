@@ -129,6 +129,20 @@ void MainEditor::saveFile(CodeEditor* saveEditor)
     }
 }
 
+void MainEditor::closeAllFile()
+{
+    for (auto c: allOpenFile)
+        closeFile(c.second);
+}
+void MainEditor::closeFile()
+{
+    closeFile(static_cast<CodeEditor*>(fileEditor->currentWidget()));
+}
+void MainEditor::closeFile(CodeEditor* saveEditor)
+{
+
+}
+
 void MainEditor::resizeEvent(QResizeEvent *event)
 {
     //QWidget::resizeEvent(event); //why not need? okey

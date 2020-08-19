@@ -9,6 +9,7 @@
 #include <QFile>
 #include <unordered_map>
 #include <QToolBar>
+#include <QShortcut>
 #include "gamefiles.h"
 #include "maineditor.h"
 #include <writeplacedialog.h>
@@ -23,6 +24,9 @@ class MainWindow : public QMainWindow
     QDir *dirProgram;
     QDir *placeGame;
     QDir *placeMod;
+
+    QShortcut* key_ctrlS;
+
 public:
 
     static std::unordered_map<QString, QString>  allGameBase;
@@ -34,7 +38,6 @@ public:
 
     WritePlaceDialog* dirFinder;
 
-public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -45,5 +48,9 @@ public:
 
 public slots:
     void returnFiles();
+    void slotPress_ctrlS();
+    void slotPress_ctrlShiftS();
+    void slotPress_ctrlW();
+    void slotPress_ctrlShiftW();
 };
 #endif // MAINWINDOW_H

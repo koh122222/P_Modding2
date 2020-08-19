@@ -87,6 +87,8 @@ QString WritePlaceDialog::getNowGame()
 }
 
 
+
+
 void WritePlaceDialog::selectGamePlace()
 {
     QString inDir =

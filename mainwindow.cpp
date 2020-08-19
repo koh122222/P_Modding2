@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QMenuBar>
 
+
 std::unordered_map<QString, QString> MainWindow::allGameBase
 {
     {"Europa Universalis IV", "eu4.exe"}
@@ -14,6 +15,7 @@ std::unordered_map<QString, QString> MainWindow::allGameBase
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    //create main widgets
     QWidget* mainWidget = new QWidget(this);
     setCentralWidget(mainWidget);
     QVBoxLayout* mainLayout = new QVBoxLayout(mainWidget);
@@ -34,16 +36,23 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->addWidget(toolBar, 0);
     mainLayout->addWidget(centralSplitter, 1);
     mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->setSpacing(0);
+
+    menuBar()->addMenu(tr("&File"));
 
     resize(1024, 720);
 
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");
-
     placeGame = new QDir("");
     placeMod = new QDir("");
 
-    menuBar()->addMenu(tr("&File"));
+    key_ctrlS = new QShortcut(this);
+    key_ctrlS->setKey(Qt::CTRL + Qt::Key_S);
+    connect(key_ctrlS, SIGNAL(activated()), this, SLOT(slotPress_ctrlS()));
+
+
+
 
     dirFinder = new WritePlaceDialog(this);
     show();
@@ -95,7 +104,7 @@ void MainWindow::returnFiles()
         gameFiles->setGamePlace(placeGame->absolutePath());
         gameFiles->setModPlace(placeMod->absolutePath());
 
-        modifView->localOpener();
+        //modifView->localOpener();
         qDebug() << "dialog work";
 
 
@@ -118,3 +127,23 @@ QString MainWindow::getPlaceMod()
     return placeMod->absolutePath();
 }
 
+void MainWindow::slotPress_ctrlS()
+{
+    qDebug() << "ctrl S";
+    mainEditor->saveFile();
+}
+
+void MainWindow::slotPress_ctrlShiftS()
+{
+    qDebug() << "ctrl shift S";
+    mainEditor->saveAllFile();
+}
+
+void MainWindow::slotPress_ctrlW()
+{
+    qDebug() << "ctrl W";
+}
+void MainWindow::slotPress_ctrlShiftW()
+{
+    qDebug() << "ctrl shift W";
+}

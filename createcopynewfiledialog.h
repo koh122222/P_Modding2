@@ -29,6 +29,7 @@ public:
     void clearBoxes();
     QString getFullNewName();
     QString getNewName();
+    bool getReplaceTrue();
 
 private slots:
     void changeNameEdit(int state);

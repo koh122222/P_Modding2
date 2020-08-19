@@ -40,6 +40,9 @@ public:
     void saveAllFile();
     void saveFile();
     void saveFile(CodeEditor* saveEditor);
+    void closeAllFile();
+    void closeFile();
+    void closeFile(CodeEditor* saveEditor);
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

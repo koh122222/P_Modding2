@@ -120,3 +120,8 @@ void CreateCopyNewFileDialog::changeReplaceBox(int state)
     }
 }
 
+bool CreateCopyNewFileDialog::getReplaceTrue()
+{
+    return newNameBox->isChecked();
+}
+

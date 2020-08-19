@@ -1,5 +1,6 @@
 #include "toolbar.h"
-
+#include "mainwindow.h"
+#include <QDebug>
 /*
  * NEW_FILE,
         OPEN_FILE,
@@ -20,11 +21,16 @@
 ToolBar::ToolBar(QWidget* parent)
     :QToolBar(parent)
 {
+    //MainEditor * ptr_mainEditor = static_cast<MainWindow*>()->mainEditor;
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_openFile.png"), "open (?)"));
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_save.png"), "save (Crtl + S)"));
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_saveAllFile.png"), "save all (?)"));
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_closeFile.png"), "close (?)"));
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_closeAllFile.png"), "close all (?)"));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_save.png"), "save (Crtl + S)",
+                               parent->parent(), SLOT(slotPress_ctrlS())));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_saveAllFile.png"), "save all (Crtl + Shift + S)",
+                               parent->parent(), SLOT(slotPress_ctrlShiftS())));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_closeFile.png"), "close (Crtl + W)",
+                               parent->parent(), SLOT(slotPress_ctrlW())));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_closeAllFile.png"), "close all (Crtl + Shift + W)",
+                               parent->parent(), SLOT(slotPress_ctrlShiftW())));
     addSeparator();
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_cutText.png"), "cut (crtl + X)"));
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_copyText.png"), "copy (crtl + C)"));
@@ -39,6 +45,9 @@ ToolBar::ToolBar(QWidget* parent)
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_increaseText.png"), "increase (crtl + mouse wheel forward)"));
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_reduceText.png"), "reduce (crtl + mouse wheel backward)"));
 
+
+
+    //connect(allActionButton[SAVE_FILE], )
     setMaximumHeight(32);
 
 

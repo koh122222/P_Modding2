@@ -142,8 +142,10 @@ void MainWindow::slotPress_ctrlShiftS()
 void MainWindow::slotPress_ctrlW()
 {
     qDebug() << "ctrl W";
+    mainEditor->closeFile();
 }
 void MainWindow::slotPress_ctrlShiftW()
 {
     qDebug() << "ctrl shift W";
+    mainEditor->closeAllFile();
 }

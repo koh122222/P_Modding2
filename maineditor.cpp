@@ -131,16 +131,41 @@ void MainEditor::saveFile(CodeEditor* saveEditor)
 
 void MainEditor::closeAllFile()
 {
-    for (auto c: allOpenFile)
-        closeFile(c.second);
+    while (!allOpenFile.empty())
+    {
+        auto c = allOpenFile.begin();
+        qDebug() << c->first;
+        closeFile(fileEditor->indexOf(c->second));
+    }
 }
 void MainEditor::closeFile()
 {
-    closeFile(static_cast<CodeEditor*>(fileEditor->currentWidget()));
+    closeFile(fileEditor->currentIndex());
 }
+/*
 void MainEditor::closeFile(CodeEditor* saveEditor)
 {
+    //NEED SAVE FILE... EHHHHH
 
+}
+*/
+
+void MainEditor::closeFile(qint32 index)
+{
+    for (auto c : allOpenFile)
+    {
+        qDebug() << "!!!" << c.first;
+    }
+
+    CodeEditor* deleteEditor = static_cast<CodeEditor*>(fileEditor->widget(index));
+    auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
+                     [deleteEditor] (std::pair<QString, CodeEditor*> el)
+        { return el.second == deleteEditor; });
+    qDebug() << needIt->first;
+    allOpenFile.erase(needIt);
+    fileEditor->removeTab(index);
+    delete deleteEditor; //this doesn't work completely ((
+    qDebug() << "really?";
 }
 
 void MainEditor::resizeEvent(QResizeEvent *event)
@@ -148,17 +173,6 @@ void MainEditor::resizeEvent(QResizeEvent *event)
     //QWidget::resizeEvent(event); //why not need? okey
     if (createFileModButton != nullptr && (fileEditor->currentIndex() == -1));
         createFileModButton->resizeGeometryEvent();
-}
-
-void MainEditor::closeFile(qint32 index)
-{
-    CodeEditor* deleteEditor = static_cast<CodeEditor*>(fileEditor->widget(index));
-    auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
-                     [deleteEditor] (std::pair<QString, CodeEditor*> el)
-        { return el.second == deleteEditor; });
-    allOpenFile.erase(needIt);
-    fileEditor->removeTab(index);
-    delete deleteEditor; //this doesn't work completely ((
 }
 
 void MainEditor::changeTab(qint32 index)

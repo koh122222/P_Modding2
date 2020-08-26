@@ -42,7 +42,7 @@ public:
     void saveFile(CodeEditor* saveEditor);
     void closeAllFile();
     void closeFile();
-    void closeFile(CodeEditor* saveEditor);
+    //void closeFile(CodeEditor* saveEditor);
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

@@ -19,8 +19,8 @@ public:
         SAVE_ALL_FILE,
         CLOSE_FILE,
         CLOSE_ALL_FILE, ///////RASDELITEL
-        CUT_TEXT,
         COPY_TEXT,
+        CUT_TEXT,
         PASTE_TEXT,
         BACK_TEXT,
         FORWARD_TEXT,

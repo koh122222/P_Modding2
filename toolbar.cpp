@@ -1,23 +1,7 @@
 #include "toolbar.h"
 #include "mainwindow.h"
 #include <QDebug>
-/*
- * NEW_FILE,
-        OPEN_FILE,
-        SAVE_FILE,
-        SAVE_ALL_FILE,
-        CLOSE_FILE,
-        CLOSE_ALL_FILE, ///////RASDELITEL
-        CUT_TEXT,
-        COPY_TEXT,
-        PASTE_TEXT,
-        BACK_TEXT,
-        FORWARD_TEXT,
-        FIND_TEXT,
-        REPLACE_WORD,
-        INCREASE_TEXT,
-        REDUCE_TEXT
- */
+
 ToolBar::ToolBar(QWidget* parent)
     :QToolBar(parent)
 {
@@ -32,14 +16,20 @@ ToolBar::ToolBar(QWidget* parent)
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_closeAllFile.png"), "close all (Crtl + Shift + W)",
                                parent->parent(), SLOT(slotPress_ctrlShiftW())));
     addSeparator();
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_cutText.png"), "cut (crtl + X)"));
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_copyText.png"), "copy (crtl + C)"));
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_pasteText.png"), "paste (crtl + V)"));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_copyText.png"), "copy (crtl + C)",
+                               parent->parent(), SLOT(slotPress_ctrlC())));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_cutText.png"), "cut (crtl + X)",
+                               parent->parent(), SLOT(slotPress_ctrlX())));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_pasteText.png"), "paste (crtl + V)",
+                               parent->parent(), SLOT(slotPress_ctrlV())));
     addSeparator();
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_backText.png"), "back (crtl + Z)"));
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_forwardText.png"), "forward (crtl + Y)"));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_backText.png"), "back (crtl + Z)",
+                               parent->parent(), SLOT(slotPress_ctrlZ())));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_forwardText.png"), "forward (crtl + Y)",
+                               parent->parent(), SLOT(slotPress_ctrlY())));
     addSeparator();
-    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_findText.png"), "find (crtl + F)"));
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_findText.png"), "find (crtl + F)",
+                               parent->parent(), SLOT(slotPress_ctrlF())));
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_replaceWord.png"), "replace (?)"));
     addSeparator();
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_increaseText.png"), "increase (crtl + mouse wheel forward)"));

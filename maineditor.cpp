@@ -131,11 +131,13 @@ void MainEditor::saveFile(CodeEditor* saveEditor)
 
 void MainEditor::closeAllFile()
 {
-    while (!allOpenFile.empty())
+    for (qint32 i = 0; i < allOpenFile.size(); ++i) // now i really don't like map(
     {
         auto c = allOpenFile.begin();
-        qDebug() << c->first;
-        closeFile(fileEditor->indexOf(c->second));
+        for (qint32 t = 0; t < i; ++t)
+            ++c;
+        if(closeFile(fileEditor->indexOf(c->second)))
+            --i;
     }
 }
 void MainEditor::closeFile()
@@ -150,7 +152,7 @@ void MainEditor::closeFile(CodeEditor* saveEditor)
 }
 */
 
-void MainEditor::closeFile(qint32 index)
+bool MainEditor::closeFile(qint32 index)
 {
     for (auto c : allOpenFile)
     {
@@ -161,11 +163,60 @@ void MainEditor::closeFile(qint32 index)
     auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
                      [deleteEditor] (std::pair<QString, CodeEditor*> el)
         { return el.second == deleteEditor; });
-    qDebug() << needIt->first;
-    allOpenFile.erase(needIt);
-    fileEditor->removeTab(index);
-    delete deleteEditor; //this doesn't work completely ((
-    qDebug() << "really?";
+    fileEditor->setCurrentWidget(deleteEditor);
+
+    QMessageBox::StandardButton reply;
+    if (deleteEditor->document()->isModified())
+    {
+        reply = QMessageBox::question(this, "",
+                                        tr("The file was changed. Save?"),
+                                        QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel);
+    }
+    else
+        reply = QMessageBox::No;
+    if (reply == QMessageBox::Yes || reply == QMessageBox::No)//if close
+    {
+        if (reply == QMessageBox::Yes)
+        {
+            saveFile(deleteEditor);
+        }
+        qDebug() << "delete: " << needIt->first;
+        allOpenFile.erase(needIt);
+        fileEditor->removeTab(index);
+        delete deleteEditor; //this doesn't work completely ((
+
+        qDebug() << "close";
+        return true;
+    }
+    else
+        return false;//else - cancel
+
+
+}
+
+void MainEditor::copyText()
+{
+    static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
+}
+void MainEditor::cutText()
+{
+    static_cast<CodeEditor*>(fileEditor->currentWidget())->cut();
+}
+void MainEditor::pasteText()
+{
+    static_cast<CodeEditor*>(fileEditor->currentWidget())->paste();
+}
+void MainEditor::backText()
+{
+    static_cast<CodeEditor*>(fileEditor->currentWidget())->undo();
+}
+void MainEditor::forwardText()
+{
+    static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
+}
+void MainEditor::findText()
+{
+
 }
 
 void MainEditor::resizeEvent(QResizeEvent *event)

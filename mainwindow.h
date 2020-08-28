@@ -52,5 +52,13 @@ public slots:
     void slotPress_ctrlShiftS();
     void slotPress_ctrlW();
     void slotPress_ctrlShiftW();
+
+    void slotPress_ctrlC(); // there is no direct keyboard binding
+    void slotPress_ctrlX(); // there is no direct keyboard binding
+    void slotPress_ctrlV(); // there is no direct keyboard binding
+    void slotPress_ctrlZ(); // there is no direct keyboard binding
+    void slotPress_ctrlY(); // there is no direct keyboard binding
+    void slotPress_ctrlF();
+
 };
 #endif // MAINWINDOW_H

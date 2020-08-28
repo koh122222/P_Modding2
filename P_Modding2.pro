@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     codeeditor.cpp \
     createcopynewfiledialog.cpp \
+    findtextdialog.cpp \
     gamefiles.cpp \
     main.cpp \
     maineditor.cpp \
@@ -33,6 +34,7 @@ SOURCES += \
 HEADERS += \
     codeeditor.h \
     createcopynewfiledialog.h \
+    findtextdialog.h \
     gamefiles.h \
     maineditor.h \
     mainwindow.h \

@@ -42,6 +42,13 @@ public:
     void saveFile(CodeEditor* saveEditor);
     void closeAllFile();
     void closeFile();
+    void copyText();
+    void cutText();
+    void pasteText();
+    void backText();
+    void forwardText();
+    void findText();
+
     //void closeFile(CodeEditor* saveEditor);
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -49,7 +56,7 @@ protected:
 signals:
 
 public slots:
-    void closeFile(qint32 index);
+    bool closeFile(qint32 index);
     void changeTab(qint32 index);
     void createFileMod();
     void createIncludeFileMod();

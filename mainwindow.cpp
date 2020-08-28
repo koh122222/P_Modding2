@@ -149,3 +149,28 @@ void MainWindow::slotPress_ctrlShiftW()
     qDebug() << "ctrl shift W";
     mainEditor->closeAllFile();
 }
+
+void MainWindow::slotPress_ctrlC()
+{
+    mainEditor->copyText();
+}
+void MainWindow::slotPress_ctrlX()
+{
+    mainEditor->cutText();
+}
+void MainWindow::slotPress_ctrlV()
+{
+    mainEditor->pasteText();
+}
+void MainWindow::slotPress_ctrlZ()
+{
+    mainEditor->backText();
+}
+void MainWindow::slotPress_ctrlY()
+{
+    mainEditor->forwardText();
+}
+void MainWindow::slotPress_ctrlF()
+{
+    mainEditor->findText();
+}

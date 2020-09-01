@@ -47,7 +47,6 @@ public:
     void pasteText();
     void backText();
     void forwardText();
-    void findText();
 
     //void closeFile(CodeEditor* saveEditor);
 protected:

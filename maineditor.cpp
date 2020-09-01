@@ -131,6 +131,8 @@ void MainEditor::saveFile(CodeEditor* saveEditor)
 
 void MainEditor::closeAllFile()
 {
+    if (allOpenFile.empty())
+        return;
     for (qint32 i = 0; i < allOpenFile.size(); ++i) // now i really don't like map(
     {
         auto c = allOpenFile.begin();
@@ -160,6 +162,8 @@ bool MainEditor::closeFile(qint32 index)
     }
 
     CodeEditor* deleteEditor = static_cast<CodeEditor*>(fileEditor->widget(index));
+    if (deleteEditor == nullptr)
+        return false;
     auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
                      [deleteEditor] (std::pair<QString, CodeEditor*> el)
         { return el.second == deleteEditor; });
@@ -196,27 +200,28 @@ bool MainEditor::closeFile(qint32 index)
 
 void MainEditor::copyText()
 {
-    static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
+    if (fileEditor->currentWidget() != nullptr)
+        static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
 }
 void MainEditor::cutText()
 {
-    static_cast<CodeEditor*>(fileEditor->currentWidget())->cut();
+    if (fileEditor->currentWidget() != nullptr)
+        static_cast<CodeEditor*>(fileEditor->currentWidget())->cut();
 }
 void MainEditor::pasteText()
 {
-    static_cast<CodeEditor*>(fileEditor->currentWidget())->paste();
+    if (fileEditor->currentWidget() != nullptr)
+        static_cast<CodeEditor*>(fileEditor->currentWidget())->paste();
 }
 void MainEditor::backText()
 {
-    static_cast<CodeEditor*>(fileEditor->currentWidget())->undo();
+    if (fileEditor->currentWidget() != nullptr)
+        static_cast<CodeEditor*>(fileEditor->currentWidget())->undo();
 }
 void MainEditor::forwardText()
 {
-    static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
-}
-void MainEditor::findText()
-{
-
+    if (fileEditor->currentWidget() != nullptr)
+        static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
 
 void MainEditor::resizeEvent(QResizeEvent *event)

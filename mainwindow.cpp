@@ -47,12 +47,27 @@ MainWindow::MainWindow(QWidget *parent)
     placeGame = new QDir("");
     placeMod = new QDir("");
 
-    key_ctrlS = new QShortcut(this);
+    QShortcut* key_ctrlS = new QShortcut(this);
     key_ctrlS->setKey(Qt::CTRL + Qt::Key_S);
     connect(key_ctrlS, SIGNAL(activated()), this, SLOT(slotPress_ctrlS()));
 
+    QShortcut* key_ctrlShiftS = new QShortcut(this);
+    key_ctrlShiftS->setKey(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    connect(key_ctrlShiftS, SIGNAL(activated()), this, SLOT(slotPress_ctrlShiftS()));
 
+    QShortcut* key_ctrlW = new QShortcut(this);
+    key_ctrlW->setKey(Qt::CTRL + Qt::Key_W);
+    connect(key_ctrlW, SIGNAL(activated()), this, SLOT(slotPress_ctrlW()));
 
+    QShortcut* key_ctrlShiftW = new QShortcut(this);
+    key_ctrlShiftW->setKey(Qt::CTRL + Qt::SHIFT + Qt::Key_W);
+    connect(key_ctrlShiftW, SIGNAL(activated()), this, SLOT(slotPress_ctrlShiftW()));
+
+    QShortcut* key_ctrlF = new QShortcut(this);
+    key_ctrlF->setKey(Qt::CTRL + Qt::Key_F);
+    connect(key_ctrlF, SIGNAL(activated()), this, SLOT(slotPress_ctrlF()));
+
+    textFinder = new FindTextDialog(this);
 
     dirFinder = new WritePlaceDialog(this);
     show();
@@ -172,5 +187,5 @@ void MainWindow::slotPress_ctrlY()
 }
 void MainWindow::slotPress_ctrlF()
 {
-    mainEditor->findText();
+    textFinder->open();
 }

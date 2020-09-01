@@ -15,6 +15,7 @@
 #include <writeplacedialog.h>
 #include <modifView.h>
 #include "toolbar.h"
+#include "findtextdialog.h"
 
 class MainWindow : public QMainWindow
 {
@@ -25,7 +26,6 @@ class MainWindow : public QMainWindow
     QDir *placeGame;
     QDir *placeMod;
 
-    QShortcut* key_ctrlS;
 
 public:
 
@@ -36,6 +36,7 @@ public:
     MainEditor* mainEditor;
     ModifView* modifView;
 
+    FindTextDialog* textFinder;
     WritePlaceDialog* dirFinder;
 
     MainWindow(QWidget *parent = nullptr);

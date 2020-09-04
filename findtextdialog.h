@@ -34,9 +34,13 @@ public:
     void setFindName(QString setName);
     bool isFind(QString findText);
     void countText();
+    void findName(bool isDown);
+
+
 
 public slots:
     void findNameDown();
+    void findNameUp();
 
 };
 
@@ -66,7 +70,6 @@ public:
 };
 
 
-
 class FindTextDialog : public QDialog
 {
     Q_OBJECT
@@ -75,6 +78,7 @@ class FindTextDialog : public QDialog
     RenameTextWidget* renameTextWidget;
 public:
     FindTextDialog(QWidget* parent);
+    void startWork();
 public slots:
     void changeTab(int);
 };

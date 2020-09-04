@@ -224,7 +224,7 @@ void MainEditor::forwardText()
         static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
 
-qint32 MainEditor::lighterFindText(QString fText)
+qint32 MainEditor::lighterFindText(QString fText, bool down)
 {
 
 

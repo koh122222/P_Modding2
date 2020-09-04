@@ -24,6 +24,7 @@ class MainEditor : public QWidget
     AllOpenFile allOpenFile;
     QVBoxLayout *layout;
     QFont *nowFont;
+    QString findName;
 
 
     CreateCopyNewFileDialog* createCopyNewFileDialog;
@@ -48,7 +49,7 @@ public:
     void backText();
     void forwardText();
 
-    qint32 lighterFindText(QString fText);
+    qint32 lighterFindText(QString fText, bool down);
 
     void findCountText(QString findText, bool wholeWord, bool matchCase);
 

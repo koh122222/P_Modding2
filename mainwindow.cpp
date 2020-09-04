@@ -187,5 +187,5 @@ void MainWindow::slotPress_ctrlY()
 }
 void MainWindow::slotPress_ctrlF()
 {
-    textFinder->open();
+    textFinder->startWork();
 }

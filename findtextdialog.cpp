@@ -35,7 +35,8 @@ FindTextWidget::FindTextWidget(QWidget* parent)
     layout->addWidget(matchWholeWordOnlyBox, 2, 0, 1, 2);
     layout->addWidget(matchCaseBox, 3, 0, 1, 2);
 
-    connect(upFindButton, SIGNAL(clicked()), this, SLOT(findNameDown()));
+    connect(downFindButton, SIGNAL(clicked()), this, SLOT(findNameDown()));
+    connect(upFindButton, SIGNAL(clicked()), this, SLOT(findNameUp()));
 
 
 
@@ -66,15 +67,28 @@ void FindTextWidget::countText()
     //qint32 count = static_cast<MainWindow*>(parent)->mainEditor-
 }
 
-void FindTextWidget::findNameDown()
+void FindTextWidget::findName(bool isDown)
 {
     QString findNameStr = findNameEditBox->currentText();
     if (findNameEditBox->currentText() == "")
         return;
-    qint32 countText = static_cast<MainWindow*>(parent())
-            ->mainEditor->lighterFindText(findNameStr);
-
+    qint32 intCount = static_cast<MainWindow*>(parent())
+            ->mainEditor->lighterFindText(findNameStr, isDown);
+    qDebug() << intCount;
 }
+
+void FindTextWidget::findNameDown()
+{
+    findName(true);
+}
+
+void FindTextWidget::findNameUp()
+{
+    findName(false);
+}
+
+
+
 
 //setMaxCount(5)
 RenameTextWidget::RenameTextWidget(QWidget* parent)
@@ -159,6 +173,11 @@ FindTextDialog::FindTextDialog(QWidget* parent)
     mainLayout->addWidget(tabWidget);
     setLayout(mainLayout);
     connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(changeTab(int)));
+}
+
+void FindTextDialog::startWork()
+{
+    show();
 }
 
 void FindTextDialog::changeTab(int state)

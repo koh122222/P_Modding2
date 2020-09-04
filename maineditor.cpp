@@ -224,6 +224,15 @@ void MainEditor::forwardText()
         static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
 
+qint32 MainEditor::lighterFindText(QString fText)
+{
+
+
+
+    //temp
+    return 5;
+}
+
 void MainEditor::resizeEvent(QResizeEvent *event)
 {
     //QWidget::resizeEvent(event); //why not need? okey

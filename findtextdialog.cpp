@@ -1,34 +1,17 @@
 #include "findtextdialog.h"
-
-/*
-    QLabel* findLabel;
-    QComboBox* findNameEditBox;
-    QPushButton* upFindButton;
-    QPushButton* downFindButton;
-    QPushButton* countButton;
-    QPushButton* findNowDocButton;
-    QPushButton* findAllDocButton;
-    QPushButton* closeButton;
-    QCheckBox* findFullNameBox;
-    QCheckBox* fildWithReg;
-    */
-
-MainFinder::MainFinder(QWidget* parent)
-    :QWidget(parent)
-{
-
-}
+#include "mainwindow.h"
+#include <QDebug>
 
 FindTextWidget::FindTextWidget(QWidget* parent)
-    :MainFinder(parent)
+    :QWidget(parent)
 {
     findLabel = new QLabel("Find: ", this);
     findNameEditBox = new QComboBox(this);
     findNameEditBox->setEditable(true);
     upFindButton = new QPushButton("up", this);
-    upFindButton->setMaximumWidth(50);
-    downFindButton = new QPushButton("down", this);
-    downFindButton->setMaximumWidth(50);
+    upFindButton->setMaximumWidth(30);
+    downFindButton = new QPushButton("Find next", this);
+    downFindButton->setMaximumWidth(80);
     countButton = new QPushButton("count", this);
     countButton->setMaximumWidth(120);
     findNowDocButton = new QPushButton("find in this Doc", this);
@@ -37,39 +20,164 @@ FindTextWidget::FindTextWidget(QWidget* parent)
     findAllDocButton->setMaximumWidth(120);
     closeButton = new QPushButton("close", this);
     closeButton->setMaximumWidth(120);
-    findFullNameBox = new QCheckBox("find full name", this);
-    findWithReg = new QCheckBox("find with reg", this);
+    matchWholeWordOnlyBox = new QCheckBox("Match whole word only", this);
+    matchCaseBox = new QCheckBox("Match case", this);
 
     QGridLayout* layout = new QGridLayout(this);
     layout->addWidget(findLabel, 0, 1, 1, 1);
     layout->addWidget(findNameEditBox, 0, 2, 1, 11);
-    layout->addWidget(upFindButton, 0, 13, 1, 1);
-    layout->addWidget(downFindButton, 0, 14, 1, 1);
+    layout->addWidget(downFindButton, 0, 13, 1, 1);
+    layout->addWidget(upFindButton, 0, 14, 1, 1);
     layout->addWidget(countButton, 1, 13, 1, 2);
     layout->addWidget(findNowDocButton, 2, 13, 1, 2);
     layout->addWidget(findAllDocButton, 3, 13, 1, 2);
     layout->addWidget(closeButton, 4, 13, 1, 2);
-    layout->addWidget(findFullNameBox, 2, 0, 1, 2);
-    layout->addWidget(findWithReg, 3, 0, 1, 2);
+    layout->addWidget(matchWholeWordOnlyBox, 2, 0, 1, 2);
+    layout->addWidget(matchCaseBox, 3, 0, 1, 2);
 
+    connect(upFindButton, SIGNAL(clicked()), this, SLOT(findNameDown()));
 
 
 
 }
 
+QString FindTextWidget::getFindName()
+{
+    return findNameEditBox->currentText();
+}
 
+void FindTextWidget::addFindName(QString addName)
+{
+    findNameEditBox->addItem(addName);
+}
+
+void FindTextWidget::setFindName(QString setName)
+{
+    findNameEditBox->setEditText(setName);
+}
+
+bool FindTextWidget::isFind(QString findText)
+{
+    return findNameEditBox->findText(findText) != -1;
+}
+
+void FindTextWidget::countText()
+{
+    //qint32 count = static_cast<MainWindow*>(parent)->mainEditor-
+}
+
+void FindTextWidget::findNameDown()
+{
+    QString findNameStr = findNameEditBox->currentText();
+    if (findNameEditBox->currentText() == "")
+        return;
+    qint32 countText = static_cast<MainWindow*>(parent())
+            ->mainEditor->lighterFindText(findNameStr);
+
+}
+
+//setMaxCount(5)
+RenameTextWidget::RenameTextWidget(QWidget* parent)
+    : QWidget(parent)
+{
+    findLabel = new QLabel("Find: ", this);
+    findNameEditBox = new QComboBox(this);
+    findNameEditBox->setEditable(true);
+    reNameEditBox = new QComboBox(this);
+    reNameEditBox->setEditable(true);
+    upFindButton = new QPushButton("up", this);
+    upFindButton->setMaximumWidth(30);
+    downFindButton = new QPushButton("Find next", this);
+    downFindButton->setMaximumWidth(80);
+    renameButton = new QPushButton("rename", this);
+    renameButton->setMaximumWidth(120);
+    renameAllButton = new QPushButton("rename all", this);
+    renameAllButton->setMaximumWidth(120);
+    renameAllDocButton = new QPushButton("rename all doc", this);
+    renameAllDocButton->setMaximumWidth(120);
+    closeButton = new QPushButton("close", this);
+    closeButton->setMaximumWidth(120);
+    matchWholeWordOnlyBox = new QCheckBox("Match whole word only", this);
+    matchCaseBox = new QCheckBox("Match case", this);
+
+    QGridLayout* layout = new QGridLayout(this);
+    layout->addWidget(findLabel, 0, 1, 1, 1);
+    layout->addWidget(findNameEditBox, 0, 2, 1, 11);
+    layout->addWidget(reNameEditBox, 1, 2, 1, 11);
+    layout->addWidget(downFindButton, 0, 13, 1, 1);
+    layout->addWidget(upFindButton, 0, 14, 1, 1);
+    layout->addWidget(renameButton, 1, 13, 1, 2);
+    layout->addWidget(renameAllButton, 2, 13, 1, 2);
+    layout->addWidget(renameAllDocButton, 3, 13, 1, 2);
+    layout->addWidget(closeButton, 4, 13, 1, 2);
+    layout->addWidget(matchWholeWordOnlyBox, 2, 0, 1, 2);
+    layout->addWidget(matchCaseBox, 3, 0, 1, 2);
+
+}
+
+QString RenameTextWidget::getFindName()
+{
+    return findNameEditBox->currentText();
+}
+
+QString RenameTextWidget::getReName()
+{
+    return reNameEditBox->currentText();
+}
+
+void RenameTextWidget::addFindName(QString addName)
+{
+    findNameEditBox->addItem(addName);
+}
+
+void RenameTextWidget::addReName(QString addName)
+{
+    reNameEditBox->addItem(addName);
+}
+
+void RenameTextWidget::setFindName(QString setName)
+{
+    findNameEditBox->setEditText(setName);
+}
+
+bool RenameTextWidget::isFind(QString findText)
+{
+    return findNameEditBox->findText(findText) != -1;
+}
 
 FindTextDialog::FindTextDialog(QWidget* parent)
     :QDialog(parent)
 {
     resize(600, 180);
     findTextWidget = new FindTextWidget(this);
+    renameTextWidget = new RenameTextWidget(this);
     tabWidget = new QTabWidget(this);
     tabWidget->addTab(findTextWidget, "find");
-
+    tabWidget->addTab(renameTextWidget, "rename");
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(tabWidget);
     setLayout(mainLayout);
+    connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(changeTab(int)));
+}
 
+void FindTextDialog::changeTab(int state)
+{
+    qDebug() << state;
+    if (state == 0) //if findWidget
+    {
+        qDebug() << findTextWidget->isFind(findTextWidget->getFindName()) <<
+                    findTextWidget->getFindName();
+        if (!findTextWidget->isFind(renameTextWidget->getFindName()) &&
+                findTextWidget->getFindName() != "")
+            findTextWidget->setFindName(renameTextWidget->getFindName());
+    }
+    else if (state == 1)
+    {
+        qDebug() << renameTextWidget->isFind(renameTextWidget->getFindName()) <<
+                    renameTextWidget->getFindName();
+        if (!renameTextWidget->isFind(findTextWidget->getFindName()) &&
+                findTextWidget->getFindName() != "")
+            renameTextWidget->setFindName(findTextWidget->getFindName());
+    }
 }

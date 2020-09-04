@@ -48,6 +48,10 @@ public:
     void backText();
     void forwardText();
 
+    qint32 lighterFindText(QString fText);
+
+    void findCountText(QString findText, bool wholeWord, bool matchCase);
+
     //void closeFile(CodeEditor* saveEditor);
 protected:
     void resizeEvent(QResizeEvent *event) override;

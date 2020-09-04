@@ -11,14 +11,9 @@
 #include <QTabWidget>
 #include <QPushButton>
 
-class MainFinder : public QWidget
-{
-    Q_OBJECT
-public:
-    MainFinder(QWidget* parent);
-};
 
-class FindTextWidget : public MainFinder
+
+class FindTextWidget : public QWidget
 {
     Q_OBJECT
     QLabel* findLabel;
@@ -29,11 +24,44 @@ class FindTextWidget : public MainFinder
     QPushButton* findNowDocButton;
     QPushButton* findAllDocButton;
     QPushButton* closeButton;
-    QCheckBox* findFullNameBox;
-    QCheckBox* findWithReg;
+    QCheckBox* matchWholeWordOnlyBox;
+    QCheckBox* matchCaseBox;
 
 public:
     FindTextWidget(QWidget* parent);
+    QString getFindName();
+    void addFindName(QString addName);
+    void setFindName(QString setName);
+    bool isFind(QString findText);
+    void countText();
+
+public slots:
+    void findNameDown();
+
+};
+
+class RenameTextWidget : public QWidget
+{
+    QLabel* findLabel;
+    QComboBox* findNameEditBox;
+    QComboBox* reNameEditBox;
+    QPushButton* upFindButton;
+    QPushButton* downFindButton;
+    QPushButton* renameButton;
+    QPushButton* renameAllButton;
+    QPushButton* renameAllDocButton;
+    QPushButton* closeButton;
+    QCheckBox* matchWholeWordOnlyBox;
+    QCheckBox* matchCaseBox;
+public:
+    RenameTextWidget(QWidget* parent);
+    QString getFindName();
+    QString getReName();
+    void addFindName(QString addName);
+    void addReName(QString addName);
+    void setFindName(QString setName);
+
+    bool isFind(QString findText);
 
 };
 
@@ -44,8 +72,11 @@ class FindTextDialog : public QDialog
     Q_OBJECT
     QTabWidget* tabWidget;
     FindTextWidget* findTextWidget;
+    RenameTextWidget* renameTextWidget;
 public:
     FindTextDialog(QWidget* parent);
+public slots:
+    void changeTab(int);
 };
 
 #endif // FINDTEXTDIALOG_H

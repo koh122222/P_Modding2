@@ -6,18 +6,20 @@
 #include <QResizeEvent>
 #include <QSize>
 #include <QWidget>
+#include "highlighter.h"
 
 class LineNumberArea;
 
 class CodeEditor : public QPlainTextEdit
 {
     Q_OBJECT
-
+    Highlighter* highlighter;
 public:
     CodeEditor(QWidget *parent = nullptr);
 
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
+    Highlighter* getHighlighter();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

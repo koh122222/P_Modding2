@@ -6,7 +6,7 @@
 CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
 {
     lineNumberArea = new LineNumberArea(this);
-
+    highlighter = new Highlighter(document());
     connect(this, &CodeEditor::blockCountChanged, this, &CodeEditor::updateLineNumberAreaWidth);
     connect(this, &CodeEditor::updateRequest, this, &CodeEditor::updateLineNumberArea);
     connect(this, &CodeEditor::cursorPositionChanged, this, &CodeEditor::highlightCurrentLine);
@@ -27,6 +27,11 @@ int CodeEditor::lineNumberAreaWidth()
     int space = 3 + fontMetrics().horizontalAdvance(QLatin1Char('9')) * digits;
 
     return space;
+}
+
+Highlighter* CodeEditor::getHighlighter()
+{
+    return highlighter;
 }
 
 void CodeEditor::updateLineNumberAreaWidth(int)

@@ -12,6 +12,7 @@
 #include "codeeditor.h"
 #include "createcopynewfiledialog.h"
 
+
 class NewFileButton;
 
 using AllOpenFile = std::unordered_map<QString, CodeEditor*>;
@@ -25,7 +26,6 @@ class MainEditor : public QWidget
     QVBoxLayout *layout;
     QFont *nowFont;
     QString findName;
-
 
     CreateCopyNewFileDialog* createCopyNewFileDialog;
 public:

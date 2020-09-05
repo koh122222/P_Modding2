@@ -20,6 +20,7 @@ SOURCES += \
     createcopynewfiledialog.cpp \
     findtextdialog.cpp \
     gamefiles.cpp \
+    highlighter.cpp \
     main.cpp \
     maineditor.cpp \
     mainwindow.cpp \
@@ -36,6 +37,7 @@ HEADERS += \
     createcopynewfiledialog.h \
     findtextdialog.h \
     gamefiles.h \
+    highlighter.h \
     maineditor.h \
     mainwindow.h \
     modifView.h \

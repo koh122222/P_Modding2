@@ -24,6 +24,7 @@ SOURCES += \
     main.cpp \
     maineditor.cpp \
     mainwindow.cpp \
+    modifOpener.cpp \
     modifView.cpp \
     newfilebutton.cpp \
     onlyfilesystemmodel.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     highlighter.h \
     maineditor.h \
     mainwindow.h \
+    modifOpener.h \
     modifView.h \
     newfilebutton.h \
     onlyfilesystemmodel.h \

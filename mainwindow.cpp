@@ -119,7 +119,7 @@ void MainWindow::returnFiles()
         gameFiles->setGamePlace(placeGame->absolutePath());
         gameFiles->setModPlace(placeMod->absolutePath());
 
-        //modifView->localOpener();
+
         qDebug() << "dialog work";
 
 

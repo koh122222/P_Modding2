@@ -202,6 +202,7 @@ void MainEditor::copyText()
 {
     if (fileEditor->currentWidget() != nullptr)
         static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
+    qDebug() << returnCountText("if", true, true);
 }
 void MainEditor::cutText()
 {
@@ -244,6 +245,7 @@ qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
             ->toPlainText().count(findExpression);
     else
         return -1;
+    return -1;
 }
 
 qint32 MainEditor::lighterFindText(QString fText, bool down)

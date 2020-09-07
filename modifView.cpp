@@ -65,71 +65,32 @@ void ModifView::opener2()
 
     bool modifier = false;
     QString pre_modFile;
-    for (int i = 0;i < adv.size();++i)
+    for (int i = 7;i < adv.size() -1 ;++i)
     {
-
-         if (modifier)
+        if (modifier)
             pre_modFile+=adv[i];
-         if (i>13)
-            if ((adv[i]=="s")&&(adv[i-6]=="#")&&(adv[i-5]==" "))
-                modifier = true;
-            if(adv[i]=="\n")
-                modifier = false;
-    }
-    /*
-    QString uncleanFile;
-    bool contin = true;
-    bool trash = false;
-    for (int i = 0;i < pre_modFile.size();++i)
-    {
-        if (i < pre_modFile.size()-4)
-        {
-            if ((pre_modFile[i]=="#")
-                ||(pre_modFile[i]=="=")
-                ||(pre_modFile.mid(i,3)=="tag")
-                ||(pre_modFile.mid(i,3)=="TAG")
-                ||(pre_modFile.mid(i,3)=="AND")
-                ||(pre_modFile.mid(i,3)=="NOT")
-                ||(pre_modFile.mid(i,2)=="OR")
-                ||(pre_modFile.mid(i,7)=="dynasty")
-                ||(pre_modFile.mid(i,5)=="allow")
-                ||(pre_modFile.mid(i,5)=="start")
-                ||(pre_modFile.mid(i,9)=="religion ")
-                ||(pre_modFile.mid(i,6)=="region")
-                ||(pre_modFile.mid(i,8)=="category")
-                ||(pre_modFile.mid(i,13)=="culture_group")
-                ||(pre_modFile.mid(i,15)=="primary_culture"))
-                trash = true;
-        }
-        if (pre_modFile[i]==" ")
-            contin = false;
-        if (trash)
-            contin = false;
-        if (pre_modFile[i]=="\n")
-            trash = false;
-        if ((contin)||(pre_modFile[i]=="\n"))
-            uncleanFile += pre_modFile[i];
-        contin = true;
 
-    }*/
-    QString adModifiers = pre_modFile;
-    /*
-    for (int i =0; i < uncleanFile.size(); ++i)
+        if ((adv[i-6]=="#")&&(adv[i-5]==" ")&&(adv[i-4]=="B"))
+            modifier = true;
+        if(adv[i+1]=="=")
+            modifier = false;
+    }
+    QString idModifiers;
+    for (int i = 1;i <pre_modFile.size();++i)
     {
-        if (i>0)
-            if ((uncleanFile[i]=="\n")&&(uncleanFile[i - 1]!="\n")&&(uncleanFile[i - 1]!="\t"))
-                adModifiers += "\n";
-        if ((uncleanFile[i]!="\n")&&(uncleanFile[i]!="\t"))
-            adModifiers += uncleanFile[i];
-    }*/
+        if (!((pre_modFile[i]==" ")||(pre_modFile[i]=="\t")))
+            idModifiers+=pre_modFile[i];
+        if ((pre_modFile[i]=="\n")&&(pre_modFile[i-1]=="\t"))
+            idModifiers = idModifiers.left(idModifiers.size() - 1);
+    }
+    //qDebug()<<idModifiers;
+    //testEditor->setText(idModifiers);
     int lenght = 0;
-    testEditor->setText(adModifiers);
-    /*
-    for (int i = 0 ; i<adModifiers.size(); ++i)
+    for (int i = 0 ; i<idModifiers.size(); ++i)
     {
-        if (adModifiers[i]=="\n")
+        if (idModifiers[i]=="\n")
         {
-            QString newMod = adModifiers.mid(i - lenght,lenght);
+            QString newMod = idModifiers.mid(i - lenght,lenght);
             lenght = -1;
             bool unique = true;
             for (int i = 0; i <  modifiers.size(); ++i)
@@ -140,11 +101,10 @@ void ModifView::opener2()
             if (unique)
             {
                  modifiers.push_back(newMod);
-                 //qDebug()<<newMod;
             }
         }
         ++lenght;
-    }*/
+    }
 }
 
 void ModifView::ideasOpen ()

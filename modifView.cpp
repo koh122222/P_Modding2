@@ -71,7 +71,7 @@ void ModifView::opener2()
          if (modifier)
             pre_modFile+=adv[i];
          if (i>13)
-            if ((adv[i]=="s")&&(adv[i-6]=="#"))
+            if ((adv[i]=="s")&&(adv[i-6]=="#")&&(adv[i-5]==" "))
                 modifier = true;
             if(adv[i]=="\n")
                 modifier = false;

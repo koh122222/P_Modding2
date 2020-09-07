@@ -20,7 +20,7 @@ void Highlighter::highlightBlock(const QString &text)
         }
     }
     setCurrentBlockState(0);
-
+//////////! for {}
     /*
 //! [8]
 

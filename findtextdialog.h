@@ -33,7 +33,6 @@ public:
     void addFindName(QString addName);
     void setFindName(QString setName);
     bool isFind(QString findText);
-    void countText();
     void findName(bool isDown);
 
 
@@ -41,6 +40,8 @@ public:
 public slots:
     void findNameDown();
     void findNameUp();
+    void countText();
+
 
 };
 

@@ -49,6 +49,9 @@ public:
     void backText();
     void forwardText();
 
+    qint32 returnCountText(QString cText, bool matchWhileWordOnly,
+                           bool matchCase);
+
     qint32 lighterFindText(QString fText, bool down);
 
     void findCountText(QString findText, bool wholeWord, bool matchCase);

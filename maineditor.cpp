@@ -224,6 +224,28 @@ void MainEditor::forwardText()
         static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
 
+qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
+                                   bool matchCase)
+{
+    QRegularExpression findExpression;
+    if (matchWhileWordOnly)
+        findExpression.setPattern("\\b" + cText + "\\b");
+    else
+        findExpression.setPattern(cText);
+
+    if (!matchCase)
+        findExpression.setPatternOptions(
+                    QRegularExpression::CaseInsensitiveOption);
+    qDebug() << "st";
+    qDebug() << fileEditor->currentWidget();
+    qDebug() << "st2";
+    if (fileEditor->currentWidget() != nullptr)
+        return static_cast<CodeEditor*>(fileEditor->currentWidget())
+            ->toPlainText().count(findExpression);
+    else
+        return -1;
+}
+
 qint32 MainEditor::lighterFindText(QString fText, bool down)
 {
 

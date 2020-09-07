@@ -17,6 +17,17 @@
 #include "toolbar.h"
 #include "findtextdialog.h"
 
+namespace TYPE_MOD {
+    enum EU {
+        IDEAS,
+        EVENTS
+    };
+}
+
+
+
+using ModMap = std::vector<std::pair<TYPE_MOD::EU, localMap>>;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -25,6 +36,8 @@ class MainWindow : public QMainWindow
     QDir *dirProgram;
     QDir *placeGame;
     QDir *placeMod;
+
+    ModMap* modMap;
 
 
 public:

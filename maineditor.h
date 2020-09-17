@@ -27,6 +27,11 @@ class MainEditor : public QWidget
     QFont *nowFont;
     QString findName;
 
+
+    //////////////////////////////////////////////////
+    CodeEditor *currentEditor = nullptr;
+
+
     CreateCopyNewFileDialog* createCopyNewFileDialog;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
@@ -49,8 +54,7 @@ public:
     void backText();
     void forwardText();
 
-    qint32 returnCountText(QString cText, bool matchWhileWordOnly,
-                           bool matchCase);
+
 
     qint32 lighterFindText(QString fText, bool down);
 
@@ -67,6 +71,8 @@ public slots:
     void changeTab(qint32 index);
     void createFileMod();
     void createIncludeFileMod();
+    void returnCountText(QString cText, bool matchWhileWordOnly,
+                           bool matchCase);
 
 };
 

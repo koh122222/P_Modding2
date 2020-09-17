@@ -35,7 +35,9 @@ public:
     bool isFind(QString findText);
     void findName(bool isDown);
 
-
+signals:
+    void testSignal(QString cText, bool matchWhileWordOnly,
+                    bool matchCase);
 
 public slots:
     void findNameDown();

@@ -38,7 +38,9 @@ FindTextWidget::FindTextWidget(QWidget* parent)
     connect(downFindButton, SIGNAL(clicked()), this, SLOT(findNameDown()));
     connect(upFindButton, SIGNAL(clicked()), this, SLOT(findNameUp()));
     connect(countButton, SIGNAL(clicked()), this, SLOT(countText()));
-
+    connect(this, SIGNAL(testSignal(QString, bool, bool)),
+            (static_cast<MainWindow*>(parent->parent())->mainEditor),
+            SLOT(returnCountText(QString, bool, bool)));
 
 }
 
@@ -85,14 +87,13 @@ void FindTextWidget::findNameUp()
 void FindTextWidget::countText()
 {
     qDebug() << "count: ";
+    qDebug() << "lol 2";
     QString findCountName = findNameEditBox->currentText();
     if (findCountName == "")
         return;
-    qint32 count = static_cast<MainWindow*>(parent())->
-            mainEditor->returnCountText(findCountName,
-                                        matchWholeWordOnlyBox->isChecked(),
-                                        matchCaseBox->isChecked());
-    qDebug() << count;
+    testSignal(findCountName, matchWholeWordOnlyBox->isChecked(),
+               matchCaseBox->isChecked());
+    qDebug() << "end";
 }
 
 

@@ -202,7 +202,6 @@ void MainEditor::copyText()
 {
     if (fileEditor->currentWidget() != nullptr)
         static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
-    qDebug() << returnCountText("if", true, true);
 }
 void MainEditor::cutText()
 {
@@ -225,9 +224,10 @@ void MainEditor::forwardText()
         static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
 
-qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
+void MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
                                    bool matchCase)
 {
+
     QRegularExpression findExpression;
     if (matchWhileWordOnly)
         findExpression.setPattern("\\b" + cText + "\\b");
@@ -238,14 +238,16 @@ qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
         findExpression.setPatternOptions(
                     QRegularExpression::CaseInsensitiveOption);
     qDebug() << "st";
-    qDebug() << fileEditor->currentWidget();
+    qDebug() << 1;
     qDebug() << "st2";
     if (fileEditor->currentWidget() != nullptr)
-        return static_cast<CodeEditor*>(fileEditor->currentWidget())
+        qDebug() << static_cast<CodeEditor*>(fileEditor->currentWidget())
             ->toPlainText().count(findExpression);
     else
-        return -1;
-    return -1;
+        return;
+    return;
+
+    return;
 }
 
 qint32 MainEditor::lighterFindText(QString fText, bool down)
@@ -284,6 +286,7 @@ void MainEditor::changeTab(qint32 index)
     {
         createFileModButton->setVisible(false);
     }
+    //currentEditor = static_cast<CodeEditor*>(fileEditor->widget(index));
 }
 
 void MainEditor::createFileMod()

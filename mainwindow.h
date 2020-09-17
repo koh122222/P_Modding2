@@ -74,5 +74,7 @@ public slots:
     void slotPress_ctrlY(); // there is no direct keyboard binding
     void slotPress_ctrlF();
 
+    void setStyle();
+
 };
 #endif // MAINWINDOW_H

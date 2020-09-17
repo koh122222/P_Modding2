@@ -38,7 +38,12 @@ MainWindow::MainWindow(QWidget *parent)
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
 
-    menuBar()->addMenu(tr("&File"));
+    QMenu* file_menuBar = menuBar()->addMenu(tr("File"));
+    QMenu* options_menuBar = menuBar()->addMenu(tr("Options"));
+
+
+
+
 
     resize(1024, 720);
 

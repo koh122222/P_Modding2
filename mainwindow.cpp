@@ -6,7 +6,6 @@
 #include <QFileInfo>
 #include <QMenuBar>
 
-
 std::unordered_map<QString, QString> MainWindow::allGameBase
 {
     {"Europa Universalis IV", "eu4.exe"}
@@ -40,6 +39,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     QMenu* file_menuBar = menuBar()->addMenu(tr("File"));
     QMenu* options_menuBar = menuBar()->addMenu(tr("Options"));
+
+    QAction* lightStyleAction = new QAction("light style", this);
+    connect(lightStyleAction, &QAction::triggered, this, &MainWindow::setStyleLight);
+    options_menuBar->addAction(lightStyleAction);
+
+    QAction* nightStyleAction = new QAction("night style", this);
+    connect(nightStyleAction, &QAction::triggered, this, &MainWindow::setStyleNight);
+    options_menuBar->addAction(nightStyleAction);
 
 
 
@@ -135,6 +142,31 @@ void MainWindow::returnFiles()
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::setStyleNight()
+{
+    QPalette darkPalette;
+
+        darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::WindowText, Qt::white);
+        darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
+        darkPalette.setColor(QPalette::AlternateBase, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+        darkPalette.setColor(QPalette::Text, Qt::white);
+        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
+        darkPalette.setColor(QPalette::ButtonText, Qt::white);
+        darkPalette.setColor(QPalette::BrightText, Qt::red);
+        darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+        darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+        setPalette(darkPalette);
+}
+
+void MainWindow::setStyleLight()
+{
+    setPalette(style()->standardPalette());
 }
 
 QString MainWindow::getPlaceGame()

@@ -39,7 +39,9 @@ public:
     bool eventPoint (QString programText);
     void localOpener();
     void ideasOpen ();
+    void ageOpener ();
     void opener2();
+    void opener3();
 public slots:
     void allPrint(int a);
     void textPrint(int a);

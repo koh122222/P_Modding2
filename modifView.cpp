@@ -36,10 +36,16 @@ ModifView::ModifView(QWidget *parent) : QWidget(parent)
 void ModifView::modifierOpener()
 {
     //localOpener();
+    ageOpener();
     //ideasOpen ();
-    opener2();
+    //opener3();
 
-    /*modifierMap = new localMap;
+    modifierMap = new localMap;
+    for (int i = 0; i <modifiers.size();++i)
+    {
+        modifierMap->insert(localMap::value_type(modifiers[i]+":0"," (0)_(0) Че смотришь ? "));
+    }
+    /*
     for (auto it = allMap->begin();it !=allMap->end();++it)
     {
         QString TechName = it->first;
@@ -51,6 +57,85 @@ void ModifView::modifierOpener()
                 modifierMap->insert(localMap::value_type(TechName,LocalName));
             }
     }*/
+}
+
+void ModifView::ageOpener()
+{
+    QString ageModif;
+    QString fileAdd = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
+    fileAdd+="/common/ages/00_default.txt";
+    QFile ageFile(fileAdd);
+    ageFile.open(QFile::ReadOnly | QFile::Text);
+    QTextStream idea_file(&ageFile);
+    QString rawFile = idea_file.readAll();
+    bool modifier = false;
+    bool ai = false;
+    bool abilities = false;
+    QString pre_modFile;
+    for (int i = 10;i < rawFile.size() - 1;++i)
+   {
+        if (abilities)
+        {
+           if (rawFile.mid(i,5)=="age_o")
+               abilities = false;
+           if (rawFile.mid(i-1,2)=="ab")
+               ai = false;
+           if (rawFile.mid(i-13,14)=="ai_will_do = {")
+               ai = true;
+           if (!ai)
+           {
+
+               if (rawFile[i]=="}")
+                   modifier = false;
+               if (modifier)
+                   pre_modFile+=rawFile[i];
+               if (rawFile.mid(i-11,12)=="modifier = {")
+                   modifier = true;
+           }
+
+        }
+        if (rawFile.mid(i-12,9)=="abilities")
+            abilities = true;
+   }
+    QString idModifiers;
+    for (int i = 1;i <pre_modFile.size();++i)
+    {
+        if (!((pre_modFile[i]==" ")||(pre_modFile[i]=="\t")||(pre_modFile[i]=="=")
+              ||(pre_modFile[i]=="-")||(pre_modFile[i]==".")||(pre_modFile[i]=="0")
+              ||(pre_modFile[i]=="1")||(pre_modFile[i]=="2")||(pre_modFile[i]=="3")
+              ||(pre_modFile[i]=="4")||(pre_modFile[i]=="5")||(pre_modFile[i]=="6")
+              ||(pre_modFile[i]=="7")||(pre_modFile[i]=="8")||(pre_modFile[i]=="9")))
+            idModifiers+=pre_modFile[i];
+        if ((pre_modFile[i]=="\n")&&(pre_modFile[i-1]=="\t"))
+            idModifiers = idModifiers.left(idModifiers.size() - 1);
+
+    }
+    int lenght = 0;
+    for (int i = 0 ; i<idModifiers.size(); ++i)
+    {
+        if (idModifiers[i]=="\n")
+        {
+            QString newMod = idModifiers.mid(i - lenght,lenght);
+            lenght = -1;
+            bool unique = true;
+            for (int i = 0; i <  modifiers.size(); ++i)
+            {
+                if ( modifiers[i]==newMod)
+                    unique = false;
+            }
+            if (unique)
+            {
+                 modifiers.push_back(newMod);
+            }
+        }
+        ++lenght;
+    }
+    //testEditor->setText(idModifiers);
+}
+
+void ModifView::opener3()
+{
+
 }
 
 void ModifView::opener2()
@@ -83,8 +168,6 @@ void ModifView::opener2()
         if ((pre_modFile[i]=="\n")&&(pre_modFile[i-1]=="\t"))
             idModifiers = idModifiers.left(idModifiers.size() - 1);
     }
-    //qDebug()<<idModifiers;
-    //testEditor->setText(idModifiers);
     int lenght = 0;
     for (int i = 0 ; i<idModifiers.size(); ++i)
     {
@@ -267,6 +350,9 @@ void ModifView::localOpener()
 
     //YAML::reedFile(filePlace+"/countries_l_english.yml",*allMap);
 }
+
+
+
 
 bool ModifView::messagePoint (QString localizedText)
 {

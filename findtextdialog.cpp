@@ -38,10 +38,6 @@ FindTextWidget::FindTextWidget(QWidget* parent)
     connect(downFindButton, SIGNAL(clicked()), this, SLOT(findNameDown()));
     connect(upFindButton, SIGNAL(clicked()), this, SLOT(findNameUp()));
     connect(countButton, SIGNAL(clicked()), this, SLOT(countText()));
-    connect(this, SIGNAL(testSignal(QString, bool, bool)),
-            (static_cast<MainWindow*>(parent->parent())->mainEditor),
-            SLOT(returnCountText(QString, bool, bool)));
-
 }
 
 QString FindTextWidget::getFindName()
@@ -66,10 +62,12 @@ bool FindTextWidget::isFind(QString findText)
 
 void FindTextWidget::findName(bool isDown)
 {
+    qDebug() << this;
+    qDebug() << parent()->parent()->parent()->parent();
     QString findNameStr = findNameEditBox->currentText();
     if (findNameEditBox->currentText() == "")
         return;
-    qint32 intCount = static_cast<MainWindow*>(parent())
+    qint32 intCount = static_cast<MainWindow*>(parent()->parent()->parent()->parent())
             ->mainEditor->lighterFindText(findNameStr, isDown);
     qDebug() << intCount;
 }
@@ -91,8 +89,11 @@ void FindTextWidget::countText()
     QString findCountName = findNameEditBox->currentText();
     if (findCountName == "")
         return;
-    testSignal(findCountName, matchWholeWordOnlyBox->isChecked(),
-               matchCaseBox->isChecked());
+    qint32 answer = static_cast<MainWindow*>(parent()->parent()->parent()->parent())
+                ->mainEditor->returnCountText(findCountName, matchWholeWordOnlyBox->isChecked(),
+                                            matchCaseBox->isChecked());
+    static_cast<FindTextDialog*>(parent()->parent()->parent())->setInfoLabel(
+                "count " + findCountName + " : " + QString::number(answer));
     qDebug() << "end";
 }
 
@@ -175,9 +176,11 @@ FindTextDialog::FindTextDialog(QWidget* parent)
     tabWidget = new QTabWidget(this);
     tabWidget->addTab(findTextWidget, "find");
     tabWidget->addTab(renameTextWidget, "rename");
+    infoLabel = new QLabel(this);
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addWidget(tabWidget);
+    mainLayout->addWidget(infoLabel);
     setLayout(mainLayout);
     connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(changeTab(int)));
 }
@@ -185,6 +188,11 @@ FindTextDialog::FindTextDialog(QWidget* parent)
 void FindTextDialog::startWork()
 {
     show();
+}
+
+void FindTextDialog::setInfoLabel(QString str)
+{
+    infoLabel->setText(str);
 }
 
 void FindTextDialog::changeTab(int state)

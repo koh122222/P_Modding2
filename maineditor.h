@@ -26,6 +26,7 @@ class MainEditor : public QWidget
     QVBoxLayout *layout;
     QFont *nowFont;
     QString findName;
+    qint32 countFindName;
 
 
     //////////////////////////////////////////////////
@@ -58,7 +59,8 @@ public:
 
     qint32 lighterFindText(QString fText, bool down);
 
-    void findCountText(QString findText, bool wholeWord, bool matchCase);
+
+
 
     //void closeFile(CodeEditor* saveEditor);
 protected:
@@ -71,7 +73,7 @@ public slots:
     void changeTab(qint32 index);
     void createFileMod();
     void createIncludeFileMod();
-    void returnCountText(QString cText, bool matchWhileWordOnly,
+    int returnCountText(QString cText, bool matchWhileWordOnly,
                            bool matchCase);
 
 };

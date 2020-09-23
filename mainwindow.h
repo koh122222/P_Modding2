@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QString>
 #include <QDir>
+#include <QApplication>
 #include <QFile>
 #include <unordered_map>
 #include <QToolBar>
@@ -17,27 +18,28 @@
 #include "toolbar.h"
 #include "findtextdialog.h"
 
-namespace TYPE_MOD {
-    enum EU {
-        IDEAS,
-        EVENTS
-    };
-}
 
+enum TYPE_MOD
+{
+    EU_BEGIN,
+    EU_IDEAS,
+    EU_EVENTS,
+    EU_END
+};
 
-
-using ModMap = std::vector<std::pair<TYPE_MOD::EU, localMap>>;
+using gameModif = std::vector<std::pair<TYPE_MOD, localMap>>;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+    QApplication* mainApp;
     QString gameName;
-
+    std::unordered_map<QString, QString>::iterator nowGame;
     QDir *dirProgram;
     QDir *placeGame;
     QDir *placeMod;
 
-    ModMap* modMap;
+    gameModif* modMap;
 
     void setStyleNight();
     void setStyleLight();
@@ -54,11 +56,13 @@ public:
     FindTextDialog* textFinder;
     WritePlaceDialog* dirFinder;
 
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget *parent = nullptr, QApplication* in_mainApp = nullptr);
     ~MainWindow();
 
     QString getPlaceGame();
     QString getPlaceMod();
+
+    void startReadParameters();
 
 
 

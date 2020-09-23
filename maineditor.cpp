@@ -224,7 +224,7 @@ void MainEditor::forwardText()
         static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
 
-void MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
+qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
                                    bool matchCase)
 {
 
@@ -237,17 +237,12 @@ void MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
     if (!matchCase)
         findExpression.setPatternOptions(
                     QRegularExpression::CaseInsensitiveOption);
-    qDebug() << "st";
-    qDebug() << 1;
-    qDebug() << "st2";
     if (fileEditor->currentWidget() != nullptr)
-        qDebug() << static_cast<CodeEditor*>(fileEditor->currentWidget())
+        countFindName = static_cast<CodeEditor*>(fileEditor->currentWidget())
             ->toPlainText().count(findExpression);
     else
-        return;
-    return;
-
-    return;
+        countFindName = -1;
+    return countFindName;
 }
 
 qint32 MainEditor::lighterFindText(QString fText, bool down)

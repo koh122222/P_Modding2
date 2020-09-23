@@ -34,11 +34,11 @@ public:
     void setFindName(QString setName);
     bool isFind(QString findText);
     void findName(bool isDown);
-
+/*
 signals:
     void testSignal(QString cText, bool matchWhileWordOnly,
                     bool matchCase);
-
+*/
 public slots:
     void findNameDown();
     void findNameUp();
@@ -76,12 +76,15 @@ public:
 class FindTextDialog : public QDialog
 {
     Q_OBJECT
+    QLabel* infoLabel;
     QTabWidget* tabWidget;
     FindTextWidget* findTextWidget;
     RenameTextWidget* renameTextWidget;
 public:
     FindTextDialog(QWidget* parent);
     void startWork();
+    void setInfoLabel(QString str);
+
 public slots:
     void changeTab(int);
 };

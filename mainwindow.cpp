@@ -8,12 +8,14 @@
 
 std::unordered_map<QString, QString> MainWindow::allGameBase
 {
-    {"Europa Universalis IV", "eu4.exe"}
+    {"Europa Universalis IV", "eu4"}
 };
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
     : QMainWindow(parent)
 {
+    qDebug() << this;
+    mainApp = in_mainApp;
     //create main widgets
     QWidget* mainWidget = new QWidget(this);
     setCentralWidget(mainWidget);
@@ -87,6 +89,24 @@ MainWindow::MainWindow(QWidget *parent)
     dirFinder->open();
 }
 
+void MainWindow::startReadParameters()
+{
+    if (nowGame->second == "eu4")
+    {
+        qDebug() << "start par";
+        QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");
+        QString parFiles(QCoreApplication::applicationDirPath() + "//euFiles");
+        localMap tempMap;
+        //std::make_pair<TYPE_MOD::EU, localMap>(TYPE_MOD::IDEAS, tempMap);
+        //modMap->push_back(std::make_pair<TYPE_MOD::EU, localMap>(TYPE_MOD::IDEAS, tempMap));
+        //YAML::reedFile(parFiles + "ideas.txt" ,(modMap->back().second));
+
+
+    }
+    //qDebug() << modMap->back().second.begin()->second;
+
+}
+
 void MainWindow::returnFiles()
 {
     qDebug() << "returns places mod and game from the dialog";
@@ -109,7 +129,7 @@ void MainWindow::returnFiles()
             dirFinder->open();
             return;
         }
-        QFileInfo gameFile(placeGame->path() + "//" + it->second);
+        QFileInfo gameFile(placeGame->path() + "//" + it->second + ".exe");
         if (!(gameFile.exists() && gameFile.isFile()))
         {
             dirFinder->setLiteInfProgram(it->second + " not find in directory");
@@ -118,6 +138,7 @@ void MainWindow::returnFiles()
         }
         //if all normal
         qDebug() << "start writing dir mod and game";
+        nowGame = it;
         QFile writePlaceGame(dirProgram->absolutePath() + "//ProgramFiles//placeGame.txt");
         writePlaceGame.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceGame(&writePlaceGame);
@@ -131,7 +152,7 @@ void MainWindow::returnFiles()
         gameFiles->setGamePlace(placeGame->absolutePath());
         gameFiles->setModPlace(placeMod->absolutePath());
 
-
+        startReadParameters();
         qDebug() << "dialog work";
 
 
@@ -148,20 +169,31 @@ void MainWindow::setStyleNight()
 {
     QPalette darkPalette;
 
-        darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
-        darkPalette.setColor(QPalette::WindowText, Qt::white);
-        darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
-        darkPalette.setColor(QPalette::AlternateBase, QColor(53, 53, 53));
-        darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
-        darkPalette.setColor(QPalette::ToolTipText, Qt::white);
-        darkPalette.setColor(QPalette::Text, Qt::white);
-        darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
-        darkPalette.setColor(QPalette::ButtonText, Qt::white);
-        darkPalette.setColor(QPalette::BrightText, Qt::red);
-        darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
-        darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
-        darkPalette.setColor(QPalette::HighlightedText, Qt::black);
-        setPalette(darkPalette);
+    darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
+    darkPalette.setColor(QPalette::WindowText, Qt::white);
+    darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
+    darkPalette.setColor(QPalette::AlternateBase, QColor(53, 53, 53));
+    darkPalette.setColor(QPalette::ToolTipBase, Qt::white);
+    darkPalette.setColor(QPalette::ToolTipText, Qt::white);
+    darkPalette.setColor(QPalette::Text, Qt::white);
+    darkPalette.setColor(QPalette::Button, QColor(53, 53, 53));
+    darkPalette.setColor(QPalette::ButtonText, Qt::white);
+    darkPalette.setColor(QPalette::BrightText, Qt::red);
+    darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
+    darkPalette.setColor(QPalette::HighlightedText, Qt::black);
+    //setPalette(darkPalette);
+    mainApp->setPalette(darkPalette);
+    //(qApp)->setPalette(darkPalette);
+    //qApp->setP
+    /*
+    toolBar->setPalette(darkPalette);
+    gameFiles->setPalette(darkPalette);
+    mainEditor->setPalette(darkPalette);
+    modifView->setPalette(darkPalette);
+    textFinder->setPalette(darkPalette);*/
+
+
 }
 
 void MainWindow::setStyleLight()

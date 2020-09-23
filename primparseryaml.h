@@ -2,8 +2,9 @@
 #define PRIMPARSERYAML_H
 #include <QFile>
 #include <unordered_map>
+#include <QHash>
 
-using localMap = std::unordered_map<QString, QString>;
+using localMap = QHash<QString, QString>;
 
 namespace YAML
 {

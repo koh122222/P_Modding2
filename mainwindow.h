@@ -24,10 +24,11 @@ enum TYPE_MOD
     EU_BEGIN,
     EU_IDEAS,
     EU_EVENTS,
-    EU_END
+    EU_END,
+    END_TYPE
 };
 
-using gameModif = std::vector<std::pair<TYPE_MOD, localMap>>;
+using gameModif = std::vector<localMap>;
 
 class MainWindow : public QMainWindow
 {
@@ -39,7 +40,7 @@ class MainWindow : public QMainWindow
     QDir *placeGame;
     QDir *placeMod;
 
-    gameModif* modMap;
+    gameModif modMap;
 
     void setStyleNight();
     void setStyleLight();

@@ -5,6 +5,7 @@
 #include <QCoreApplication>
 #include <QFileInfo>
 #include <QMenuBar>
+#include <QHash>
 
 std::unordered_map<QString, QString> MainWindow::allGameBase
 {
@@ -56,6 +57,9 @@ MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
 
     resize(1024, 720);
 
+    modMap.resize(TYPE_MOD::END_TYPE);
+
+
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");
     placeGame = new QDir("");
@@ -97,8 +101,20 @@ void MainWindow::startReadParameters()
         QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");
         QString parFiles(QCoreApplication::applicationDirPath() + "//euFiles");
         localMap tempMap;
-        //std::make_pair<TYPE_MOD::EU, localMap>(TYPE_MOD::IDEAS, tempMap);
-        //modMap->push_back(std::make_pair<TYPE_MOD::EU, localMap>(TYPE_MOD::IDEAS, tempMap));
+        tempMap.insert(QString("4444"), QString("333"));
+        qDebug() << tempMap.size();
+
+
+        //std::pair<TYPE_MOD, localMap> t = std::make_pair<TYPE_MOD, localMap>(TYPE_MOD::EU_IDEAS, localMap{});
+
+
+        //qDebug() << t.second.size() <<"????";
+
+        YAML::reedFile(parFiles + "//eu_ideas.txt", modMap[TYPE_MOD::EU_IDEAS]);
+        for (auto c : modMap[TYPE_MOD::EU_IDEAS])
+            qDebug() << c;
+        qDebug() << modMap[TYPE_MOD::EU_IDEAS].key("OR");
+        //modMap->push_back(tempMap);
         //YAML::reedFile(parFiles + "ideas.txt" ,(modMap->back().second));
 
 

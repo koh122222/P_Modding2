@@ -20,7 +20,7 @@ public:
     void lineNumberAreaPaintEvent(QPaintEvent *event);
     int lineNumberAreaWidth();
     Highlighter* getHighlighter();
-
+    void updateHighlighter();
 protected:
     void resizeEvent(QResizeEvent *event) override;
 

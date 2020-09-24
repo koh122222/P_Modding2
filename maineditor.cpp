@@ -245,6 +245,14 @@ qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
     return countFindName;
 }
 
+void MainEditor::updateAllHighlighter()
+{
+    for (auto c : allOpenFile)
+    {
+        c.second->updateHighlighter();
+    }
+}
+
 qint32 MainEditor::lighterFindText(QString fText, bool down)
 {
 
@@ -257,6 +265,7 @@ qint32 MainEditor::lighterFindText(QString fText, bool down)
 void MainEditor::resizeEvent(QResizeEvent *event)
 {
     //QWidget::resizeEvent(event); //why not need? okey
+    updateAllHighlighter();
     if (createFileModButton != nullptr && (fileEditor->currentIndex() == -1));
         createFileModButton->resizeGeometryEvent();
 }

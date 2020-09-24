@@ -23,6 +23,7 @@ class Highlighter : public QSyntaxHighlighter
 
 public:
     Highlighter(QTextDocument *parent);
+    void updateHighLighter(const QString &text);
 protected:
     void highlightBlock(const QString &text) override;
 };

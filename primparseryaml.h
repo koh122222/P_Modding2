@@ -3,8 +3,7 @@
 #include <QFile>
 #include <unordered_map>
 #include <QHash>
-
-using localMap = QHash<QString, QString>;
+#include "allpar.h"
 
 namespace YAML
 {

@@ -17,18 +17,8 @@
 #include <modifView.h>
 #include "toolbar.h"
 #include "findtextdialog.h"
+#include "allpar.h"
 
-
-enum TYPE_MOD
-{
-    EU_BEGIN,
-    EU_IDEAS,
-    EU_EVENTS,
-    EU_END,
-    END_TYPE
-};
-
-using gameModif = std::vector<localMap>;
 
 class MainWindow : public QMainWindow
 {
@@ -40,7 +30,6 @@ class MainWindow : public QMainWindow
     QDir *placeGame;
     QDir *placeMod;
 
-    gameModif modMap;
 
     void setStyleNight();
     void setStyleLight();
@@ -48,6 +37,8 @@ class MainWindow : public QMainWindow
 public:
 
     static std::unordered_map<QString, QString>  allGameBase;
+
+    //static std::array<QColor, TYPE_MOD::END_TYPE> highlighter_light;
 
     ToolBar* toolBar;
     GameFiles* gameFiles;
@@ -64,6 +55,7 @@ public:
     QString getPlaceMod();
 
     void startReadParameters();
+    void updateParameters();
 
 
 

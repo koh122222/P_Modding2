@@ -1,13 +1,31 @@
 #include "highlighter.h"
+#include "allpar.h"
+#include <QDebug>
 
 Highlighter::Highlighter(QTextDocument *parent)
     :QSyntaxHighlighter(parent)
 {
-    findFormat.setForeground(Qt::darkGreen);
-    findFormat.setFontWeight(QFont::Bold);
-    findFormat.setBackground(Qt::green);
-    highlightingRules.append(
-                HighlightingRule{QRegularExpression("\\btest\\b"), findFormat});
+    ;
+}
+
+void Highlighter::updateHighLighter(const QString &text)
+{
+    highlightingRules.resize(0);
+    //findFormat.setForeground(AllPar::highlighter_light[TYPE_MOD::EU_EVENTS]);
+    //findFormat.setFontWeight(QFont::Bold);
+    //findFormat.setBackground(Qt::green);
+    for (int i = TYPE_MOD::EU_BEGIN; i < TYPE_MOD::END_TYPE; ++i)// : AllPar::highlighter_light)
+    {
+        findFormat.setForeground(AllPar::highlighter_light[i]);
+        for (auto c : AllPar::modMap[i])
+        {
+            QString regExp = "";
+            regExp += QStringLiteral("\\b") + c.first + QStringLiteral("\\b");
+            highlightingRules.append(
+                    HighlightingRule{QRegularExpression(regExp), findFormat});
+        }
+    }
+    rehighlight();
 }
 
 void Highlighter::highlightBlock(const QString &text)

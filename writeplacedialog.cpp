@@ -19,7 +19,7 @@ WritePlaceDialog::WritePlaceDialog(QWidget* parent)
     placeModBox = new QComboBox(this);
     {
         qint32 i = 0;
-        for (auto& c : static_cast<MainWindow*>(parent)->allGameBase)
+        for (auto& c : AllPar::allGameBase)
         {
             nowGameBox->insertItem(i, c.first);
             ++i;

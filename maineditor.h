@@ -56,7 +56,7 @@ public:
     void forwardText();
 
 
-
+    void updateAllHighlighter();
     qint32 lighterFindText(QString fText, bool down);
 
 

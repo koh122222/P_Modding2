@@ -41,9 +41,9 @@ void ModifView::modifierOpener()
     //opener3();
 
     modifierMap = new localMap;
-    for (int i = 0; i <modifiers.size();++i)
+    for (int i = 0; i <modifiers.size(); ++i)
     {
-        modifierMap->insert(modifiers[i]+":0"," (0)_(0) Че смотришь ? ");
+        modifierMap->insert(localMap::value_type(modifiers[i]+":0"," (0)_(0) Че смотришь ? "));
     }
     /*
     for (auto it = allMap->begin();it !=allMap->end();++it)
@@ -329,20 +329,20 @@ void ModifView::localOpener()
     for (auto it = allMap->begin();it !=allMap->end();++it)
     {
 
-        QString TechName = it.key();
-        QString LocalName = it.value();
+        QString TechName = it->first;
+        QString LocalName = it->second;
         if (messagePoint(LocalName))
         {
-            textMap->insert(TechName,LocalName);
+            textMap->insert(localMap::value_type(TechName,LocalName));
         }
 
         if (tagPoint(TechName)||adj_tagPoint(TechName))
         {
-            tagMap->insert(TechName,LocalName);
+            tagMap->insert(localMap::value_type(TechName,LocalName));
         }
         if (eventPoint(TechName))
         {
-            eventMap->insert(TechName,LocalName);
+            eventMap->insert(localMap::value_type(TechName,LocalName));
 
         }
     }
@@ -428,9 +428,9 @@ void ModifView::allPrint(int a)
         QString text ;
         for (auto it = allMap->begin();it !=allMap->end();++it)
         {
-            text+=it.key();
+            text+=it->first;
             text+=" | ";
-            text+=it.value();
+            text+=it->second;
             text+="\n";
         }
         testEditor->setText(text);
@@ -446,9 +446,9 @@ void ModifView::textPrint(int a)
         QString text;
         for (auto it = textMap->begin();it !=textMap->end();++it)
         {
-            text+=it.key();
+            text+=it->first;
             text+=" | ";
-            text+=it.value();
+            text+=it->second;
             text+="\n";
         }
         testEditor->setText(text);
@@ -464,9 +464,9 @@ void ModifView::modifierPrint(int a)
         QString text ;
         for (auto it = modifierMap->begin();it !=modifierMap->end();++it)
         {
-            text+=it.key();
+            text+=it->first;
             text+=" | ";
-            text+=it.value();
+            text+=it->second;
             text+="\n";
             //qDebug()<<"Кох - пидор";
         }
@@ -483,9 +483,9 @@ void ModifView::eventPrint(int a)
         QString text ;
         for (auto it = eventMap->begin();it !=eventMap->end();++it)
         {
-            text+=it.key();
+            text+=it->first;
             text+=" | ";
-            text+=it.value();
+            text+=it->second;
             text+="\n";
         }
         testEditor->setText(text);
@@ -502,9 +502,9 @@ void ModifView::tagPrint(int a)
         QString text;
         for (auto it = tagMap->begin();it !=tagMap->end();++it)
         {
-            text+=it.key();
+            text+=it->first;
             text+=" | ";
-            text+=it.value();
+            text+=it->second;
             text+="\n";
         }
         testEditor->setText(text);

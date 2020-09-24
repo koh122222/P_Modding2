@@ -7,10 +7,8 @@
 #include <QMenuBar>
 #include <QHash>
 
-std::unordered_map<QString, QString> MainWindow::allGameBase
-{
-    {"Europa Universalis IV", "eu4"}
-};
+
+
 
 MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
     : QMainWindow(parent)
@@ -51,14 +49,9 @@ MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
     connect(nightStyleAction, &QAction::triggered, this, &MainWindow::setStyleNight);
     options_menuBar->addAction(nightStyleAction);
 
-
-
-
-
     resize(1024, 720);
 
-    modMap.resize(TYPE_MOD::END_TYPE);
-
+    AllPar::modMap.resize(TYPE_MOD::END_TYPE);
 
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");
@@ -100,20 +93,15 @@ void MainWindow::startReadParameters()
         qDebug() << "start par";
         QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");
         QString parFiles(QCoreApplication::applicationDirPath() + "//euFiles");
-        localMap tempMap;
-        tempMap.insert(QString("4444"), QString("333"));
-        qDebug() << tempMap.size();
-
-
-        //std::pair<TYPE_MOD, localMap> t = std::make_pair<TYPE_MOD, localMap>(TYPE_MOD::EU_IDEAS, localMap{});
-
-
-        //qDebug() << t.second.size() <<"????";
-
-        YAML::reedFile(parFiles + "//eu_ideas.txt", modMap[TYPE_MOD::EU_IDEAS]);
-        for (auto c : modMap[TYPE_MOD::EU_IDEAS])
+        YAML::reedFile(parFiles + "//eu_ideas.txt", AllPar::modMap[TYPE_MOD::EU_IDEAS]);
+        YAML::reedFile(parFiles + "//eu_events.txt", AllPar::modMap[TYPE_MOD::EU_EVENTS]);
+        for (auto c : AllPar::modMap[TYPE_MOD::EU_IDEAS])
             qDebug() << c;
-        qDebug() << modMap[TYPE_MOD::EU_IDEAS].key("OR");
+        for (auto c : AllPar::modMap[TYPE_MOD::EU_EVENTS])
+            qDebug() << c;
+        for (auto c : AllPar::modMap[TYPE_MOD::EU_EVENTS])
+            qDebug() << c;
+        //qDebug() << modMap[TYPE_MOD::EU_IDEAS].key("OR");
         //modMap->push_back(tempMap);
         //YAML::reedFile(parFiles + "ideas.txt" ,(modMap->back().second));
 
@@ -123,6 +111,10 @@ void MainWindow::startReadParameters()
 
 }
 
+void MainWindow::updateParameters()
+{
+
+}
 void MainWindow::returnFiles()
 {
     qDebug() << "returns places mod and game from the dialog";
@@ -138,8 +130,8 @@ void MainWindow::returnFiles()
     }
     else
     {
-        std::unordered_map<QString, QString>::iterator it = allGameBase.find(dirFinder->getNowGame());
-        if (it == allGameBase.end())
+        std::unordered_map<QString, QString>::iterator it = AllPar::allGameBase.find(dirFinder->getNowGame());
+        if (it == AllPar::allGameBase.end())
         {
             dirFinder->setLiteInfProgram("The selected game is not supported");
             dirFinder->open();

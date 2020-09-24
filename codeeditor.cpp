@@ -15,6 +15,11 @@ CodeEditor::CodeEditor(QWidget *parent) : QPlainTextEdit(parent)
     highlightCurrentLine();
 }
 
+void CodeEditor::updateHighlighter()
+{
+    highlighter->updateHighLighter(toPlainText());
+}
+
 int CodeEditor::lineNumberAreaWidth()
 {
     int digits = 1;

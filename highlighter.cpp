@@ -17,7 +17,7 @@ void Highlighter::updateHighLighter(const QString &text)
     for (int i = TYPE_MOD::EU_BEGIN; i < TYPE_MOD::END_TYPE; ++i)// : AllPar::highlighter_light)
     {
         findFormat.setForeground(AllPar::highlighter_light[i]);
-        for (auto c : AllPar::modMap[i])
+        for (auto c : AllPar::modVector[i])
         {
             QString regExp = "";
             regExp += QStringLiteral("\\b") + c.first + QStringLiteral("\\b");

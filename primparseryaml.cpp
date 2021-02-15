@@ -20,3 +20,17 @@ void YAML::reedFile(QString adress, localMap& strMap)
     }
     file.close();
 }
+
+void writeFile(QString adress, localMap& strMap)
+{
+    QFile file(adress);
+    file.open(QFile::WriteOnly | QFile::Text);
+    QTextStream out(&file);
+    out << adress.mid(adress.lastIndexOf('/'), adress.lastIndexOf('.')) + ":\n";
+    for (auto &c : strMap)
+    {
+        out << " " << c.first << " \"" << c.second << "\"";
+    }
+    file.close();
+}
+

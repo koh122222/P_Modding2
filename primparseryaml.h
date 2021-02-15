@@ -8,6 +8,7 @@
 namespace YAML
 {
     void reedFile(QString adress, localMap& strMap);
+    void writeFile(QString adress, localMap& strMap);
 }
 
 #endif // PRIMPARSERYAML_H

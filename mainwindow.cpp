@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
 
     resize(1024, 720);
 
-    AllPar::modMap.resize(TYPE_MOD::END_TYPE);
+    AllPar::modVector.resize(TYPE_MOD::END_TYPE);
 
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");
@@ -93,13 +93,13 @@ void MainWindow::startReadParameters()
         qDebug() << "start par";
         QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");
         QString parFiles(QCoreApplication::applicationDirPath() + "//euFiles");
-        YAML::reedFile(parFiles + "//eu_ideas.txt", AllPar::modMap[TYPE_MOD::EU_IDEAS]);
-        YAML::reedFile(parFiles + "//eu_events.txt", AllPar::modMap[TYPE_MOD::EU_EVENTS]);
-        for (auto c : AllPar::modMap[TYPE_MOD::EU_IDEAS])
+        YAML::reedFile(parFiles + "//eu_ideas.txt", AllPar::modVector[TYPE_MOD::EU_IDEAS]);
+        YAML::reedFile(parFiles + "//eu_events.txt", AllPar::modVector[TYPE_MOD::EU_EVENTS]);
+        for (auto c : AllPar::modVector[TYPE_MOD::EU_IDEAS])
             qDebug() << c;
-        for (auto c : AllPar::modMap[TYPE_MOD::EU_EVENTS])
+        for (auto c : AllPar::modVector[TYPE_MOD::EU_EVENTS])
             qDebug() << c;
-        for (auto c : AllPar::modMap[TYPE_MOD::EU_EVENTS])
+        for (auto c : AllPar::modVector[TYPE_MOD::EU_EVENTS])
             qDebug() << c;
         //qDebug() << modMap[TYPE_MOD::EU_IDEAS].key("OR");
         //modMap->push_back(tempMap);

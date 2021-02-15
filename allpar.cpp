@@ -14,7 +14,7 @@ std::unordered_map<QString, QString> AllPar::allGameBase
     {QStringLiteral("Europa Universalis IV"), QStringLiteral("eu4")}
 };
 
-gameModif AllPar::modMap
+gameModif AllPar::modVector
 {
 
 };

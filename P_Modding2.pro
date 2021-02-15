@@ -27,6 +27,7 @@ SOURCES += \
     mainwindow.cpp \
     modifOpener.cpp \
     modifView.cpp \
+    modmodel.cpp \
     newfilebutton.cpp \
     onlyfilesystemmodel.cpp \
     primparseryaml.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     mainwindow.h \
     modifOpener.h \
     modifView.h \
+    modmodel.h \
     newfilebutton.h \
     onlyfilesystemmodel.h \
     primparseryaml.h \

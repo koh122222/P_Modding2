@@ -4,6 +4,7 @@
 #include <QColor>
 #include <unordered_map>
 #include "highlighter.h"
+#include "modmodel.h"
 
 using localMap = std::unordered_map<QString, QString>;
 using gameModif = std::vector<localMap>;
@@ -25,7 +26,7 @@ static std::array<QColor, TYPE_MOD::END_TYPE> highlighter_light;
 
 static std::unordered_map<QString, QString> allGameBase;
 
-static gameModif modMap;
+static gameModif modVector;
 
 
 };

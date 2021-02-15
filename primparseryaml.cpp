@@ -1,8 +1,9 @@
 #include "primparseryaml.h"
 #include <QTextStream>
 #include <QDebug>
-void YAML::reedFile(QString adress, localMap& strMap)
+void YAML::reedFile(QString adress, ModModel& strMap)
 {
+    qDebug() << "start reed " + adress;
     QFile file(adress);
     file.open(QFile::ReadOnly | QFile::Text);
     QTextStream in(&file);
@@ -11,17 +12,16 @@ void YAML::reedFile(QString adress, localMap& strMap)
     while (!in.atEnd())
     {
         QString line = in.readLine();
-        //qDebug()<<line;
         if (line.size() == 0)
             continue;
         qint32 startStr = line.indexOf("\"");
-        strMap.insert(localMap::value_type(line.mid(1, line.indexOf(" ", 1) - 1), //code name
+        strMap.insert(ModModel::value_type(line.mid(1, line.indexOf(" ", 1) - 1), //code name
                                                  line.mid(startStr + 1, line.indexOf("\"", startStr + 1) - startStr - 1))); //realy name
     }
     file.close();
 }
 
-void writeFile(QString adress, localMap& strMap)
+void writeFile(QString adress, ModModel& strMap)
 {
     QFile file(adress);
     file.open(QFile::WriteOnly | QFile::Text);

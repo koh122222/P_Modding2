@@ -27,8 +27,8 @@ public:
         FIND_TEXT,
         REPLACE_WORD,
         INCREASE_TEXT,
-        REDUCE_TEXT
-
+        REDUCE_TEXT,
+        GREAT_BUTTON
     };
     ToolBar(QWidget *parent);
 };

@@ -73,7 +73,7 @@ public slots:
     void slotPress_ctrlY(); // there is no direct keyboard binding
     void slotPress_ctrlF();
 
-
+    void greatBUTTON();
 
 };
 #endif // MAINWINDOW_H

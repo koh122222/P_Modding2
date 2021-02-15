@@ -24,11 +24,11 @@ class ModifView : public QWidget
     QString currentText;
 
 public:
-    localMap* allMap;
-    localMap* textMap;
-    localMap* tagMap;
-    localMap* eventMap;
-    localMap* modifierMap;
+    ModModel* allMap;
+    ModModel* textMap;
+    ModModel* tagMap;
+    ModModel* eventMap;
+    ModModel* modifierMap;
 
     std::vector <QString> modifiers;
 

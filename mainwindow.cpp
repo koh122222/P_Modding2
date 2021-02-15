@@ -266,3 +266,9 @@ void MainWindow::slotPress_ctrlF()
 {
     textFinder->startWork();
 }
+
+void MainWindow::greatBUTTON()
+{
+    AllPar::modVector[EU_IDEAS].insert(ModModel::value_type("testIdea1", "testIdea111111"));
+    qDebug() << AllPar::modVector[EU_IDEAS].mainItems();
+}

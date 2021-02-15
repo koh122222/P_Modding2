@@ -6,8 +6,7 @@
 #include "highlighter.h"
 #include "modmodel.h"
 
-using localMap = std::unordered_map<QString, QString>;
-using gameModif = std::vector<localMap>;
+using gameModif = std::vector<ModModel>;
 
 enum TYPE_MOD
 {

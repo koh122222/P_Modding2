@@ -40,10 +40,10 @@ void ModifView::modifierOpener()
     //ideasOpen ();
     //opener3();
 
-    modifierMap = new localMap;
+    modifierMap = new ModModel;
     for (int i = 0; i <modifiers.size(); ++i)
     {
-        modifierMap->insert(localMap::value_type(modifiers[i]+":0"," (0)_(0) Че смотришь ? "));
+        modifierMap->insert(ModModel::value_type(modifiers[i]+":0"," (0)_(0) Че смотришь ? "));
     }
     /*
     for (auto it = allMap->begin();it !=allMap->end();++it)
@@ -54,7 +54,7 @@ void ModifView::modifierOpener()
             if ((modifiers[i]+":0"== TechName) || ("custom_idea_"+modifiers[i]+":0"== TechName))
             {
 
-                modifierMap->insert(localMap::value_type(TechName,LocalName));
+                modifierMap->insert(ModModel::value_type(TechName,LocalName));
             }
     }*/
 }
@@ -314,10 +314,10 @@ void ModifView::localOpener()
     QDir local(filePlace);
     QStringList names = local.entryList();
 
-    allMap = new localMap;
-    textMap = new localMap;
-    tagMap = new localMap;
-    eventMap = new localMap;
+    allMap = new ModModel;
+    textMap = new ModModel;
+    tagMap = new ModModel;
+    eventMap = new ModModel;
     for (int i = 0; i< names.size();++i)
     {
         if (names[i].right(11)=="english.yml")
@@ -333,16 +333,16 @@ void ModifView::localOpener()
         QString LocalName = it->second;
         if (messagePoint(LocalName))
         {
-            textMap->insert(localMap::value_type(TechName,LocalName));
+            textMap->insert(ModModel::value_type(TechName,LocalName));
         }
 
         if (tagPoint(TechName)||adj_tagPoint(TechName))
         {
-            tagMap->insert(localMap::value_type(TechName,LocalName));
+            tagMap->insert(ModModel::value_type(TechName,LocalName));
         }
         if (eventPoint(TechName))
         {
-            eventMap->insert(localMap::value_type(TechName,LocalName));
+            eventMap->insert(ModModel::value_type(TechName,LocalName));
 
         }
     }

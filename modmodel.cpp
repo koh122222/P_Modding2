@@ -1,14 +1,24 @@
 #include "modmodel.h"
-
+#include <QDebug>
 
 ModModel::ModModel()
 {
-    items.push_back(std::make_pair<QString, QString>("ffff2", "ssss2"));
-    items.push_back(std::make_pair<QString, QString>("ffff1", "ssss1"));
-    items.push_back(std::make_pair<QString, QString>("ffff3", "ssss3"));
-
 }
 
+ModModel::ModModel(const ModModel& copyEl)
+{
+    qDebug() << "COPY MODMODEL " << copyEl.items[0].first;
+    items = copyEl.items;
+}
+
+ModModel& ModModel::operator=(const ModModel& copyEl)
+{
+    qDebug() << "COPY MODMODEL2 " << copyEl.items[0].first;
+    if (this == &copyEl)
+        return *this;
+    items = copyEl.items;
+    return *this;
+}
 int ModModel::rowCount(const QModelIndex &parent) const
 {
     return items.size();
@@ -46,6 +56,16 @@ void ModModel::sort(int column, Qt::SortOrder orde)
     { return lhs.first < rhs.first; });
 }
 
+ModPair* ModModel::begin()
+{
+    return &*(items.begin());
+}
+
+ModPair* ModModel::end()
+{
+    return &*(items.end());
+}
+
 QString ModModel::getCodeName(QString& findLName)
 {
     auto needPair = std::lower_bound(items.begin(), items.end(), findLName, []
@@ -69,17 +89,22 @@ QString ModModel::getLanguageName(QString& findCName)
         return QString("PM_THE_ELEMENT_WILL_NOT_FIND");
 }
 
-bool ModModel::insertMod(ModPair pMod)
+bool ModModel::insert(ModPair pMod)
 {
     auto startPair = std::lower_bound(items.begin(), items.end(), pMod);
     items.insert(startPair, pMod);
     return true;
 }
 
-bool ModModel::eraseMod(ModPair pMod)
+bool ModModel::erase(ModPair pMod)
 {
     auto delPair = std::lower_bound(items.begin(), items.end(), pMod);
     if (*delPair == pMod)
     items.erase(delPair);
     return true;
+}
+
+std::vector<ModPair>& ModModel::mainItems()
+{
+    return items;
 }

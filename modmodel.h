@@ -14,6 +14,8 @@ class ModModel : public QAbstractTableModel
     std::vector<ModPair> items;
 public:
     ModModel();
+    ModModel(const ModModel& copyEl);
+    ModModel& operator=(const ModModel& copyEl);
 private:
     int rowCount(const QModelIndex &parent) const;
     int columnCount(const QModelIndex &parent) const;
@@ -22,11 +24,19 @@ private:
     void sort(int column = 0, Qt::SortOrder order = Qt::AscendingOrder);
 
 public:
+    ModPair* begin();
+    ModPair* end();
+
     QString getCodeName(QString& findLName);
     QString getLanguageName(QString& findCName);
+    bool insert(ModPair pMod);
+    bool erase(ModPair pMod);
 
-    bool insertMod(ModPair pMod);
-    bool eraseMod(ModPair pMod);
+
+    //temp
+    std::vector<ModPair>& mainItems();
+
+    using value_type = ModPair;
 };
 
 #endif // MODMODEL_H

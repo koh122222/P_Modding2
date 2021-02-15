@@ -34,7 +34,8 @@ ToolBar::ToolBar(QWidget* parent)
     addSeparator();
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_increaseText.png"), "increase (crtl + mouse wheel forward)"));
     allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_reduceText.png"), "reduce (crtl + mouse wheel backward)"));
-
+    allActionButton.push_back(addAction(QIcon("://resources//toolIcon//icon_GREATBUTTON.png"), "GREAT BUTTON",
+                               parent->parent(), SLOT(greatBUTTON())));
 
 
     //connect(allActionButton[SAVE_FILE], )

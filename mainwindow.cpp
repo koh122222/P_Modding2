@@ -176,7 +176,7 @@ MainWindow::~MainWindow()
 void MainWindow::setStyleNight()
 {
     QPalette darkPalette;
-
+/*
     darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
     darkPalette.setColor(QPalette::WindowText, Qt::white);
     darkPalette.setColor(QPalette::Base, QColor(25, 25, 25));
@@ -190,17 +190,9 @@ void MainWindow::setStyleNight()
     darkPalette.setColor(QPalette::Link, QColor(42, 130, 218));
     darkPalette.setColor(QPalette::Highlight, QColor(42, 130, 218));
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
-    //setPalette(darkPalette);
     mainApp->setPalette(darkPalette);
-    //(qApp)->setPalette(darkPalette);
-    //qApp->setP
-    /*
-    toolBar->setPalette(darkPalette);
-    gameFiles->setPalette(darkPalette);
-    mainEditor->setPalette(darkPalette);
-    modifView->setPalette(darkPalette);
-    textFinder->setPalette(darkPalette);*/
-
+*/
+    qApp->setStyleSheet("QPlainTextEdit { background-color: #363636 }");
 
 }
 

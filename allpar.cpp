@@ -1,6 +1,6 @@
 #include "allpar.h"
 
-std::array<QColor, TYPE_MOD::END_TYPE> AllPar::highlighter_light
+std::array<QColor, TYPE_MOD::M_END_TYPE> AllPar::highlighter_light
 {
     QColor{}, //EU_BEGIN
     QColor{70, 99, 41}, //EU_IDEAS
@@ -17,4 +17,12 @@ std::unordered_map<QString, QString> AllPar::allGameBase
 gameModif AllPar::modVector
 {
 
+};
+
+std::vector<std::unordered_map<QString, QString>> AllPar::interface_colors
+{
+    {//DARK
+        {QStringLiteral("mainColor"), QStringLiteral("#363636")},
+        {QStringLiteral("lightBorderColor"), QStringLiteral("#121212")}
+    }
 };

@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
 
     resize(1024, 720);
 
-    AllPar::modVector.resize(TYPE_MOD::END_TYPE);
+    AllPar::modVector.resize(TYPE_MOD::M_END_TYPE);
 
     dirProgram = new QDir(QCoreApplication::applicationDirPath());
     dirProgram->mkdir("ProgramFiles");
@@ -93,13 +93,13 @@ void MainWindow::startReadParameters()
         qDebug() << "start par";
         QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");
         QString parFiles(QCoreApplication::applicationDirPath() + "//euFiles");
-        YAML::reedFile(parFiles + "//eu_ideas.txt", AllPar::modVector[TYPE_MOD::EU_IDEAS]);
-        YAML::reedFile(parFiles + "//eu_events.txt", AllPar::modVector[TYPE_MOD::EU_EVENTS]);
-        for (auto c : AllPar::modVector[TYPE_MOD::EU_IDEAS])
+        YAML::reedFile(parFiles + "//eu_ideas.txt", AllPar::modVector[TYPE_MOD::M_EU_IDEAS]);
+        YAML::reedFile(parFiles + "//eu_events.txt", AllPar::modVector[TYPE_MOD::M_EU_EVENTS]);
+        for (auto c : AllPar::modVector[TYPE_MOD::M_EU_IDEAS])
             qDebug() << c;
-        for (auto c : AllPar::modVector[TYPE_MOD::EU_EVENTS])
+        for (auto c : AllPar::modVector[TYPE_MOD::M_EU_EVENTS])
             qDebug() << c;
-        for (auto c : AllPar::modVector[TYPE_MOD::EU_EVENTS])
+        for (auto c : AllPar::modVector[TYPE_MOD::M_EU_EVENTS])
             qDebug() << c;
         //qDebug() << modMap[TYPE_MOD::EU_IDEAS].key("OR");
         //modMap->push_back(tempMap);
@@ -175,7 +175,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setStyleNight()
 {
-    QPalette darkPalette;
+    //QPalette darkPalette;
 /*
     darkPalette.setColor(QPalette::Window, QColor(53, 53, 53));
     darkPalette.setColor(QPalette::WindowText, Qt::white);
@@ -192,7 +192,31 @@ void MainWindow::setStyleNight()
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
     mainApp->setPalette(darkPalette);
 */
-    qApp->setStyleSheet("QPlainTextEdit { background-color: #363636 }");
+    std::unordered_map<QString, QString> iColors = AllPar::interface_colors[AllPar::VT_DARK];
+    qDebug() << iColors["mainColor"]; //color: #dedede
+    qApp->setStyleSheet(
+            "QWidget"
+            "{"
+            "   background-color: " + iColors["mainColor"] + ";"
+            "   color: #dedede"
+            "}"
+            "QLineEdit"
+            "{"
+            "   background-color: " + iColors["mainColor"] + ";"
+            "   border-radius: 4px;"
+            "   border-style: outset;"
+            "   border-width: 1px;"
+            "   border-color: " + iColors["lightBorderColor"] + ""
+            "}"
+            "QPlainTextEdit"
+            "{"
+            "   background-color: " + iColors["mainColor"] + ";"
+            "}"
+            "QTreeView"
+            "{"
+            "}"
+
+        );
 
 }
 
@@ -261,6 +285,6 @@ void MainWindow::slotPress_ctrlF()
 
 void MainWindow::greatBUTTON()
 {
-    AllPar::modVector[EU_IDEAS].insert(ModModel::value_type("testIdea1", "testIdea111111"));
-    qDebug() << AllPar::modVector[EU_IDEAS].mainItems();
+    AllPar::modVector[M_EU_IDEAS].insert(ModModel::value_type("testIdea1", "testIdea111111"));
+    qDebug() << AllPar::modVector[M_EU_IDEAS].mainItems();
 }

@@ -14,7 +14,7 @@ void Highlighter::updateHighLighter(const QString &text)
     //findFormat.setForeground(AllPar::highlighter_light[TYPE_MOD::EU_EVENTS]);
     //findFormat.setFontWeight(QFont::Bold);
     //findFormat.setBackground(Qt::green);
-    for (int i = TYPE_MOD::EU_BEGIN; i < TYPE_MOD::END_TYPE; ++i)// : AllPar::highlighter_light)
+    for (int i = TYPE_MOD::M_EU_BEGIN; i < TYPE_MOD::M_END_TYPE; ++i)// : AllPar::highlighter_light)
     {
         findFormat.setForeground(AllPar::highlighter_light[i]);
         for (auto c : AllPar::modVector[i])

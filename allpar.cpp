@@ -22,7 +22,9 @@ gameModif AllPar::modVector
 std::vector<std::unordered_map<QString, QString>> AllPar::interface_colors
 {
     {//DARK
-        {QStringLiteral("mainColor"), QStringLiteral("#363636")},
+        {QStringLiteral("mainBGColor"), QStringLiteral("#2e2f30")},
+        {QStringLiteral("secondBGColor"), QStringLiteral("#404142")},
+        {QStringLiteral("mainTextColor"), QStringLiteral("#d0d0d0")},
         {QStringLiteral("lightBorderColor"), QStringLiteral("#121212")}
     }
 };

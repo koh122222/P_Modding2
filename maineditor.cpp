@@ -255,9 +255,66 @@ void MainEditor::updateAllHighlighter()
 
 qint32 MainEditor::lighterFindText(QString fText, bool down)
 {
+    QTextCursor nowCursor = static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor();
+    qint32 nowPt;
+    qint32 newPt;
+    if (down)
+    {
+        //to move to the next word
+        nowCursor.movePosition(QTextCursor::EndOfWord);
+        nowPt = nowCursor.position();
+
+        newPt = static_cast<CodeEditor*>(fileEditor->currentWidget())->toPlainText().mid(nowPt).indexOf(fText);
+        if (newPt != -1) //add start str if find
+        {
+            newPt += nowPt;
+        }
+        if (newPt == -1) //if dont find after ptr
+        {
+            newPt = static_cast<CodeEditor*>(fileEditor->currentWidget())->toPlainText().mid(0, nowPt).indexOf(fText);
+        }
+    }
+    else
+    {
+        //to move to the next word
+        nowCursor.movePosition(QTextCursor::StartOfWord);
+        nowPt = nowCursor.position();
+
+        newPt = static_cast<CodeEditor*>(fileEditor->currentWidget())->toPlainText().mid(0, nowPt).lastIndexOf(fText);
+        if (newPt == -1) //if dont find before ptr
+        {
+            newPt = static_cast<CodeEditor*>(fileEditor->currentWidget())->toPlainText().mid(nowPt).lastIndexOf(fText);
+            if (newPt != -1) //if find
+                newPt += nowPt;
+        }
+    }
+
+    if (newPt != -1) // if find
+    {
+        newPt += fText.size();
+        QTextCursor ptr = static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor();
+        ptr.setPosition(newPt);
+        static_cast<CodeEditor*>(fileEditor->currentWidget())->setTextCursor(ptr);
+        return static_cast<CodeEditor*>(fileEditor->currentWidget())->toPlainText().count(fText);
+    }
+    else
+    {
+        return 0;
+    }
 
 
 
+
+    /*
+    qDebug() << "start ligherFindT";
+    qint32 newPt = static_cast<CodeEditor*>(fileEditor->currentWidget())->toPlainText().indexOf(fText);
+    qDebug() << newPt;
+     qDebug() << static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor().position();
+     QTextCursor ptr = static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor();
+     ptr.setPosition(newPt);
+    static_cast<CodeEditor*>(fileEditor->currentWidget())->setTextCursor(ptr);
+    qDebug() << static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor().position();
+*/
     //temp
     return 5;
 }

@@ -12,10 +12,10 @@
 #include "codeeditor.h"
 #include "createcopynewfiledialog.h"
 
-
 class NewFileButton;
 
 using AllOpenFile = std::unordered_map<QString, CodeEditor*>;
+//#define nowCodeEditor static_cast<CodeEditor*>(fileEditor->currentWidget());
 
 class MainEditor : public QWidget
 {

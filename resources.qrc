@@ -17,5 +17,6 @@
         <file>toolIcon/icon_saveAllFile.png</file>
         <file>toolIcon/icon_cutText.png</file>
         <file>toolIcon/icon_GREATBUTTON.png</file>
+        <file>interfaceImage/arrow_top.png</file>
     </qresource>
 </RCC>

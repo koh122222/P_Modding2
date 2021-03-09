@@ -24,7 +24,13 @@ std::vector<std::unordered_map<QString, QString>> AllPar::interface_colors
     {//DARK
         {QStringLiteral("mainBGColor"), QStringLiteral("#2e2f30")},
         {QStringLiteral("secondBGColor"), QStringLiteral("#404142")},
+        {QStringLiteral("selectBGColor"), QStringLiteral("#5e5f60")},
+        {QStringLiteral("selectBGColor2"), QStringLiteral("#1d545c")},
         {QStringLiteral("mainTextColor"), QStringLiteral("#d0d0d0")},
-        {QStringLiteral("lightBorderColor"), QStringLiteral("#121212")}
+        {QStringLiteral("lightBorderColor"), QStringLiteral("#121212")},
+        {QStringLiteral("lightBorderColor2"), QStringLiteral("#303030")},
+        {QStringLiteral("lightBorderColor3"), QStringLiteral("#666768")},
+        {QStringLiteral("scrollHandle"), QStringLiteral("#4a4b4c")}
+
     }
 };

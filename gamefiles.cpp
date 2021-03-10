@@ -33,7 +33,7 @@ GameFiles::GameFiles(QWidget *parent)
     splitter = new QSplitter(this);
     layout = new QVBoxLayout(this);
     splitter->setOrientation(Qt::Vertical);
-    splitter->setHandleWidth(1);
+    splitter->setHandleWidth(0);
     splitter->addWidget(mainTree);
     splitter->addWidget(favouritesTree);
     layout->addWidget(splitter);

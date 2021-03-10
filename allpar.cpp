@@ -30,7 +30,7 @@ std::vector<std::unordered_map<QString, QString>> AllPar::interface_colors
         {QStringLiteral("lightBorderColor"), QStringLiteral("#121212")},
         {QStringLiteral("lightBorderColor2"), QStringLiteral("#303030")},
         {QStringLiteral("lightBorderColor3"), QStringLiteral("#666768")},
-        {QStringLiteral("scrollHandle"), QStringLiteral("#4a4b4c")}
+        {QStringLiteral("scrollHandle"), QStringLiteral("#505051")}
 
     }
 };

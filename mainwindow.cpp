@@ -13,7 +13,7 @@
 MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
     : QMainWindow(parent)
 {
-    //setStyleNight();
+    setStyleNight();
     qDebug() << this;
     mainApp = in_mainApp;
     //create main widgets
@@ -253,47 +253,48 @@ void MainWindow::setStyleNight()
             "   border-left-width: 0px;"
             "   height: 1.2em;"
             "}"
-            "QScrollBar:vertical"
+
+
+            "QScrollBar:vertical "
             "{"
             "   border-style: solid;"
             "   border-width: 1px;"
-            "   border-color: green;"//" + iColors["lightBorderColor3"] + ";"
-            "   background:" + iColors["secondBGColor"] + ";"
-            "   width: 15px;"
-            "   margin: 22px 0px 22px 0px;"
+            "   border-right-width: 0px;"
+            "   border-color:" + iColors["lightBorderColor"] + ";"
+            "   background-color:" + iColors["secondBGColor"] + ";"
+            "   width: 14px;"
+            "   margin: 13px 0px 13px 0px;"
             "}"
-            "QScrollBar::handle:vertical"
-            "{"
+            "QScrollBar::handle:vertical {"
             "   background-color: " + iColors["scrollHandle"] + ";"
             "   border-style: solid;"
             "   border-width: 1px;"
             "   border-color: " + iColors["lightBorderColor3"] + ";"
             "   min-height: 20px;"
             "}"
-            "QScrollBar::add-line:vertical"
-            "{"
-            "   border: 2px solid grey;"
-            "   background-color: red;"// + iColors[]
-            "   height: 1.2em;"
+            "QScrollBar::add-line:vertical {"
+            "   border-left-width: 1px;"
+            "   border-color: " + iColors["lightBorderColor"] + ";"
+            "   border-style: solid;"
+
+            //"   margin: 1px 1px 1px 1px;"
+            "   height: 13px;"
             "   subcontrol-position: bottom;"
             "   subcontrol-origin: margin;"
+            "   background-image: url(:/resources/interfaceImage/arrow_bottom.png);"
             "}"
-            "QScrollBar::sub-line:vertical"
-            "{"/*
-            "   border: 2px solid grey;"
-            "   background-color: red;"*/
-            "   height: 1.2em;"
+
+            "QScrollBar::sub-line:vertical {"
+            "   border-left-width: 1px;"
+            "   border-color: " + iColors["lightBorderColor"] + ";"
+            "   border-style: solid;"
+            "   height: 13px;"
             "   subcontrol-position: top;"
             "   subcontrol-origin: margin;"
-            "   background-image: url(:/toolIcon/icon_GREATBUTTON.png);"
+            "   background-image: url(:/resources/interfaceImage/arrow_top.png);"
             "}"
-            "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical"
-            "{"
-            "    image: url(:/toolIcon/icon_GREATBUTTON.png);"
-            "}"
-            " QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical"
-            "{"
-            "    image: url(:/toolIcon/icon_GREATBUTTON.png);"
+            "QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {"
+            "    background: none;"
             "}"
             "QTreeView"
             "{"
@@ -325,6 +326,15 @@ void MainWindow::setStyleNight()
             "QMenu::item:selected"
             "{"
             "   background-color: " + iColors["selectBGColor2"] + ";"
+            "}"
+            "QComboBox"
+            "{"
+            //"   border: 2px solid "
+            "   height: 1.3em;"
+            "}"
+            "QComboBox QAbstractItemView::item"
+            "{"
+            "   background-color" + iColors["mainBGColor"] + ";"
             "}"
 
         );

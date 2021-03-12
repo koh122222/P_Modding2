@@ -6,7 +6,7 @@
 #include <QFileInfo>
 #include <QMenuBar>
 #include <QHash>
-
+#include <QSet>
 
 
 
@@ -148,16 +148,71 @@ void MainWindow::returnFiles()
         //if all normal
         qDebug() << "start writing dir mod and game";
         nowGame = it;
+
         QFile writePlaceGame(dirProgram->absolutePath() + "//ProgramFiles//placeGame.txt");
+        writePlaceGame.open(QFile::Text | QFile::ReadOnly);
+        QTextStream oldGameStream(&writePlaceGame);
+        QSet<QString> oldGamePlace;
+        while (!oldGameStream.atEnd())
+            oldGamePlace.insert(oldGameStream.readLine());
+        writePlaceGame.close();
+        {
+        auto c = oldGamePlace.find(placeGame->absolutePath());
+        if (c != oldGamePlace.end())
+            oldGamePlace.erase(c);
+        }
         writePlaceGame.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceGame(&writePlaceGame);
-        writerPlaceGame << placeGame->absolutePath();
-        writePlaceGame.close();
+        writerPlaceGame << placeGame->absolutePath() << "\n";
+        {
+            qint32 i = 0;
+            for (auto c = oldGamePlace.end(); c != oldGamePlace.begin() && i < 5; ++i)
+            {
+                --c;
+                writerPlaceGame << *c << "\n";
+            }
+        }
+
+
+
         QFile writePlaceMod(dirProgram->absolutePath() + "//ProgramFiles//placeMod.txt");
+        writePlaceMod.open(QFile::Text | QFile::ReadOnly);
+        QTextStream oldModStream(&writePlaceMod);
+        QSet<QString> oldModPlace;
+        while (!oldModStream.atEnd())
+            oldModPlace.insert(oldModStream.readLine());
+        writePlaceMod.close();
+        qDebug() << "end QSet";
+        {
+        auto c = oldModPlace.find(placeMod->absolutePath());
+        if (c != oldModPlace.end())
+            oldModPlace.erase(c);
+        }
+        qDebug() << "end delete old";
+        writePlaceMod.open(QFile::Text | QFile::WriteOnly);
+        QTextStream writerPlaceMod(&writePlaceMod);
+        writerPlaceMod << placeMod->absolutePath() << "\n";
+        {
+            qint32 i = 0;
+            for (auto c = oldModPlace.end(); c != oldModPlace.begin() && i < 5; ++i)
+            {
+                --c;
+                writerPlaceMod << *c << "\n";
+            }
+        }
+
+        /*
+        QFile writePlaceMod(dirProgram->absolutePath() + "//ProgramFiles//placeMod.txt");
+        writePlaceMod.open(QFile::Text | QFile::ReadOnly);
+        QSet<QString> oldGameMod;
+        w
+
+
+
         writePlaceMod.open(QFile::Text | QFile::WriteOnly);
         QTextStream writerPlaceMod(&writePlaceMod);
         writerPlaceMod << placeMod->absolutePath();
-        writePlaceMod.close();
+        writePlaceMod.close();*/
         gameFiles->setGamePlace(placeGame->absolutePath());
         gameFiles->setModPlace(placeMod->absolutePath());
 

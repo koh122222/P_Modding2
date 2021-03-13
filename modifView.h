@@ -32,6 +32,7 @@ public:
 
     std::vector <QString> modifiers;
 
+    std::vector<QString> multiOpener(int levelZone, QString fileAdd, std::vector<QString> keys);
     explicit ModifView(QWidget *parent = nullptr);
     bool messagePoint (QString localizetedText);
     bool tagPoint (QString programText);

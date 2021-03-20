@@ -19,6 +19,7 @@ SOURCES += \
     allpar.cpp \
     codeeditor.cpp \
     createcopynewfiledialog.cpp \
+    custominterfacedialog.cpp \
     findtextdialog.cpp \
     gamefiles.cpp \
     highlighter.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     allpar.h \
     codeeditor.h \
     createcopynewfiledialog.h \
+    custominterfacedialog.h \
     findtextdialog.h \
     gamefiles.h \
     highlighter.h \

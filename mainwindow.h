@@ -18,12 +18,11 @@
 #include "toolbar.h"
 #include "findtextdialog.h"
 #include "allpar.h"
-
+#include "custominterfacedialog.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
-    QApplication* mainApp;
     QString gameName;
     std::unordered_map<QString, QString>::iterator nowGame;
     QDir *dirProgram;
@@ -47,8 +46,9 @@ public:
 
     FindTextDialog* textFinder;
     WritePlaceDialog* dirFinder;
+    CustomInterfaceDialog* customInterface;
 
-    MainWindow(QWidget *parent = nullptr, QApplication* in_mainApp = nullptr);
+    MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
     QString getPlaceGame();
@@ -60,6 +60,7 @@ public:
 
 
 public slots:
+    void themeDialogOpen();
     void returnFiles();
     void slotPress_ctrlS();
     void slotPress_ctrlShiftS();

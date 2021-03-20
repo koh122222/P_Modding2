@@ -10,12 +10,13 @@
 
 
 
-MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
+MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    setStyleNight();
+    //setStyleNight();
+
+    customInterface = new CustomInterfaceDialog(this);
     qDebug() << this;
-    mainApp = in_mainApp;
     //create main widgets
     QWidget* mainWidget = new QWidget(this);
     setCentralWidget(mainWidget);
@@ -39,16 +40,12 @@ MainWindow::MainWindow(QWidget *parent, QApplication* in_mainApp)
     mainLayout->setContentsMargins(0,0,0,0);
     mainLayout->setSpacing(0);
 
-    QMenu* file_menuBar = menuBar()->addMenu(tr("File"));
-    QMenu* options_menuBar = menuBar()->addMenu(tr("Options"));
+    QMenu* fileMenuBar = menuBar()->addMenu(tr("File"));
+    QMenu* optionsMenuBar = menuBar()->addMenu(tr("Options"));
 
-    QAction* lightStyleAction = new QAction("light style", this);
-    connect(lightStyleAction, &QAction::triggered, this, &MainWindow::setStyleLight);
-    options_menuBar->addAction(lightStyleAction);
-
-    QAction* nightStyleAction = new QAction("night style", this);
-    connect(nightStyleAction, &QAction::triggered, this, &MainWindow::setStyleNight);
-    options_menuBar->addAction(nightStyleAction);
+    QAction* themeAction = new QAction("Theme Options", this);
+    connect(themeAction, &QAction::triggered, this, &MainWindow::themeDialogOpen);
+    optionsMenuBar->addAction(themeAction);
 
     resize(1024, 720);
 
@@ -116,6 +113,12 @@ void MainWindow::updateParameters()
 {
 
 }
+
+void MainWindow::themeDialogOpen()
+{
+    customInterface->show();
+}
+
 void MainWindow::returnFiles()
 {
     qDebug() << "returns places mod and game from the dialog";

@@ -35,17 +35,22 @@ ModifView::ModifView(QWidget *parent) : QWidget(parent)
 
 void ModifView::modifierOpener()
 {
+    QString fileAdd = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
+    //fileAdd+="//common//buildings//01_nativebuildings.txt";
+    std::vector<QString> a = {"modifier = {"};
+    std::vector<QString> buildings = multiOpener(2,fileAdd+="//common//buildings//01_nativebuildings.txt",a);
+    qDebug()<<buildings;
     //localOpener();
-    ageOpener();
+    //ageOpener();
     //ideasOpen ();
     //opener3();
-
+    /*
     modifierMap = new ModModel;
     for (int i = 0; i <modifiers.size(); ++i)
     {
         modifierMap->insert(ModModel::value_type(modifiers[i]+":0"," (0)_(0) Че смотришь ? "));
     }
-    /*
+
     for (auto it = allMap->begin();it !=allMap->end();++it)
     {
         QString TechName = it->first;
@@ -59,8 +64,65 @@ void ModifView::modifierOpener()
     }*/
 }
 
-void ModifView::ageOpener()
+std::vector<QString> ModifView::multiOpener(int levelZone, QString fileAdd, std::vector<QString> keys)
 {
+    QFile openFile(fileAdd);
+    openFile.open(QFile::ReadOnly | QFile::Text);
+    QTextStream idea_file(&openFile);
+    QString rawFile = idea_file.readAll();
+    QString uncleanFile;
+    std::vector<QString> modList;
+    bool modifier = false;
+    bool comment = false;
+    int level =0;
+    QString pre_modFile;
+    for (int k = 0;k<keys.size();++k)
+    {
+        for (int i = keys[k].size();i < rawFile.size() - 2;++i)
+        {
+            if (rawFile[i]=='{')
+                level++;
+            if (rawFile[i]=="}")
+            {
+                level--;
+                modifier = false;
+            }
+            if (rawFile[i]=='#')
+                comment=true;
+            if (rawFile[i]=='\n')
+                comment = false;
+            if (rawFile.mid(i-keys[k].size(),keys[k].size())==keys[k])
+                modifier = true;
+
+             if (modifier && (!comment)&&(level==levelZone))
+             {
+                 if (!((rawFile[i]=='\t')||(rawFile[i]==' ')))
+                    pre_modFile+=rawFile[i];
+                 if (rawFile[i+1]=='=')
+                     modifier = false;
+                 //qDebug()<<rawFile[i];
+             }
+        }
+        QString text="";
+        for (int i = 0;i < pre_modFile.size();++i)
+        {
+            if ((pre_modFile[i]=='\n')||(i == pre_modFile.size() - 1 ))
+            {
+                if ((i == pre_modFile.size() -1 ))
+                    text+=pre_modFile[i];
+                if (text!="")
+                modList.push_back(text);
+                text = "";
+            }
+            else
+                text+=pre_modFile[i];
+        }
+    }
+    return modList;
+}
+
+void ModifView::ageOpener()
+{/*
     QString ageModif;
     QString fileAdd = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
     fileAdd+="/common/ages/00_default.txt";
@@ -130,7 +192,7 @@ void ModifView::ageOpener()
         }
         ++lenght;
     }
-    //testEditor->setText(idModifiers);
+    //testEditor->setText(idModifiers);*/
 }
 
 void ModifView::opener3()
@@ -139,7 +201,7 @@ void ModifView::opener3()
 }
 
 void ModifView::opener2()
-{
+{/*
     QString advisorModif;
     QString fileAdd = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
     fileAdd+="/common/advisortypes/00_advisortypes.txt";
@@ -187,11 +249,11 @@ void ModifView::opener2()
             }
         }
         ++lenght;
-    }
+    }*/
 }
 
 void ModifView::ideasOpen ()
-{
+{/*
 
     QString ideas;
     QString filePlace = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
@@ -303,12 +365,12 @@ void ModifView::ideasOpen ()
             }
             ++lenght;
         }
-    }
+    }*/
 }
 
 
 void ModifView::localOpener()
-{
+{/*
     QString filePlace = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
     filePlace+="/localisation";
     QDir local(filePlace);
@@ -349,7 +411,7 @@ void ModifView::localOpener()
     //qDebug()<<tagMap->size();
 
 
-    //YAML::reedFile(filePlace+"/countries_l_english.yml",*allMap);
+    //YAML::reedFile(filePlace+"/countries_l_english.yml",*allMap);*/
 }
 
 

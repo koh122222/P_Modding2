@@ -44,6 +44,7 @@ public:
 
     void openTextFile(QString &path, FileSystem fileSystem);
     void setFont(QFont* newFont);
+    QFont* getFont();
     void saveAllFile();
     void saveFile();
     void saveFile(CodeEditor* saveEditor);

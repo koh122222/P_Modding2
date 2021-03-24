@@ -10,6 +10,7 @@ using gameModif = std::vector<ModModel>;
 
 class MainWindow;
 
+//after add type_mod, add string in typeModString
 enum TYPE_MOD
 {
     M_EU_BEGIN,
@@ -22,8 +23,10 @@ enum TYPE_MOD
 class AllPar
 {
 public:
-
+    
 static MainWindow* mObject;
+
+static std::array<QString, TYPE_MOD::M_END_TYPE> typeModString;
 
 static std::array<QColor, TYPE_MOD::M_END_TYPE> highlighter_light;
 

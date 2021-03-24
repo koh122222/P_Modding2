@@ -2,6 +2,14 @@
 
 MainWindow* AllPar::mObject = nullptr;
 
+std::array<QString, TYPE_MOD::M_END_TYPE> AllPar::typeModString
+{
+    "m_eu_begin", //M_EU_BEGIN
+    "eu_ideas",
+    "eu_event",
+    "m_EU_END",
+};
+
 std::array<QColor, TYPE_MOD::M_END_TYPE> AllPar::highlighter_light
 {
     QColor{}, //EU_BEGIN

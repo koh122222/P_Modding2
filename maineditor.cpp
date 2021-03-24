@@ -98,6 +98,11 @@ void MainEditor::setFont(QFont* newFont)
         editItem.second->setFont(*newFont);
 }
 
+QFont* MainEditor::getFont()
+{
+    return nowFont;
+}
+
 void MainEditor::saveAllFile()
 {
     for (auto c: allOpenFile)

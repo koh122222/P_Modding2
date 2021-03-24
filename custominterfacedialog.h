@@ -10,10 +10,12 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QGroupBox>
+#include <QFont>
 
 class CustomInterfaceDialog : public QDialog
 {
     Q_OBJECT
+    QStringList allTheme;
 public:
     CustomInterfaceDialog(QWidget* parent);
     QLabel* ModEditorLabel;
@@ -24,7 +26,6 @@ public:
     QComboBox* fontBox;
     QLabel* sizeLabel;
     QSpinBox* sizeBox;
-    QCheckBox* antiallias;
 
     QLabel* themeEditorLabel;
     QGroupBox* themeEditor;
@@ -33,6 +34,11 @@ public:
     QPushButton* okButton;
     QPushButton* cancelButton;
     QPushButton* applyButton;
+
+    void showStart();
+
+public slots:
+    void startChange();
 
 
 };

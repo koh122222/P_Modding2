@@ -2,7 +2,6 @@
 #include <allpar.h>
 #include <QDebug>
 #include <QApplication>
-#include <QFontDatabase>
 #include "mainwindow.h"
 
 CustomInterfaceDialog::CustomInterfaceDialog(QWidget* parent)
@@ -48,8 +47,6 @@ CustomInterfaceDialog::CustomInterfaceDialog(QWidget* parent)
     QFont tempFont = ModEditorLabel->font();
     tempFont.setWeight(QFont::Bold);
     ModEditorLabel->setFont(tempFont);
-
-    QFontDatabase fontDataBase;
     fontBox->insertItems(0, fontDataBase.families());
     fontBox->setEditable(true);
     fontBox->setInsertPolicy(QComboBox::NoInsert);
@@ -77,7 +74,7 @@ void CustomInterfaceDialog::showStart()
 void CustomInterfaceDialog::startChange()
 {
     //FONT
-
+    fontDataBase.font(fontB)
     /////////////////////////////////////////////////////////////
 
 

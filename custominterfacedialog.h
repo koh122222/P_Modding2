@@ -11,6 +11,7 @@
 #include <QPushButton>
 #include <QGroupBox>
 #include <QFont>
+#include <QFontDatabase>
 
 class CustomInterfaceDialog : public QDialog
 {
@@ -34,6 +35,9 @@ public:
     QPushButton* okButton;
     QPushButton* cancelButton;
     QPushButton* applyButton;
+
+
+    QFontDatabase fontDataBase;
 
     void showStart();
 

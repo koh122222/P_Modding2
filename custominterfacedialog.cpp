@@ -10,12 +10,12 @@ CustomInterfaceDialog::CustomInterfaceDialog(QWidget* parent)
     ModEditorLabel = new QLabel("Mod Editor", this);
     fontLabel = new QLabel("Font", this);
 
-    FontEditor = new QGroupBox(this);
-    familyFontLabel = new QLabel("Family: ", FontEditor);
-    fontBox = new QComboBox(FontEditor);
-    sizeLabel = new QLabel("Size: ", FontEditor);
-    sizeBox = new QSpinBox(FontEditor);
-    QGridLayout *fontLayout = new QGridLayout(FontEditor);
+    fontEditor = new QGroupBox(this);
+    familyFontLabel = new QLabel("Family: ", fontEditor);
+    fontBox = new QComboBox(fontEditor);
+    sizeLabel = new QLabel("Size: ", fontEditor);
+    sizeBox = new QSpinBox(fontEditor);
+    QGridLayout *fontLayout = new QGridLayout(fontEditor);
     fontLayout->addWidget(familyFontLabel, 0, 0, 1, 1);
     fontLayout->addWidget(fontBox, 0, 1, 1, 2);
     fontLayout->addWidget(sizeLabel, 0, 3, 1, 1);
@@ -33,7 +33,7 @@ CustomInterfaceDialog::CustomInterfaceDialog(QWidget* parent)
     QGridLayout* mainLayout = new QGridLayout(this);
     mainLayout->addWidget(ModEditorLabel, 0, 0, 1, 1);
     mainLayout->addWidget(fontLabel, 1, 0, 1, 1);
-    mainLayout->addWidget(FontEditor, 2, 0, 2, 6);
+    mainLayout->addWidget(fontEditor, 2, 0, 2, 6);
     mainLayout->addWidget(themeEditorLabel, 4, 0, 1, 1);
     mainLayout->addWidget(themeEditor, 5, 0, 1, 6);
     mainLayout->addWidget(okButton, 6, 3, 1, 1);
@@ -74,8 +74,10 @@ void CustomInterfaceDialog::showStart()
 void CustomInterfaceDialog::startChange()
 {
     //FONT
-    fontDataBase.font(fontB)
+    //fontDataBase.font(fontB)
+    QFont newFont = fontDataBase.font(fontBox->currentText(), "Light", sizeBox->value());
     /////////////////////////////////////////////////////////////
+    static_cast<MainWindow*>(parent())->mainEditor->setFont(&newFont);
 
 
     //THEME

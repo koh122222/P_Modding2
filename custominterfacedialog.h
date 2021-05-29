@@ -22,7 +22,7 @@ public:
     QLabel* ModEditorLabel;
     QLabel* fontLabel;
 
-    QGroupBox* FontEditor;
+    QGroupBox* fontEditor;
     QLabel* familyFontLabel;
     QComboBox* fontBox;
     QLabel* sizeLabel;

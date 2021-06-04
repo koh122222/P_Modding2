@@ -27,7 +27,8 @@ SOURCES += \
     maineditor.cpp \
     mainwindow.cpp \
     modifOpener.cpp \
-    modifView.cpp \
+    modifViewOld.cpp \
+    modifview.cpp \
     modmodel.cpp \
     newfilebutton.cpp \
     onlyfilesystemmodel.cpp \
@@ -47,7 +48,8 @@ HEADERS += \
     maineditor.h \
     mainwindow.h \
     modifOpener.h \
-    modifView.h \
+    modifViewOld.h \
+    modifview.h \
     modmodel.h \
     newfilebutton.h \
     onlyfilesystemmodel.h \

@@ -23,12 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     gameFiles = new GameFiles(mainWidget);
     mainEditor = new MainEditor(mainWidget);
-    modifView = new ModifView(mainWidget);
     QSplitter *centralSplitter = new QSplitter(mainWidget);
     centralSplitter->setHandleWidth(0);
     centralSplitter->addWidget(gameFiles);
     centralSplitter->addWidget(mainEditor);
-    centralSplitter->addWidget(modifView);
     centralSplitter->setStretchFactor(0, 20);
     centralSplitter->setStretchFactor(1, 80);
     centralSplitter->setStretchFactor(2, 30);

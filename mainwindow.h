@@ -14,11 +14,12 @@
 #include "gamefiles.h"
 #include "maineditor.h"
 #include <writeplacedialog.h>
-#include <modifView.h>
+//#include <modifViewOld.h>
 #include "toolbar.h"
 #include "findtextdialog.h"
 #include "allpar.h"
 #include "custominterfacedialog.h"
+#include "primparseryaml.h"
 
 class MainWindow : public QMainWindow
 {
@@ -42,7 +43,6 @@ public:
     ToolBar* toolBar;
     GameFiles* gameFiles;
     MainEditor* mainEditor;
-    ModifView* modifView;
 
     FindTextDialog* textFinder;
     WritePlaceDialog* dirFinder;

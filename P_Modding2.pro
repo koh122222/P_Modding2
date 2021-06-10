@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    ParView.cpp \
     allpar.cpp \
     codeeditor.cpp \
     createcopynewfiledialog.cpp \
@@ -28,10 +29,10 @@ SOURCES += \
     mainwindow.cpp \
     modifOpener.cpp \
     modifViewOld.cpp \
-    modifview.cpp \
     modmodel.cpp \
     newfilebutton.cpp \
     onlyfilesystemmodel.cpp \
+    parviewsortfilterproxymodel.cpp \
     primparseryaml.cpp \
     tabeditor.cpp \
     toolbar.cpp \
@@ -49,10 +50,11 @@ HEADERS += \
     mainwindow.h \
     modifOpener.h \
     modifViewOld.h \
-    modifview.h \
     modmodel.h \
     newfilebutton.h \
     onlyfilesystemmodel.h \
+    parview.h \
+    parviewsortfilterproxymodel.h \
     primparseryaml.h \
     tabeditor.h \
     toolbar.h \

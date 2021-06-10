@@ -5,7 +5,7 @@
 #include <QDir>
 #include <QFile>
 
-ModifView::ModifView(QWidget *parent) : QWidget(parent)
+ModifViewOld::ModifViewOld(QWidget *parent) : QWidget(parent)
 {
     testEditor = new QTextEdit(this);
     layout = new QGridLayout(this);
@@ -33,7 +33,7 @@ ModifView::ModifView(QWidget *parent) : QWidget(parent)
     connect(opener, SIGNAL(clicked()), this, SLOT(modifierOpener()));
 }
 
-void ModifView::modifierOpener()
+void ModifViewOld::modifierOpener()
 {
     QString fileAdd = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
     //fileAdd+="//common//buildings//01_nativebuildings.txt";
@@ -64,7 +64,7 @@ void ModifView::modifierOpener()
     }*/
 }
 
-std::vector<QString> ModifView::multiOpener(int levelZone, QString fileAdd, std::vector<QString> keys)
+std::vector<QString> ModifViewOld::multiOpener(int levelZone, QString fileAdd, std::vector<QString> keys)
 {
     QFile openFile(fileAdd);
     openFile.open(QFile::ReadOnly | QFile::Text);
@@ -121,7 +121,7 @@ std::vector<QString> ModifView::multiOpener(int levelZone, QString fileAdd, std:
     return modList;
 }
 
-void ModifView::ageOpener()
+void ModifViewOld::ageOpener()
 {/*
     QString ageModif;
     QString fileAdd = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
@@ -195,12 +195,12 @@ void ModifView::ageOpener()
     //testEditor->setText(idModifiers);*/
 }
 
-void ModifView::opener3()
+void ModifViewOld::opener3()
 {
 
 }
 
-void ModifView::opener2()
+void ModifViewOld::opener2()
 {/*
     QString advisorModif;
     QString fileAdd = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
@@ -252,7 +252,7 @@ void ModifView::opener2()
     }*/
 }
 
-void ModifView::ideasOpen ()
+void ModifViewOld::ideasOpen ()
 {/*
 
     QString ideas;
@@ -369,7 +369,7 @@ void ModifView::ideasOpen ()
 }
 
 
-void ModifView::localOpener()
+void ModifViewOld::localOpener()
 {/*
     QString filePlace = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceGame();
     filePlace+="/localisation";
@@ -417,7 +417,7 @@ void ModifView::localOpener()
 
 
 
-bool ModifView::messagePoint (QString localizedText)
+bool ModifViewOld::messagePoint (QString localizedText)
 {
     if (localizedText.size() > 0)
         if (  (localizedText[localizedText.size() - 1] == ".")
@@ -438,14 +438,14 @@ bool ModifView::messagePoint (QString localizedText)
     return false;
 }
 
-bool ModifView::tagPoint (QString programText)
+bool ModifViewOld::tagPoint (QString programText)
 {
     if (programText.size()==5)
         return true;
     return false;
 }
 
-bool ModifView::adj_tagPoint (QString programText)
+bool ModifViewOld::adj_tagPoint (QString programText)
 {
     if (programText.size()==9)
         if (programText.mid(3,4) == "_ADJ")
@@ -453,7 +453,7 @@ bool ModifView::adj_tagPoint (QString programText)
     return false;
 }
 
-bool ModifView::eventPoint (QString programText)
+bool ModifViewOld::eventPoint (QString programText)
 {
     if (programText.size()>=5)
     {
@@ -482,7 +482,7 @@ bool ModifView::eventPoint (QString programText)
     return false;
 }
 
-void ModifView::allPrint(int a)
+void ModifViewOld::allPrint(int a)
 {
     testEditor->setText("");
     if (a)
@@ -500,7 +500,7 @@ void ModifView::allPrint(int a)
     }
 }
 
-void ModifView::textPrint(int a)
+void ModifViewOld::textPrint(int a)
 {
     testEditor->setText("");
     if (a)
@@ -518,7 +518,7 @@ void ModifView::textPrint(int a)
     }
 }
 
-void ModifView::modifierPrint(int a)
+void ModifViewOld::modifierPrint(int a)
 {
     testEditor->setText("");
     if (a)
@@ -537,7 +537,7 @@ void ModifView::modifierPrint(int a)
     }
 }
 
-void ModifView::eventPrint(int a)
+void ModifViewOld::eventPrint(int a)
 {
     testEditor->setText("");
     if (a)
@@ -556,7 +556,7 @@ void ModifView::eventPrint(int a)
     }
 }
 
-void ModifView::tagPrint(int a)
+void ModifViewOld::tagPrint(int a)
 {
     testEditor->setText("");
     if (a)

@@ -20,6 +20,7 @@
 #include "allpar.h"
 #include "custominterfacedialog.h"
 #include "primparseryaml.h"
+#include "ParView.h"
 
 class MainWindow : public QMainWindow
 {
@@ -43,6 +44,7 @@ public:
     ToolBar* toolBar;
     GameFiles* gameFiles;
     MainEditor* mainEditor;
+    ParView* parView;
 
     FindTextDialog* textFinder;
     WritePlaceDialog* dirFinder;

@@ -13,6 +13,7 @@ class MainWindow;
 //after add type_mod, add string in typeModString
 enum TYPE_MOD
 {
+    M_START_TYPE,
     M_EU_BEGIN,
     M_EU_IDEAS,
     M_EU_EVENTS,

@@ -4,6 +4,7 @@ MainWindow* AllPar::mObject = nullptr;
 
 std::array<QString, TYPE_MOD::M_END_TYPE> AllPar::typeModString
 {
+    "m_START_TYPE",
     "m_eu_begin", //M_EU_BEGIN
     "eu_ideas",
     "eu_event",

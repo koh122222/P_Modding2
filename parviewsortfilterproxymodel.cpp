@@ -1,7 +1,7 @@
 #include "parviewsortfilterproxymodel.h"
 #include "ParView.h"
 #include "allpar.h"
-
+#include <QDebug>
 ParViewSortFilterProxyModel::ParViewSortFilterProxyModel(QObject *parent)
     :QSortFilterProxyModel(parent)
 {
@@ -10,23 +10,16 @@ ParViewSortFilterProxyModel::ParViewSortFilterProxyModel(QObject *parent)
 
 bool ParViewSortFilterProxyModel::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const
 {
-    QString nowParType =
-            static_cast<ParView*>(parent())->getParType();
-    TYPE_MOD enumParType = TYPE_MOD::M_START_TYPE;
-    for (int i = 0; i < AllPar::typeModString.size(); ++i)
-    {
-        if (AllPar::typeModString[i] == nowParType)
-        {
-            enumParType = static_cast<TYPE_MOD>(i);
-            break;
-        }
-    }
+    QString findPar =
+            static_cast<ParView*>(parent())->getFindPar();
+    QString nowPar = sourceModel()->index(source_row, 0).data().toString();
+    QString nowParTranslate = sourceModel()->index(source_row, 1).data().toString();
+    if (findPar == "")
+        return true;
+    else
+        return (nowPar.indexOf(findPar) != -1) || (nowParTranslate.indexOf(findPar) != -1);// &&
+            //source_parent.data().value<ModPair>().first.indexOf(nowFindPar));
 
-
-//QString nowFindPar =
-           // static_cast<ParView*>(parent())->getFindPar();
-
-    //return (nowParType )
 
 
     return true;

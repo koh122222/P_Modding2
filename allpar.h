@@ -3,6 +3,7 @@
 #include <array>
 #include <QColor>
 #include <unordered_map>
+#include <QVector>
 #include "highlighter.h"
 #include "modmodel.h"
 

@@ -7,19 +7,28 @@
 #include <QTreeView>
 #include <QLineEdit>
 #include <QGridLayout>
+#include "allpar.h"
+#include "parviewsortfilterproxymodel.h"
 
 class ParView : public QWidget
 {
     Q_OBJECT
-    QComboBox* parType;
+    ParViewSortFilterProxyModel* parViewFilterModel;
+    TYPE_MOD parType;
+    QComboBox* parCode;
     QLineEdit* findPar;
     QTreeView* seePar;
 public:
     explicit ParView(QWidget *parent = nullptr);
 
-    QString getParType();
+    void setParType(TYPE_MOD newTypeMod);
+    TYPE_MOD getParType();
+    QString getParCode();
     QString getFindPar();
 signals:
+
+public slots:
+    void setParType();
 
 };
 

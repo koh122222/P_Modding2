@@ -91,8 +91,11 @@ void MainWindow::startReadParameters()
         qDebug() << "start par";
         QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");
         QString parFiles(QCoreApplication::applicationDirPath() + "//euFiles");
-        YAML::reedFile(parFiles + "//eu_ideas.txt", AllPar::modVector[TYPE_MOD::M_EU_IDEAS]);
-        YAML::reedFile(parFiles + "//eu_events.txt", AllPar::modVector[TYPE_MOD::M_EU_EVENTS]);
+        for (qint32 nowType = M_EU_BEGIN; nowType < M_EU_END; nowType += 1)
+        {
+            YAML::reedFile(parFiles + "//" + AllPar::typeModString[nowType] + ".txt",
+                           AllPar::modVector[nowType]);
+        }
         for (auto c : AllPar::modVector[TYPE_MOD::M_EU_IDEAS])
             qDebug() << c;
         for (auto c : AllPar::modVector[TYPE_MOD::M_EU_EVENTS])

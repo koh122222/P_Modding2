@@ -14,6 +14,16 @@ void YAML::reedFile(QString adress, ModModel& strMap)
         QString line = in.readLine();
         if (line.size() == 0)
             continue;
+        qint32 firstS = line.indexOf("#");//if early comment
+        if (firstS != -1)
+        {
+            if (firstS < line.indexOf("\""))
+                continue;
+        }
+        if (line.indexOf("\"") == -1) //if bad line
+            continue;
+
+
         qint32 startStr = line.indexOf("\"");
         strMap.insert(ModModel::value_type(line.mid(1, line.indexOf(" ", 1) - 1), //code name
                                                  line.mid(startStr + 1, line.indexOf("\"", startStr + 1) - startStr - 1))); //realy name

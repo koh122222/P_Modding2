@@ -88,7 +88,7 @@ void MainWindow::startReadParameters()
 {
     if (nowGame->second == "eu4")
     {
-        paraReader* readParameters = new paraReader(this);
+        //paraReader* readParameters = new paraReader(this);
         /*
         qDebug() << "start par";
         QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");

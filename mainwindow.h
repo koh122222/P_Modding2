@@ -15,6 +15,7 @@
 #include "maineditor.h"
 #include <writeplacedialog.h>
 //#include <modifViewOld.h>
+#include "parareader.h"
 #include "toolbar.h"
 #include "findtextdialog.h"
 #include "allpar.h"

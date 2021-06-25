@@ -87,6 +87,8 @@ void MainWindow::startReadParameters()
 {
     if (nowGame->second == "eu4")
     {
+        //paraReader* readParameters = new paraReader(this);
+        /*
         qDebug() << "start par";
         QDir(QCoreApplication::applicationDirPath()).mkdir("euFiles");
         QString parFiles(QCoreApplication::applicationDirPath() + "//euFiles");
@@ -104,7 +106,7 @@ void MainWindow::startReadParameters()
         //qDebug() << modMap[TYPE_MOD::EU_IDEAS].key("OR");
         //modMap->push_back(tempMap);
         //YAML::reedFile(parFiles + "ideas.txt" ,(modMap->back().second));
-
+    */
 
     }
     //qDebug() << modMap->back().second.begin()->second;

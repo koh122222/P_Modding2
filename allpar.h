@@ -22,6 +22,13 @@ enum TYPE_MOD
     M_END_TYPE
 };
 
+enum FileSystem
+{
+    FS_GAME_FILE,
+    FS_MOD_FILE
+};
+
+
 class AllPar
 {
 public:

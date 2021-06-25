@@ -36,6 +36,7 @@ SOURCES += \
     primparseryaml.cpp \
     tabeditor.cpp \
     toolbar.cpp \
+    workWindow.cpp \
     writeplacedialog.cpp
 
 HEADERS += \
@@ -58,6 +59,7 @@ HEADERS += \
     primparseryaml.h \
     tabeditor.h \
     toolbar.h \
+    workWindow.h \
     writeplacedialog.h
 
 # Default rules for deployment.

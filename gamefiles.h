@@ -30,7 +30,7 @@ public:
     void setGamePlace(QString placeGame);
     void setModPlace(QString placeMod);
 
-    void openFileFromTree(const QModelIndex& index, MainEditor::FileSystem fileSystem);
+    void openFileFromTree(const QModelIndex& index, FileSystem fileSystem);
 
 signals:
 

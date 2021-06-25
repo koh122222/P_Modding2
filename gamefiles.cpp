@@ -58,14 +58,14 @@ void GameFiles::setModPlace(QString placeMod)
 
 void GameFiles::openFileFromTreeGame(const QModelIndex& index)
 {
-    openFileFromTree(index, MainEditor::GAME_FILE);
+    openFileFromTree(index, FileSystem::FS_GAME_FILE);
 }
 void GameFiles::openFileFromTreeMod(const QModelIndex& index)
 {
-    openFileFromTree(index, MainEditor::MOD_FILE);
+    openFileFromTree(index, FileSystem::FS_MOD_FILE);
 }
 //NOW ONLY FOR TXT
-void GameFiles::openFileFromTree(const QModelIndex& index, MainEditor::FileSystem fileSystem)
+void GameFiles::openFileFromTree(const QModelIndex& index, FileSystem fileSystem)
 {
     QString clickedFile = fileModel->filePath(index);
     if (fileModel->isDir(index))//////

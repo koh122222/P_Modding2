@@ -12,31 +12,39 @@
 #include "newfilebutton.h"
 
 
-MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
+MainEditor::MainEditor(QWidget *parent) : QMainWindow(parent)
 {
-    fileEditor = new TabEditor(this);
-    fileEditor->setTabsClosable(true);
-    connect(fileEditor, SIGNAL(tabCloseRequested(int)), this, SLOT(closeFile(qint32)));
-    connect(fileEditor, SIGNAL(currentChanged(int)), this, SLOT(changeTab(qint32)));
+    //connect(fileEditor, SIGNAL(tabCloseRequested(int)), this, SLOT(closeFile(qint32)));
+    //connect(fileEditor, SIGNAL(currentChanged(int)), this, SLOT(changeTab(qint32)));
     nowFont = new QFont("Courier", 12);
-    createFileModButton = new NewFileButton("create such a file in the mod directory", this); //todo
-    createFileModButton->setStyleSheet("background-color: rgba(57, 69, 8, 200)");
-    createFileModButton->setVisible(false);
-    connect(createFileModButton, SIGNAL(clicked()), this, SLOT(createFileMod()));
-
-    layout = new QVBoxLayout(this);
-    layout->addWidget(fileEditor);
-    layout->setContentsMargins(0,0,0,0);
-    layout->setMargin(0);
+    //@@@@@@replace
+    //createFileModButton = new NewFileButton("create such a file in the mod directory", this); //todo
+    //createFileModButton->setStyleSheet("background-color: rgba(57, 69, 8, 200)");
+    //createFileModButton->setVisible(false);
+    //connect(createFileModButton, SIGNAL(clicked()), this, SLOT(createFileMod()));
 
 
 
     createCopyNewFileDialog = new CreateCopyNewFileDialog(this);
 
     connect(createCopyNewFileDialog, SIGNAL(accepted()), this, SLOT(createIncludeFileMod()));
+    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
+            this, SLOT(seeOldWindow(QWidget*,QWidget*)));
 
-
-
+//    dock = new QDockWidget("111", this);
+//    WorkWindow* testWindow = new WorkWindow(this);
+//    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+//    dock->setWidget(testWindow);
+//    dock->setTitleBarWidget(new QWidget());
+//    addDockWidget(Qt::RightDockWidgetArea, dock);
+/*
+    dock = new QDockWidget("222", this);
+    WorkWindow* testWindow2 = new WorkWindow(this);
+    dock->setTitleBarWidget(new QWidget());
+    dock->setWidget(testWindow2);
+    addDockWidget(Qt::RightDockWidgetArea, dock);
+    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
+            this, SLOT(seeOldWindow(QWidget*,QWidget*)));*/
 
     /*
     fileEditor = new CodeEditor(this);
@@ -51,51 +59,72 @@ MainEditor::MainEditor(QWidget *parent) : QWidget(parent)
 
 void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
 {
-    auto c = allOpenFile.find(path);
-    if (c != allOpenFile.end()) //if the tab exists
+    qDebug() << "openTextFile";
+    WorkWindow* nowWindow = nullptr;
+    CodeEditor* nowWorkEditor = nullptr;
+    QVector<CodeEditor*> allFindEditor;
+    //if Dock empty
+    if (savedWorkWindows.empty())
     {
-        fileEditor->setCurrentWidget(c->second);
+        dock = new QDockWidget(this);
+        nowWindow = new WorkWindow(this);
+        savedWorkWindows.push_back(nowWindow);
+        dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+        dock->setWidget(nowWindow);
+        dock->setTitleBarWidget(new QWidget());
+        addDockWidget(Qt::RightDockWidgetArea, dock);
+        nowWindow->addEditor(path, fileSystem, nowFont);
+        nowFileEditor = nowWindow->getEditor(path);
+        return;
     }
-    else //create new Tab
+    else
     {
-        CodeEditor* newCodeEditor = new CodeEditor;
-        QFile file(path);
-
-        if (!file.open(QIODevice::ReadOnly | QFile::Text)) {
-            QMessageBox::warning(this, "Warning", "Cannot open file: " + file.errorString());
+        qDebug("1");
+        if (nowFileEditor != nullptr)
+        {
+            if (qobject_cast<WorkWindow*>(
+                        nowFileEditor->parent()->parent())->getEditor(path)
+                    != nullptr)
+            {
+                qobject_cast<WorkWindow*>(
+                                        nowFileEditor->
+                            parent()->parent())->setEditor(path);
+                return;
+            }
+        }
+        else //if
+        {
+            qDebug("2");
+            //need better find now workWindow
+            nowFileEditor = savedWorkWindows[0]->getCurrentEditor();
             return;
-        }
-        QTextStream in(&file);
-        QString text = in.readAll();
-        newCodeEditor->setPlainText(text);
-        file.close();
-        newCodeEditor->setFont(*nowFont);
-        QFontMetrics metrics(*nowFont);
-        newCodeEditor->setTabStopDistance(metrics.horizontalAdvance("    "));
-        allOpenFile.insert(AllOpenFile::value_type(path, newCodeEditor));
 
-        if (fileSystem == MainEditor::GAME_FILE)
+        }
+
+        //temp, need add work with two and more files in more windows
+        for (auto c : savedWorkWindows)
         {
-            QIcon gameIcon("://resources//gameIcon//eu4_icon.jpg");
-            fileEditor->addTab(newCodeEditor, gameIcon,
-                               path.mid(path.lastIndexOf("/") + 1));
+            qDebug("3");
+            CodeEditor* returnEditor = c->getEditor(path);
+            if (returnEditor != nullptr)
+                return; //temp!!!
         }
-        else if (fileSystem == MainEditor::MOD_FILE)
-        {
-            QIcon modIcon("://resources//gameIcon//eu4_modIcon.png");
-            fileEditor->addTab(newCodeEditor, modIcon,
-                               path.mid(path.lastIndexOf("/") + 1));
-        }
-        fileEditor->setCurrentWidget(newCodeEditor);
-
-
     }
+    qDebug("4");
+    //if has window and dont has copy
+    nowWindow = qobject_cast<WorkWindow*>(nowFileEditor->parent()->parent());
+    nowWindow->addEditor(path, fileSystem, nowFont);
+    qDebug("5");
+    nowFileEditor = nowWindow->getEditor(path);
+    qDebug("6");
+    return;
 }
 
 void MainEditor::setFont(QFont* newFont)
 {
+    /*
     for (auto editItem : allOpenFile)
-        editItem.second->setFont(*newFont);
+        editItem.second->setFont(*newFont);*/
 }
 
 QFont* MainEditor::getFont()
@@ -105,18 +134,20 @@ QFont* MainEditor::getFont()
 
 void MainEditor::saveAllFile()
 {
+    /*
     for (auto c: allOpenFile)
-        saveFile(c.second);
+        saveFile(c.second);*/
 
 }
 
 void MainEditor::saveFile()
 {
-    saveFile(static_cast<CodeEditor*>(fileEditor->currentWidget()));
+    //saveFile(static_cast<CodeEditor*>(fileEditor->currentWidget()));
 }
 
 void MainEditor::saveFile(CodeEditor* saveEditor)
 {
+    /*
     //CodeEditor* saveEditor = static_cast<CodeEditor*>(fileEditor->currentWidget());
     if (saveEditor == nullptr)
         return;
@@ -131,11 +162,12 @@ void MainEditor::saveFile(CodeEditor* saveEditor)
         writeFile.open(QFile::Text | QFile::WriteOnly);
         QTextStream out(&writeFile);
         out << saveEditor->toPlainText();
-    }
+    }*/
 }
 
 void MainEditor::closeAllFile()
 {
+    /*
     if (allOpenFile.empty())
         return;
     for (qint32 i = 0; i < allOpenFile.size(); ++i) // now i really don't like map(
@@ -145,22 +177,23 @@ void MainEditor::closeAllFile()
             ++c;
         if(closeFile(fileEditor->indexOf(c->second)))
             --i;
-    }
+    }*/
 }
 void MainEditor::closeFile()
 {
-    closeFile(fileEditor->currentIndex());
+    //closeFile(fileEditor->currentIndex());
 }
-/*
-void MainEditor::closeFile(CodeEditor* saveEditor)
-{
-    //NEED SAVE FILE... EHHHHH
 
-}
-*/
+//void MainEditor::closeFile(CodeEditor* saveEditor)
+//{
+//    //NEED SAVE FILE... EHHHHH
+//
+//}
+
 
 bool MainEditor::closeFile(qint32 index)
 {
+    /*
     for (auto c : allOpenFile)
     {
         qDebug() << "!!!" << c.first;
@@ -198,41 +231,41 @@ bool MainEditor::closeFile(qint32 index)
         return true;
     }
     else
-        return false;//else - cancel
+        return false;//else - cancel*/
 
 
 }
 
 void MainEditor::copyText()
 {
-    if (fileEditor->currentWidget() != nullptr)
-        static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
+    //if (fileEditor->currentWidget() != nullptr)
+        //static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
 }
 void MainEditor::cutText()
 {
-    if (fileEditor->currentWidget() != nullptr)
-        static_cast<CodeEditor*>(fileEditor->currentWidget())->cut();
+    //if (fileEditor->currentWidget() != nullptr)
+        //static_cast<CodeEditor*>(fileEditor->currentWidget())->cut();
 }
 void MainEditor::pasteText()
 {
-    if (fileEditor->currentWidget() != nullptr)
-        static_cast<CodeEditor*>(fileEditor->currentWidget())->paste();
+    //if (fileEditor->currentWidget() != nullptr)
+        //static_cast<CodeEditor*>(fileEditor->currentWidget())->paste();
 }
 void MainEditor::backText()
 {
-    if (fileEditor->currentWidget() != nullptr)
-        static_cast<CodeEditor*>(fileEditor->currentWidget())->undo();
+    //if (fileEditor->currentWidget() != nullptr)
+        //static_cast<CodeEditor*>(fileEditor->currentWidget())->undo();
 }
 void MainEditor::forwardText()
 {
-    if (fileEditor->currentWidget() != nullptr)
-        static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
+    //if (fileEditor->currentWidget() != nullptr)
+        //static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
 
 qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
                                    bool matchCase)
 {
-
+/*
     QRegularExpression findExpression;
     if (matchWhileWordOnly)
         findExpression.setPattern("\\b" + cText + "\\b");
@@ -247,19 +280,21 @@ qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
             ->toPlainText().count(findExpression);
     else
         countFindName = -1;
-    return countFindName;
+    return countFindName;*/
 }
 
 void MainEditor::updateAllHighlighter()
 {
+    /*
     for (auto c : allOpenFile)
     {
         c.second->updateHighlighter();
-    }
+    }*/
 }
 
 qint32 MainEditor::lighterFindText(QString fText, bool down)
 {
+    /*
     QTextCursor nowCursor = static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor();
     qint32 nowPt;
     qint32 newPt;
@@ -308,32 +343,22 @@ qint32 MainEditor::lighterFindText(QString fText, bool down)
     }
 
 
-
-
-    /*
-    qDebug() << "start ligherFindT";
-    qint32 newPt = static_cast<CodeEditor*>(fileEditor->currentWidget())->toPlainText().indexOf(fText);
-    qDebug() << newPt;
-     qDebug() << static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor().position();
-     QTextCursor ptr = static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor();
-     ptr.setPosition(newPt);
-    static_cast<CodeEditor*>(fileEditor->currentWidget())->setTextCursor(ptr);
-    qDebug() << static_cast<CodeEditor*>(fileEditor->currentWidget())->textCursor().position();
 */
-    //temp
     return 5;
 }
 
 void MainEditor::resizeEvent(QResizeEvent *event)
 {
+    /*
     //QWidget::resizeEvent(event); //why not need? okey
     updateAllHighlighter();
     if (createFileModButton != nullptr && (fileEditor->currentIndex() == -1));
-        createFileModButton->resizeGeometryEvent();
+        createFileModButton->resizeGeometryEvent();*/
 }
 
 void MainEditor::changeTab(qint32 index)
 {
+    /*
     if (index == -1)
     {
         createFileModButton->setVisible(false);
@@ -352,11 +377,12 @@ void MainEditor::changeTab(qint32 index)
     {
         createFileModButton->setVisible(false);
     }
-    //currentEditor = static_cast<CodeEditor*>(fileEditor->widget(index));
+    //currentEditor = static_cast<CodeEditor*>(fileEditor->widget(index));*/
 }
 
 void MainEditor::createFileMod()
 {
+    /*
     CodeEditor* nowEditor = static_cast<CodeEditor*>(fileEditor->currentWidget());
     if (nowEditor == nullptr)
         return;
@@ -417,12 +443,13 @@ void MainEditor::createFileMod()
         createCopyNewFileDialog->setNameFile(dirFileOfTheMod + shortFileName, true);
         createCopyNewFileDialog->clearBoxes();
         createCopyNewFileDialog->open();
-    }
+    }*/
 
 }
 
 void MainEditor::createIncludeFileMod()
 {
+    /*
     QString fullNameFile = createCopyNewFileDialog->getFullNewName();
     qDebug() << fullNameFile << "!";
      QFileInfo gameFile(fullNameFile);
@@ -465,6 +492,16 @@ void MainEditor::createIncludeFileMod()
      }
 
 
+*/
 
+}
 
+void MainEditor::seeOldWindow(QWidget* oldW, QWidget* newW)
+{
+    if (qobject_cast<CodeEditor*>(newW) != nullptr)
+    {
+        qDebug() << "change CodeWindow " << newW;
+        nowFileEditor = newW;
+    }
+    //CodeEditor* NewWidget = newW;
 }

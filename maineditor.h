@@ -8,18 +8,29 @@
 #include <QTabWidget>
 #include <QPushButton>
 #include <unordered_map>
+#include <QMainWindow>
+#include <QDockWidget>
+#include <QVector>
 #include "tabeditor.h"
 #include "codeeditor.h"
 #include "createcopynewfiledialog.h"
+#include "workWindow.h"
+#include "allpar.h"
 
 class NewFileButton;
 
 using AllOpenFile = std::unordered_map<QString, CodeEditor*>;
 //#define nowCodeEditor static_cast<CodeEditor*>(fileEditor->currentWidget());
 
-class MainEditor : public QWidget
+class MainEditor : public QMainWindow
 {
     Q_OBJECT
+    QWidget* centralWidget;
+    QVector<WorkWindow*> savedWorkWindows;
+    QDockWidget *dock;
+    QWidget* nowFileEditor = nullptr;
+    QVector<std::pair<QString, QVector<CodeEditor*>>> multiCodeEditor; //name editor's file, vector of them Editor
+
     TabEditor *fileEditor;
     NewFileButton *createFileModButton;
     AllOpenFile allOpenFile;
@@ -36,11 +47,6 @@ class MainEditor : public QWidget
     CreateCopyNewFileDialog* createCopyNewFileDialog;
 public:
     explicit MainEditor(QWidget *parent = nullptr);
-    enum FileSystem
-    {
-        GAME_FILE,
-        MOD_FILE
-    };
 
     void openTextFile(QString &path, FileSystem fileSystem);
     void setFont(QFont* newFont);
@@ -76,6 +82,8 @@ public slots:
     void createIncludeFileMod();
     int returnCountText(QString cText, bool matchWhileWordOnly,
                            bool matchCase);
+
+    void seeOldWindow(QWidget* oldW, QWidget* newW);
 
 };
 

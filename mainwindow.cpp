@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
     centralSplitter->setStretchFactor(1, 80);
     centralSplitter->setStretchFactor(2, 30);
     centralSplitter->setStretchFactor(3, 20);
-
     toolBar = new ToolBar(mainWidget);
     mainLayout->addWidget(toolBar, 0);
     mainLayout->addWidget(centralSplitter, 1);

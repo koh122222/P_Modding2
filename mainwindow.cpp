@@ -107,7 +107,7 @@ void MainWindow::startReadParameters()
         //qDebug() << modMap[TYPE_MOD::EU_IDEAS].key("OR");
         //modMap->push_back(tempMap);
         //YAML::reedFile(parFiles + "ideas.txt" ,(modMap->back().second));
-
+    */
 
     }
     //qDebug() << modMap->back().second.begin()->second;

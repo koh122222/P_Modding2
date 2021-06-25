@@ -32,6 +32,7 @@ SOURCES += \
     modmodel.cpp \
     newfilebutton.cpp \
     onlyfilesystemmodel.cpp \
+    parareader.cpp \
     parviewsortfilterproxymodel.cpp \
     primparseryaml.cpp \
     tabeditor.cpp \
@@ -53,6 +54,7 @@ HEADERS += \
     modmodel.h \
     newfilebutton.h \
     onlyfilesystemmodel.h \
+    parareader.h \
     parview.h \
     parviewsortfilterproxymodel.h \
     primparseryaml.h \

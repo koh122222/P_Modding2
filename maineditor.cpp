@@ -30,22 +30,25 @@ MainEditor::MainEditor(QWidget *parent) : QMainWindow(parent)
     connect(createCopyNewFileDialog, SIGNAL(accepted()), this, SLOT(createIncludeFileMod()));
     connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
             this, SLOT(seeOldWindow(QWidget*,QWidget*)));
+    /*
+    dock = new QDockWidget("111", this);
+    WorkWindow* testWindow = new WorkWindow(this);
+    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
+    dock->setWidget(testWindow);
+    dock->setTitleBarWidget(new QWidget());
+    addDockWidget(Qt::RightDockWidgetArea, dock);
+    testWindow->addEditor("C:/Program Files/st/steamapps/common/Europa Universalis IV/common/advisortypes/00_advisortypes.txt", FileSystem::FS_MOD_FILE, nowFont);
+    nowFileEditor = testWindow->getEditor("C:/Program Files/st/steamapps/common/Europa Universalis IV/common/advisortypes/00_advisortypes.txt");
+    savedWorkWindows.push_back(testWindow);
 
-//    dock = new QDockWidget("111", this);
-//    WorkWindow* testWindow = new WorkWindow(this);
-//    dock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea);
-//    dock->setWidget(testWindow);
-//    dock->setTitleBarWidget(new QWidget());
-//    addDockWidget(Qt::RightDockWidgetArea, dock);
-/*
     dock = new QDockWidget("222", this);
     WorkWindow* testWindow2 = new WorkWindow(this);
     dock->setTitleBarWidget(new QWidget());
     dock->setWidget(testWindow2);
     addDockWidget(Qt::RightDockWidgetArea, dock);
-    connect(qApp, SIGNAL(focusChanged(QWidget*,QWidget*)),
-            this, SLOT(seeOldWindow(QWidget*,QWidget*)));*/
-
+    testWindow2->addEditor("C:/Program Files/st/steamapps/common/Europa Universalis IV/common/ages/00_default.txt", FileSystem::FS_MOD_FILE, nowFont);
+    nowFileEditor = testWindow2->getEditor("C:/Program Files/st/steamapps/common/Europa Universalis IV/common/ages/00_default.txt");
+    savedWorkWindows.push_back(testWindow2);*/
     /*
     fileEditor = new CodeEditor(this);
     QFont fontEditor("Courier", 16);
@@ -59,6 +62,7 @@ MainEditor::MainEditor(QWidget *parent) : QMainWindow(parent)
 
 void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
 {
+    qDebug() << path;
     qDebug() << "openTextFile";
     WorkWindow* nowWindow = nullptr;
     CodeEditor* nowWorkEditor = nullptr;
@@ -79,7 +83,6 @@ void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
     }
     else
     {
-        qDebug("1");
         if (nowFileEditor != nullptr)
         {
             if (qobject_cast<WorkWindow*>(
@@ -94,7 +97,6 @@ void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
         }
         else //if
         {
-            qDebug("2");
             //need better find now workWindow
             nowFileEditor = savedWorkWindows[0]->getCurrentEditor();
             return;
@@ -104,27 +106,25 @@ void MainEditor::openTextFile(QString &path, FileSystem fileSystem)
         //temp, need add work with two and more files in more windows
         for (auto c : savedWorkWindows)
         {
-            qDebug("3");
             CodeEditor* returnEditor = c->getEditor(path);
             if (returnEditor != nullptr)
                 return; //temp!!!
         }
     }
-    qDebug("4");
+    qDebug() << "500";
     //if has window and dont has copy
     nowWindow = qobject_cast<WorkWindow*>(nowFileEditor->parent()->parent());
     nowWindow->addEditor(path, fileSystem, nowFont);
-    qDebug("5");
     nowFileEditor = nowWindow->getEditor(path);
-    qDebug("6");
     return;
 }
 
 void MainEditor::setFont(QFont* newFont)
 {
-    /*
-    for (auto editItem : allOpenFile)
-        editItem.second->setFont(*newFont);*/
+    for (auto editWindow : savedWorkWindows)
+    {
+        editWindow->setNewFont(newFont);
+    }
 }
 
 QFont* MainEditor::getFont()
@@ -134,35 +134,24 @@ QFont* MainEditor::getFont()
 
 void MainEditor::saveAllFile()
 {
-    /*
-    for (auto c: allOpenFile)
-        saveFile(c.second);*/
+
+    for (auto saveWindow : savedWorkWindows)
+        saveWindow->saveAllFile();
 
 }
 
 void MainEditor::saveFile()
 {
-    //saveFile(static_cast<CodeEditor*>(fileEditor->currentWidget()));
+    if (qobject_cast<CodeEditor*>(nowFileEditor) != nullptr)
+                static_cast<WorkWindow*>(nowFileEditor->parent()->parent())
+                ->saveFile(qobject_cast<CodeEditor*>(nowFileEditor));
 }
 
 void MainEditor::saveFile(CodeEditor* saveEditor)
 {
-    /*
-    //CodeEditor* saveEditor = static_cast<CodeEditor*>(fileEditor->currentWidget());
-    if (saveEditor == nullptr)
-        return;
-    auto needIt = find_if(allOpenFile.begin(), allOpenFile.end(),
-                     [saveEditor] (std::pair<QString, CodeEditor*> el)
-        { return el.second == saveEditor; });
-    qDebug() << needIt->first;
-    QString placeMod = static_cast<MainWindow*>(parent()->parent()->parent())->getPlaceMod();
-    if (needIt->first.mid(0, placeMod.size()) == placeMod)
-    {
-        QFile writeFile(needIt->first);
-        writeFile.open(QFile::Text | QFile::WriteOnly);
-        QTextStream out(&writeFile);
-        out << saveEditor->toPlainText();
-    }*/
+    //////////////////////////////////!!!!!!
+    //now dont need. will be delete
+    ////////////////////////////////////////
 }
 
 void MainEditor::closeAllFile()
@@ -181,7 +170,9 @@ void MainEditor::closeAllFile()
 }
 void MainEditor::closeFile()
 {
-    //closeFile(fileEditor->currentIndex());
+    if (qobject_cast<CodeEditor*>(nowFileEditor) != nullptr)
+                static_cast<WorkWindow*>(nowFileEditor->parent()->parent())
+                ->closeFile(qobject_cast<CodeEditor*>(nowFileEditor));
 }
 
 //void MainEditor::closeFile(CodeEditor* saveEditor)
@@ -191,7 +182,7 @@ void MainEditor::closeFile()
 //}
 
 
-bool MainEditor::closeFile(qint32 index)
+bool MainEditor::closeFile(CodeEditor* closeEditor)
 {
     /*
     for (auto c : allOpenFile)
@@ -238,26 +229,36 @@ bool MainEditor::closeFile(qint32 index)
 
 void MainEditor::copyText()
 {
+    if (qobject_cast<CodeEditor*>(nowFileEditor) != nullptr)
+        static_cast<CodeEditor*>(nowFileEditor)->copy();
     //if (fileEditor->currentWidget() != nullptr)
         //static_cast<CodeEditor*>(fileEditor->currentWidget())->copy();
 }
 void MainEditor::cutText()
 {
+    if (qobject_cast<CodeEditor*>(nowFileEditor) != nullptr)
+        static_cast<CodeEditor*>(nowFileEditor)->cut();
     //if (fileEditor->currentWidget() != nullptr)
         //static_cast<CodeEditor*>(fileEditor->currentWidget())->cut();
 }
 void MainEditor::pasteText()
 {
+    if (qobject_cast<CodeEditor*>(nowFileEditor) != nullptr)
+        static_cast<CodeEditor*>(nowFileEditor)->paste();
     //if (fileEditor->currentWidget() != nullptr)
         //static_cast<CodeEditor*>(fileEditor->currentWidget())->paste();
 }
 void MainEditor::backText()
 {
+    if (qobject_cast<CodeEditor*>(nowFileEditor) != nullptr)
+        static_cast<CodeEditor*>(nowFileEditor)->undo();
     //if (fileEditor->currentWidget() != nullptr)
         //static_cast<CodeEditor*>(fileEditor->currentWidget())->undo();
 }
 void MainEditor::forwardText()
 {
+    if (qobject_cast<CodeEditor*>(nowFileEditor) != nullptr)
+        static_cast<CodeEditor*>(nowFileEditor)->redo();
     //if (fileEditor->currentWidget() != nullptr)
         //static_cast<CodeEditor*>(fileEditor->currentWidget())->redo();
 }
@@ -285,11 +286,10 @@ qint32 MainEditor::returnCountText(QString cText, bool matchWhileWordOnly,
 
 void MainEditor::updateAllHighlighter()
 {
-    /*
-    for (auto c : allOpenFile)
+    for (auto c : savedWorkWindows)
     {
-        c.second->updateHighlighter();
-    }*/
+        ;//c->updateAllHighlighter();
+    }
 }
 
 qint32 MainEditor::lighterFindText(QString fText, bool down)
@@ -345,6 +345,13 @@ qint32 MainEditor::lighterFindText(QString fText, bool down)
 
 */
     return 5;
+}
+
+void MainEditor::nowWorkWindowDeleted(WorkWindow* deletedWindow)
+{
+    savedWorkWindows.erase(savedWorkWindows.begin() +
+                          savedWorkWindows.indexOf(deletedWindow));
+    nowFileEditor = nullptr;
 }
 
 void MainEditor::resizeEvent(QResizeEvent *event)
@@ -494,6 +501,11 @@ void MainEditor::createIncludeFileMod()
 
 */
 
+}
+
+void MainEditor::seeOldWindow(QWidget* newW)
+{
+    seeOldWindow(nowFileEditor, newW);
 }
 
 void MainEditor::seeOldWindow(QWidget* oldW, QWidget* newW)

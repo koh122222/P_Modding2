@@ -37,7 +37,7 @@ class MainWindow : public QMainWindow
     void setStyleLight();
 
 public:
-
+    QSplitter *centralSplitter;
     static std::unordered_map<QString, QString>  allGameBase;
 
     //static std::array<QColor, TYPE_MOD::END_TYPE> highlighter_light;

@@ -31,9 +31,9 @@ class MainEditor : public QMainWindow
     QWidget* nowFileEditor = nullptr;
     QVector<std::pair<QString, QVector<CodeEditor*>>> multiCodeEditor; //name editor's file, vector of them Editor
 
-    TabEditor *fileEditor;
+    //TabEditor *fileEditor;
     NewFileButton *createFileModButton;
-    AllOpenFile allOpenFile;
+    //AllOpenFile allOpenFile;
     QVBoxLayout *layout;
     QFont *nowFont;
     QString findName;
@@ -56,6 +56,7 @@ public:
     void saveFile(CodeEditor* saveEditor);
     void closeAllFile();
     void closeFile();
+    bool closeFile(CodeEditor* closeEditor);
     void copyText();
     void cutText();
     void pasteText();
@@ -69,6 +70,7 @@ public:
 
 
 
+    void nowWorkWindowDeleted(WorkWindow* deletedWindow);
     //void closeFile(CodeEditor* saveEditor);
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -76,13 +78,13 @@ protected:
 signals:
 
 public slots:
-    bool closeFile(qint32 index);
+
     void changeTab(qint32 index);
     void createFileMod();
     void createIncludeFileMod();
     int returnCountText(QString cText, bool matchWhileWordOnly,
                            bool matchCase);
-
+    void seeOldWindow(QWidget *newW);
     void seeOldWindow(QWidget* oldW, QWidget* newW);
 
 };

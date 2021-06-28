@@ -24,15 +24,16 @@ MainWindow::MainWindow(QWidget *parent)
     gameFiles = new GameFiles(mainWidget);
     mainEditor = new MainEditor(mainWidget);
     parView = new ParView(mainWidget);
-    QSplitter *centralSplitter = new QSplitter(mainWidget);
+    centralSplitter = new QSplitter(mainWidget);
     centralSplitter->setHandleWidth(0);
     centralSplitter->addWidget(gameFiles);
     centralSplitter->addWidget(mainEditor);
     centralSplitter->addWidget(parView);
-    centralSplitter->setStretchFactor(0, 20);
+    centralSplitter->setStretchFactor(0, 0);
     centralSplitter->setStretchFactor(1, 80);
-    centralSplitter->setStretchFactor(2, 30);
-    centralSplitter->setStretchFactor(3, 20);
+    centralSplitter->setStretchFactor(2, 0);
+    //startSize 640x480
+    centralSplitter->setSizes({260, 340, 330});
     toolBar = new ToolBar(mainWidget);
     mainLayout->addWidget(toolBar, 0);
     mainLayout->addWidget(centralSplitter, 1);

@@ -45,9 +45,11 @@ QVector <QString> paraReader::modReader()
                 if ((opened_file[i]==' ')
                         ||(opened_file[i]=='\n')
                         ||(opened_file[i]=='#')
+                        ||(opened_file[i]=='$')
                         ||(opened_file[i]=='\t')
                         ||(opened_file[i]=='\\')
                         ||(opened_file[i]=='\"')
+                        ||(opened_file[i]=='\'')
                         ||(opened_file[i]=='1')
                         ||(opened_file[i]=='2')
                         ||(opened_file[i]=='3')
@@ -93,9 +95,11 @@ QVector <QString> paraReader::modReader()
             if ((opened_file[i]==' ')
                     ||(opened_file[i]=='\n')
                     ||(opened_file[i]=='#')
+                    ||(opened_file[i]=='$')
                     ||(opened_file[i]=='\t')
                     ||(opened_file[i]=='\\')
                     ||(opened_file[i]=='\"')
+                    ||(opened_file[i]=='\'')
                     ||(opened_file[i]=='1')
                     ||(opened_file[i]=='2')
                     ||(opened_file[i]=='3')
@@ -134,7 +138,7 @@ QVector <QString> paraReader::modReader()
 
 ModModel paraReader::model_maker(QVector <QString> codenames)
 {
-    qDebug()<< "AA";
+    //qDebug()<< "AA";
     ModModel model;
     QString locpath = gamepath +"\\localisation";
     QDir comdir(locpath);
@@ -148,19 +152,23 @@ ModModel paraReader::model_maker(QVector <QString> codenames)
         QTextStream filestream(&modfile);
         QString opened_file = filestream.readAll();
 
+        //qDebug()<< fileInfo.fileName();
         qint32 wordsize = 0;
         QString right="";
         QString left="";
         bool finded= false;
         for (int i=0; i <opened_file.size();i++ )
         {
+            if (opened_file[i]== '\n')
+                //qDebug()<<left<< " "<<right;
+
             if ((opened_file[i]== '\n')&&(finded))
                 {
-                    right = opened_file.mid(i+1-wordsize, wordsize-1);
+                    right = opened_file.mid(i-wordsize, wordsize);
                     ModPair pair (left, right);
-                    qDebug()<< "AОА";
+                    //qDebug()<<left<< " "<<right;
                     model.insert(pair);
-                    qDebug()<< "AООООA";
+                    //qDebug()<< "AООООA";
                     finded= false;
                 }
             if ((opened_file[i]==' ')
@@ -170,11 +178,11 @@ ModModel paraReader::model_maker(QVector <QString> codenames)
                 wordsize++;
             if (opened_file[i]== ':')
                 {
-
-                    left = opened_file.mid(i+1-wordsize, wordsize+1);
+                    //qDebug()<< "a";
+                    left = opened_file.mid(i+1-wordsize, wordsize-1);
                     for (auto code:codenames)
-                        if (left == code){
-                            qDebug()<< "ЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫ";
+                        if ((left == code)&&(left.toUpper() == code.toUpper())){
+                            //qDebug()<< "ЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫЫ";
                             finded = true;
                         }
                 }
@@ -185,7 +193,7 @@ ModModel paraReader::model_maker(QVector <QString> codenames)
         bool finded = false;
         for (auto pair:model)
             if (pair.first == code){
-                qDebug()<< "ЫЫЫЫХЫ";
+                //qDebug()<< "ЫЫЫЫХЫ";
                 finded = true;
             }
         if (!finded)
@@ -194,6 +202,6 @@ ModModel paraReader::model_maker(QVector <QString> codenames)
             model.insert(paiR);
         }
     }
-    qDebug()<< "ООООООООО";
+    //qDebug()<< "ООООООООО";
     return model;
 }

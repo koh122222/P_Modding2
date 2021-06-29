@@ -308,6 +308,7 @@ void MainWindow::slotPress_ctrlF()
 
 void MainWindow::greatBUTTON()
 {
-    AllPar::modVector[M_EU_IDEAS].insert(ModModel::value_type("testIdea1", "testIdea111111"));
-    qDebug() << AllPar::modVector[M_EU_IDEAS].mainItems();
+    //AllPar::modVector[M_EU_IDEAS].insert(ModModel::value_type("testIdea1", "testIdea111111"));
+    //qDebug() << AllPar::modVector[M_EU_IDEAS].mainItems();
+    paraReader* readParameters = new paraReader(this);
 }

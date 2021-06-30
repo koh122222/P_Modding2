@@ -15,6 +15,8 @@ class paraReader : public QObject
 public:
     paraReader(QObject * parent);
     QVector <QString> modReader();
+    QVector <QString> eventReader();
+
     ModModel model_maker(QVector <QString> codename);
 
 };
